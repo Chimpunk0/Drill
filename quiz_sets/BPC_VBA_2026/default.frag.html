@@ -4243,7 +4243,7 @@
                             <div class="feedback" id="q_discord_4-fb"></div>
                         </div>
                         <div class="question" id="q_discord_5" data-answer="text"
- data-keywords="local">
+                            data-keywords="local">
                             <div class="question-label">
                                 8. Jakou hodnotu vypíše poslední příkaz z uvedeného příkladu:<br /><br />```<br />git config --global user.name &quot;global&quot;<br />git config --local user.name &quot;local&quot;<br />git config --system user.name &quot;system&quot;<br />git config user.name<br />```
                             </div>
@@ -4258,8 +4258,9 @@
                             </div>
                             <div class="feedback" id="q_discord_5-fb"></div>
                         </div>
+                        <!-- OPRAVA: pridaný switch ako alternatíva k checkout -->
                         <div class="question" id="q_discord_6" data-answer="text"
- data-keywords="checkout">
+                            data-keywords="checkout,switch">
                             <div class="question-label">
                                 15. Doplňte příkaz tak, aby provedl přepnutí pracovního prostoru na větev DEVEL.<br /><br />```<br />git _______ devel<br />```
                             </div>
@@ -4347,7 +4348,7 @@
                             <div class="feedback" id="q_discord_8-fb"></div>
                         </div>
                         <div class="question" id="q_discord_9" data-answer="text"
- data-keywords="Universal,Application,Context-specific,Private">
+                            data-keywords="Universal,Application,Context-specific,Private">
                             <div class="question-label">
                                 3. Uveďte 4 třídy používané v kódování ASN.1.
                             </div>
@@ -4471,7 +4472,7 @@
                             <div class="feedback" id="q_discord_12-fb"></div>
                         </div>
                         <div class="question" id="q_discord_13" data-answer="text"
- data-keywords="4">
+                            data-keywords="4">
                             <div class="question-label">
                                 9. Kolik nenulových znaků načte do proměnné str následující kód maximálně:<br /><br />```c<br />char str[10];<br />fgets(str, 5, stdin);<br />```
                             </div>
@@ -4522,6 +4523,7 @@
                             </div>
                             <div class="feedback" id="q_discord_14-fb"></div>
                         </div>
+                        <!-- OPRAVA: "w" otvára len pre zápis, nie čítanie aj zápis -->
                         <div class="question" id="q_discord_15" data-answer="b">
                             <div class="question-label">
                                 2. Pokud soubor data.bin existuje a není prázdný, tak funkce fopen( &quot;data.bin&quot;, &quot;w&quot;) provede:
@@ -4539,7 +4541,7 @@
                                         type="radio"
                                         name="q_discord_15"
                                         value="b"
-                                    /><span>zkrátí jeho velikost na nulovou délku a otevře ho pro čtení i zápis</span></label
+                                    /><span>zkrátí jeho velikost na nulovou délku a otevře ho pro zápis</span></label
                                 >
                                 <label class="option"
                                     ><input
@@ -4553,7 +4555,7 @@
                                         type="radio"
                                         name="q_discord_15"
                                         value="d"
-                                    /><span>soubor otevře a umožní přidáva data za konec souboru</span></label
+                                    /><span>soubor otevře a umožní přidávat data za konec souboru</span></label
                                 >
                             </div>
                             <div class="feedback" id="q_discord_15-fb"></div>
@@ -4739,7 +4741,7 @@
                             <div class="feedback" id="q_discord_20-fb"></div>
                         </div>
                         <div class="question" id="q_discord_21" data-answer="text"
- data-keywords="keyctl read 658721749">
+                            data-keywords="keyctl read 658721749">
                             <div class="question-label">
                                 5. Mějme připravené data v kernel keyrings.<br />```<br />vyuka@spin5:~$ keyctl show<br />Session Keyring<br />284120841 - alswrv 1029 1029 keyring: ses<br />249992121 -alswrv 1029 65534 \- keyring: uid.1029<br />658721749 -alswrv 1029 1029  \user: testkey<br />139480428 - alswrv 1029 1029  \- keyring: pokus<br />```<br />Zapište příkaz, kterým zobrazíte data v `user: testkey` (ID 658721749).
                             </div>
@@ -4754,6 +4756,7 @@
                             </div>
                             <div class="feedback" id="q_discord_21-fb"></div>
                         </div>
+                        <!-- OPRAVA: mysql je názov kľúča, mydata sú dáta -->
                         <div class="question" id="q_discord_22" data-answer="b">
                             <div class="question-label">
                                 6. Příkaz `keyctl add user mysql mydata @u` způsobí:
@@ -4771,7 +4774,7 @@
                                         type="radio"
                                         name="q_discord_22"
                                         value="b"
-                                    /><span>přidá nová data s označemím mydata</span></label
+                                    /><span>přidá nový klíč s názvem mysql a hodnotou mydata</span></label
                                 >
                                 <label class="option"
                                     ><input
@@ -4790,6 +4793,7 @@
                             </div>
                             <div class="feedback" id="q_discord_22-fb"></div>
                         </div>
+                        <!-- OPRAVA: opravená možnosť A aby neplatilo len B -->
                         <div class="question" id="q_discord_23" data-answer="b">
                             <div class="question-label">
                                 7. O příkazu `keyctl add user mysql mydata @u` neplatí, že:
@@ -4800,7 +4804,7 @@
                                         type="radio"
                                         name="q_discord_23"
                                         value="a"
-                                    /><span>přidaná položka bude dostupná jen z prostoru jádra</span></label
+                                    /><span>přidaná položka bude dostupná i z uživatelského prostoru</span></label
                                 >
                                 <label class="option"
                                     ><input
@@ -5095,7 +5099,7 @@
                             <div class="feedback" id="q_discord_31-fb"></div>
                         </div>
                         <div class="question" id="q_discord_32" data-answer="text"
- data-keywords="X509_print_ex_fp">
+                            data-keywords="X509_print_ex_fp">
                             <div class="question-label">
                                 9. Doplňte kód tak, aby vypsal obsah certifikátu v čitelné podobě.<br /><br />```c<br />FILE *fd;<br />X509 *cert = X509_new();<br /><br />fd = fopen(path, &quot;r&quot;);<br />PEM_read_X509(fd, &amp;cert, NULL, NULL);<br />______________(stdout, cert, XN_FLAG_COMPAT, X509_FLAG_COMPAT);<br />```
                             </div>
@@ -5163,7 +5167,7 @@
                             <div class="feedback" id="q_discord_34-fb"></div>
                         </div>
                         <div class="question" id="q_discord_35" data-answer="text"
- data-keywords="EVP_DigestInit">
+                            data-keywords="EVP_DigestInit">
                             <div class="question-label">
                                 14. Doplňte následující kód tak, aby provedl hashování zprávy.<br /><br />```c<br />char *ms_salt = &quot;salt&quot;;<br />char *ms_value = &quot;password&quot;;<br />unsigned char md_value[EVP_MAX_MD_SIZE];<br />unsigned int md_len;<br /><br />EVP_MD *md = EVP_MD_fetch( NULL, &quot;sha256&quot;, NULL);<br />EVP_MD_CTX *ctx = EVP_MD_CTX_new();<br />EVP_____________(ctx, md); // Initialize the context<br />EVP_DigestUpdate(ctx, ms_salt, strlen(ms_salt));<br />EVP_DigestUpdate(ctx, ms_value, strlen(ms_value));<br />EVP_DigestFinal(ctx, md_value, &amp;md_len);<br />EVP_MD_CTX_free(ctx);<br />EVP_MD_free(md);<br />```
                             </div>
@@ -5286,6 +5290,7 @@
                             </div>
                             <div class="feedback" id="q_discord_38-fb"></div>
                         </div>
+                        <!-- OPRAVA: doplnená podmienka s > 1 -->
                         <div class="question" id="q_discord_39" data-answer="c">
                             <div class="question-label">
                                 Počáteční nastavení s generátoru Blum Blum Shub musí splňovat:
@@ -5310,7 +5315,7 @@
                                         type="radio"
                                         name="q_discord_39"
                                         value="c"
-                                    /><span>s &lt; p * q - 1</span></label
+                                    /><span>s &lt; p * q a zároveň s &gt; 1</span></label
                                 >
                                 <label class="option"
                                     ><input
@@ -5322,45 +5327,11 @@
                             </div>
                             <div class="feedback" id="q_discord_39-fb"></div>
                         </div>
-                        <div class="question" id="q_discord_40" data-answer="b">
-                            <div class="question-label">
-                                Výstup kódování base64 může obsahovat
-                            </div>
-                            <div class="options">
-                                <label class="option"
-                                    ><input
-                                        type="radio"
-                                        name="q_discord_40"
-                                        value="a"
-                                    /><span>64 různých znaků</span></label
-                                >
-                                <label class="option"
-                                    ><input
-                                        type="radio"
-                                        name="q_discord_40"
-                                        value="b"
-                                    /><span>65 různých znaků</span></label
-                                >
-                                <label class="option"
-                                    ><input
-                                        type="radio"
-                                        name="q_discord_40"
-                                        value="c"
-                                    /><span>32 různých znaků</span></label
-                                >
-                                <label class="option"
-                                    ><input
-                                        type="radio"
-                                        name="q_discord_40"
-                                        value="d"
-                                    /><span>31 různých znaků</span></label
-                                >
-                            </div>
-                            <div class="feedback" id="q_discord_40-fb"></div>
-                        </div>
+                        <!-- q_discord_40 VYMAZANÉ - duplikát q_discord_11 -->
+                        <!-- OPRAVA: typ 'user' nie je šifrovaný -->
                         <div class="question" id="q_discord_41" data-answer="b">
                             <div class="question-label">
-                                V kernel keyrings je prvek, který obsahuje šifrovaná data dostupná z uživatelského prostoru, typu:
+                                V kernel keyrings je prvek, který obsahuje data dostupná z uživatelského prostoru, typu:
                             </div>
                             <div class="options">
                                 <label class="option"
@@ -5843,7 +5814,7 @@
                                         type="radio"
                                         name="q_discord_54"
                                         value="b"
-                                    /><span>Jednozdnačnost a bezpečnost</span></label
+                                    /><span>Jednoznačnost a bezpečnost</span></label
                                 >
                                 <label class="option"
                                     ><input
@@ -5852,7 +5823,7 @@
                                         value="c"
                                     /><span>Podpora v starších systémech</span></label
                                 >
-                                <label class="option"
+                                <label class="option
                                     ><input
                                         type="radio"
                                         name="q_discord_54"
@@ -5879,7 +5850,7 @@
                                         type="radio"
                                         name="q_discord_55"
                                         value="b"
-                                    /><span>Zabezpečení úložný prostor pro ukládání klíčů a hesel</span></label
+                                    /><span>Zabezpečený úložný prostor pro ukládání klíčů a hesel</span></label
                                 >
                                 <label class="option"
                                     ><input
@@ -6438,6 +6409,7 @@
                             </div>
                             <div class="feedback" id="q_discord_70-fb"></div>
                         </div>
+                        <!-- OPRAVA: --list (dvojpomlčka) -->
                         <div class="question" id="q_discord_71" data-answer="d">
                             <div class="question-label">
                                 Jaký příkaz zobrazí konfiguraci Gitu?
@@ -6469,7 +6441,7 @@
                                         type="radio"
                                         name="q_discord_71"
                                         value="d"
-                                    /><span>git config -list</span></label
+                                    /><span>git config --list</span></label
                                 >
                             </div>
                             <div class="feedback" id="q_discord_71-fb"></div>
