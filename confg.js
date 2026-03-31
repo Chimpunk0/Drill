@@ -11,7 +11,7 @@
  * QUIZ_TRY_FETCH_FIRST = true: pri otvorení cez HTTP sa najprv stiahne .frag.html
  * (vhodné pri úpravách fragmentu bez okamžitej regenerácie embedu).
  */
-window.QUIZ_SET_ID = window.QUIZ_SET_ID || "BPC_SOS_2026/BPC_SOS_2026_polsemestralka";
+window.QUIZ_SET_ID = window.QUIZ_SET_ID || "bpc-sos-2026/polsemestralka";
 window.QUIZ_SET_FRAGMENT_URL = window.QUIZ_SET_FRAGMENT_URL || null;
 window.QUIZ_STORAGE_KEY = window.QUIZ_STORAGE_KEY || null;
 window.QUIZ_TRY_FETCH_FIRST = window.QUIZ_TRY_FETCH_FIRST || false;
