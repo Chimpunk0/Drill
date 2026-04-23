@@ -935,6 +935,309 @@
                         </div>
                     </div>
 
+                    <div class="section" id="sec_7" data-section="7">
+                        <div class="section-title">7. Certifikáty v OpenSSL</div>
+
+                        <div class="question" id="q7_1" data-answer="a">
+                            <div class="question-label">
+                                1. Funkce `ERR_load_crypto_strings` z knihovny crypto slouží pro:
+                            </div>
+                            <div class="options">
+                                <label class="option"><input type="radio" name="q7_1" value="a" /><span>Registraci chybových hlášení pro pozdější vypisování</span></label>
+                                <label class="option"><input type="radio" name="q7_1" value="b" /><span>Načtení chyb uložených v předchozí relaci</span></label>
+                                <label class="option"><input type="radio" name="q7_1" value="c" /><span>Načtení dosud vyvolaných chyb</span></label>
+                                <label class="option"><input type="radio" name="q7_1" value="d" /><span>Vymazání dosud vyvolaných chyb</span></label>
+                            </div>
+                            <div class="feedback" id="q7_1-fb"></div>
+                        </div>
+
+                        <div class="question" id="q7_2" data-answer="a">
+                            <div class="question-label">
+                                2. K uvolnění načtených chybových hlášení v knihovně crypto slouží funkce:
+                            </div>
+                            <div class="options">
+                                <label class="option"><input type="radio" name="q7_2" value="a" /><span>`ERR_free_strings`</span></label>
+                                <label class="option"><input type="radio" name="q7_2" value="b" /><span>`ERR_unload_crypto_strings`</span></label>
+                                <label class="option"><input type="radio" name="q7_2" value="c" /><span>`ERR_delete_strings`</span></label>
+                                <label class="option"><input type="radio" name="q7_2" value="d" /><span>`ERR_save_crypto_strings`</span></label>
+                            </div>
+                            <div class="feedback" id="q7_2-fb"></div>
+                        </div>
+
+                        <div class="question" id="q7_3" data-answer="a">
+                            <div class="question-label">
+                                3. Funkce `ERR_get_error` na rozdíl od `ERR_peek_error` provede:
+                            </div>
+                            <div class="options">
+                                <label class="option"><input type="radio" name="q7_3" value="a" /><span>Odstraní kód chyby z fronty</span></label>
+                                <label class="option"><input type="radio" name="q7_3" value="b" /><span>Čte kód nejnovější chyby místo nejstarší</span></label>
+                                <label class="option"><input type="radio" name="q7_3" value="c" /><span>Čte kód nejstarší chyby místo nejnovější</span></label>
+                                <label class="option"><input type="radio" name="q7_3" value="d" /><span>Ponechá kód chyby ve frontě</span></label>
+                            </div>
+                            <div class="feedback" id="q7_3-fb"></div>
+                        </div>
+
+                        <div class="question" id="q7_4" data-answer="b">
+                            <div class="question-label">
+                                4. Funkce `ERR_peek_last_error` na rozdíl od `ERR_peek_error` provede:
+                            </div>
+                            <div class="options">
+                                <label class="option"><input type="radio" name="q7_4" value="a" /><span>Odstraní kód chyby z fronty</span></label>
+                                <label class="option"><input type="radio" name="q7_4" value="b" /><span>Čte kód nejnovější chyby místo nejstarší</span></label>
+                                <label class="option"><input type="radio" name="q7_4" value="c" /><span>Čte kód nejstarší chyby místo nejnovější</span></label>
+                                <label class="option"><input type="radio" name="q7_4" value="d" /><span>Ponechá přečtený kód chyby ve frontě</span></label>
+                            </div>
+                            <div class="feedback" id="q7_4-fb"></div>
+                        </div>
+
+                        <div class="question" id="q7_5" data-answer="a">
+                            <div class="question-label">
+                                5. Alokaci paměti pro datový typ reprezentující certifikát zajišťuje funkce:
+                            </div>
+                            <div class="options">
+                                <label class="option"><input type="radio" name="q7_5" value="a" /><span>`X509_new`</span></label>
+                                <label class="option"><input type="radio" name="q7_5" value="b" /><span>`X509_free`</span></label>
+                                <label class="option"><input type="radio" name="q7_5" value="c" /><span>`EVP_PKEY_new`</span></label>
+                                <label class="option"><input type="radio" name="q7_5" value="d" /><span>`X509_REQ_new`</span></label>
+                            </div>
+                            <div class="feedback" id="q7_5-fb"></div>
+                        </div>
+
+                        <div class="question" id="q7_6" data-answer="a">
+                            <div class="question-label">
+                                6. Pro výpis veřejného klíče slouží funkce:
+                            </div>
+                            <div class="options">
+                                <label class="option"><input type="radio" name="q7_6" value="a" /><span>`EVP_PKEY_print_public_fp`</span></label>
+                                <label class="option"><input type="radio" name="q7_6" value="b" /><span>`EVP_PKEY_print_private_fp`</span></label>
+                                <label class="option"><input type="radio" name="q7_6" value="c" /><span>`X509_REQ_print_fp`</span></label>
+                                <label class="option"><input type="radio" name="q7_6" value="d" /><span>`X509_print_ex_fp`</span></label>
+                            </div>
+                            <div class="feedback" id="q7_6-fb"></div>
+                        </div>
+
+                        <div class="question" id="q7_7" data-answer="a">
+                            <div class="question-label">
+                                7. Pro výpis žádosti o podpis certifikátu v textové podobě slouží funkce:
+                            </div>
+                            <div class="options">
+                                <label class="option"><input type="radio" name="q7_7" value="a" /><span>`X509_REQ_print_fp`</span></label>
+                                <label class="option"><input type="radio" name="q7_7" value="b" /><span>`PEM_write_X509_REQ`</span></label>
+                                <label class="option"><input type="radio" name="q7_7" value="c" /><span>`PEM_write_X509`</span></label>
+                                <label class="option"><input type="radio" name="q7_7" value="d" /><span>`X509_print_ex_fp`</span></label>
+                            </div>
+                            <div class="feedback" id="q7_7-fb"></div>
+                        </div>
+
+                        <div class="question" id="q7_8" data-answer="b">
+                            <div class="question-label">
+                                8. Seřaďte funkce do správného pořadí. Označení:
+                                1=`ERR_free_strings`, 2=`ERR_error_string_n`, 3=`ERR_load_crypto_strings`, 4=`PEM_read_X509`.
+                            </div>
+                            <div class="options">
+                                <label class="option"><input type="radio" name="q7_8" value="a" /><span>1, 2, 3, 4</span></label>
+                                <label class="option"><input type="radio" name="q7_8" value="b" /><span>3, 4, 2, 1</span></label>
+                                <label class="option"><input type="radio" name="q7_8" value="c" /><span>3, 2, 4, 1</span></label>
+                                <label class="option"><input type="radio" name="q7_8" value="d" /><span>4, 3, 2, 1</span></label>
+                            </div>
+                            <div class="feedback" id="q7_8-fb"></div>
+                        </div>
+
+                        <div class="question" id="q7_9" data-answer="d">
+                            <div class="question-label">
+                                9. Doplňte kód tak, aby vypsal obsah certifikátu v čitelné podobě:
+                                <code>_____ (stdout, cert, XN_FLAG_COMPAT, X509_FLAG_COMPAT);</code>
+                            </div>
+                            <div class="options">
+                                <label class="option"><input type="radio" name="q7_9" value="a" /><span>`X509_REQ_print_fp`</span></label>
+                                <label class="option"><input type="radio" name="q7_9" value="b" /><span>`EVP_PKEY_print_public_fp`</span></label>
+                                <label class="option"><input type="radio" name="q7_9" value="c" /><span>`PEM_write_X509`</span></label>
+                                <label class="option"><input type="radio" name="q7_9" value="d" /><span>`X509_print_ex_fp`</span></label>
+                            </div>
+                            <div class="feedback" id="q7_9-fb"></div>
+                        </div>
+                    </div>
+
+                    <div class="section" id="sec_12" data-section="12">
+                        <div class="section-title">12. Trusted Platform Module</div>
+
+                        <div class="question" id="q12_1" data-answer="a">
+                            <div class="question-label">1. Co znamená zkratka TPM?</div>
+                            <div class="options">
+                                <label class="option"><input type="radio" name="q12_1" value="a" /><span>Trusted Platform Module</span></label>
+                                <label class="option"><input type="radio" name="q12_1" value="b" /><span>Trusted Protection Method</span></label>
+                                <label class="option"><input type="radio" name="q12_1" value="c" /><span>Technical Platform Model</span></label>
+                                <label class="option"><input type="radio" name="q12_1" value="d" /><span>Total Protection Management</span></label>
+                            </div>
+                            <div class="feedback" id="q12_1-fb"></div>
+                        </div>
+
+                        <div class="question" id="q12_2" data-answer="b">
+                            <div class="question-label">2. Co je hlavní funkcí monotónního počítadla v TPM?</div>
+                            <div class="options">
+                                <label class="option"><input type="radio" name="q12_2" value="a" /><span>Ukládání času</span></label>
+                                <label class="option"><input type="radio" name="q12_2" value="b" /><span>Zabraňuje snížení hodnoty</span></label>
+                                <label class="option"><input type="radio" name="q12_2" value="c" /><span>Generování náhodných čísel</span></label>
+                                <label class="option"><input type="radio" name="q12_2" value="d" /><span>Šifrování dat</span></label>
+                            </div>
+                            <div class="feedback" id="q12_2-fb"></div>
+                        </div>
+
+                        <div class="question" id="q12_3" data-answer="c">
+                            <div class="question-label">3. Kolik PCR registrů je typicky k dispozici v TPM?</div>
+                            <div class="options">
+                                <label class="option"><input type="radio" name="q12_3" value="a" /><span>8</span></label>
+                                <label class="option"><input type="radio" name="q12_3" value="b" /><span>16</span></label>
+                                <label class="option"><input type="radio" name="q12_3" value="c" /><span>24</span></label>
+                                <label class="option"><input type="radio" name="q12_3" value="d" /><span>32</span></label>
+                            </div>
+                            <div class="feedback" id="q12_3-fb"></div>
+                        </div>
+
+                        <div class="question" id="q12_4" data-answer="a">
+                            <div class="question-label">4. Co zkontroluje UEFI Secure Boot před spuštěním operačního systému?</div>
+                            <div class="options">
+                                <label class="option"><input type="radio" name="q12_4" value="a" /><span>Podpis zavaděče</span></label>
+                                <label class="option"><input type="radio" name="q12_4" value="b" /><span>Rychlost procesoru</span></label>
+                                <label class="option"><input type="radio" name="q12_4" value="c" /><span>Velikost RAM</span></label>
+                                <label class="option"><input type="radio" name="q12_4" value="d" /><span>Stav baterie</span></label>
+                            </div>
+                            <div class="feedback" id="q12_4-fb"></div>
+                        </div>
+
+                        <div class="question" id="q12_5" data-answer="a">
+                            <div class="question-label">5. Který PCR registr typicky obsahuje měření z BIOSu?</div>
+                            <div class="options">
+                                <label class="option"><input type="radio" name="q12_5" value="a" /><span>PCR 0</span></label>
+                                <label class="option"><input type="radio" name="q12_5" value="b" /><span>PCR 1</span></label>
+                                <label class="option"><input type="radio" name="q12_5" value="c" /><span>PCR 8</span></label>
+                                <label class="option"><input type="radio" name="q12_5" value="d" /><span>PCR 23</span></label>
+                            </div>
+                            <div class="feedback" id="q12_5-fb"></div>
+                        </div>
+
+                        <div class="question" id="q12_6" data-answer="a">
+                            <div class="question-label">6. Co je unikátního na operaci pečetění v TPM?</div>
+                            <div class="options">
+                                <label class="option"><input type="radio" name="q12_6" value="a" /><span>Data mohou být dešifrována pouze ve stejném stavu platformy</span></label>
+                                <label class="option"><input type="radio" name="q12_6" value="b" /><span>Data mohou být dešifrována kýmkoli</span></label>
+                                <label class="option"><input type="radio" name="q12_6" value="c" /><span>Data jsou uchovávána bez šifrování</span></label>
+                                <label class="option"><input type="radio" name="q12_6" value="d" /><span>Data jsou automaticky dešifrována po restartu</span></label>
+                            </div>
+                            <div class="feedback" id="q12_6-fb"></div>
+                        </div>
+
+                        <div class="question" id="q12_7" data-answer="a">
+                            <div class="question-label">7. Co je účelem klíče SRK v TPM?</div>
+                            <div class="options">
+                                <label class="option"><input type="radio" name="q12_7" value="a" /><span>Hlavní klíč pro skladování</span></label>
+                                <label class="option"><input type="radio" name="q12_7" value="b" /><span>Přenos dat mezi disky</span></label>
+                                <label class="option"><input type="radio" name="q12_7" value="c" /><span>Vytváření záloh</span></label>
+                                <label class="option"><input type="radio" name="q12_7" value="d" /><span>Monitorování stavu systému</span></label>
+                            </div>
+                            <div class="feedback" id="q12_7-fb"></div>
+                        </div>
+
+                        <div class="question" id="q12_8" data-answer="a">
+                            <div class="question-label">8. Jaký je hlavní účel nástroje DM-verity?</div>
+                            <div class="options">
+                                <label class="option"><input type="radio" name="q12_8" value="a" /><span>Ověření integrity souborového systému</span></label>
+                                <label class="option"><input type="radio" name="q12_8" value="b" /><span>Šifrování souborového systému</span></label>
+                                <label class="option"><input type="radio" name="q12_8" value="c" /><span>Zrychlení systému</span></label>
+                                <label class="option"><input type="radio" name="q12_8" value="d" /><span>Komprese dat</span></label>
+                            </div>
+                            <div class="feedback" id="q12_8-fb"></div>
+                        </div>
+
+                        <div class="question" id="q12_9" data-answer="a">
+                            <div class="question-label">9. Co je `db` v kontextu UEFI Secure Boot?</div>
+                            <div class="options">
+                                <label class="option"><input type="radio" name="q12_9" value="a" /><span>Database of public keys and hashes</span></label>
+                                <label class="option"><input type="radio" name="q12_9" value="b" /><span>Denylist of binaries</span></label>
+                                <label class="option"><input type="radio" name="q12_9" value="c" /><span>Directory of bootloaders</span></label>
+                                <label class="option"><input type="radio" name="q12_9" value="d" /><span>Database of denied certificates</span></label>
+                            </div>
+                            <div class="feedback" id="q12_9-fb"></div>
+                        </div>
+
+                        <div class="question" id="q12_10" data-answer="a">
+                            <div class="question-label">10. Co znamená, že klíč je „certifikovaně migrovatelný“ v TPM?</div>
+                            <div class="options">
+                                <label class="option"><input type="radio" name="q12_10" value="a" /><span>Klíč má ověřitelné vlastnosti a může být přenesen</span></label>
+                                <label class="option"><input type="radio" name="q12_10" value="b" /><span>Klíč nelze nikdy přenést</span></label>
+                                <label class="option"><input type="radio" name="q12_10" value="c" /><span>Klíč lze použít pouze jednou</span></label>
+                                <label class="option"><input type="radio" name="q12_10" value="d" /><span>Klíč je veřejně dostupný</span></label>
+                            </div>
+                            <div class="feedback" id="q12_10-fb"></div>
+                        </div>
+
+                        <div class="question" id="q12_11" data-answer="a">
+                            <div class="question-label">11. Která z následujících není vlastností TPM?</div>
+                            <div class="options">
+                                <label class="option"><input type="radio" name="q12_11" value="a" /><span>Generování antivirového kódu</span></label>
+                                <label class="option"><input type="radio" name="q12_11" value="b" /><span>Ukládání kryptografických klíčů</span></label>
+                                <label class="option"><input type="radio" name="q12_11" value="c" /><span>Detekce odstranění modulu</span></label>
+                                <label class="option"><input type="radio" name="q12_11" value="d" /><span>Podpora různých kryptografických algoritmů</span></label>
+                            </div>
+                            <div class="feedback" id="q12_11-fb"></div>
+                        </div>
+
+                        <div class="question" id="q12_12" data-answer="a">
+                            <div class="question-label">12. Jaký druh paměti v TPM uchovává klíče i po vypnutí zařízení?</div>
+                            <div class="options">
+                                <label class="option"><input type="radio" name="q12_12" value="a" /><span>Non-volatile Memory</span></label>
+                                <label class="option"><input type="radio" name="q12_12" value="b" /><span>Volatile Memory</span></label>
+                                <label class="option"><input type="radio" name="q12_12" value="c" /><span>Temporary Memory</span></label>
+                                <label class="option"><input type="radio" name="q12_12" value="d" /><span>External Memory</span></label>
+                            </div>
+                            <div class="feedback" id="q12_12-fb"></div>
+                        </div>
+
+                        <div class="question" id="q12_13" data-answer="a">
+                            <div class="question-label">13. Jaký příkaz v TPM je používán pro digitální podepisování?</div>
+                            <div class="options">
+                                <label class="option"><input type="radio" name="q12_13" value="a" /><span>`tpm2 sign`</span></label>
+                                <label class="option"><input type="radio" name="q12_13" value="b" /><span>`tpm2 encrypt`</span></label>
+                                <label class="option"><input type="radio" name="q12_13" value="c" /><span>`tpm2 load`</span></label>
+                                <label class="option"><input type="radio" name="q12_13" value="d" /><span>`tpm2 decrypt`</span></label>
+                            </div>
+                            <div class="feedback" id="q12_13-fb"></div>
+                        </div>
+
+                        <div class="question" id="q12_14" data-answer="a">
+                            <div class="question-label">14. Co je hlavním rozdílem mezi Volatile a Non-volatile pamětí v TPM?</div>
+                            <div class="options">
+                                <label class="option"><input type="radio" name="q12_14" value="a" /><span>Non-volatile paměť uchovává data i po vypnutí napájení</span></label>
+                                <label class="option"><input type="radio" name="q12_14" value="b" /><span>Volatile paměť je rychlejší</span></label>
+                                <label class="option"><input type="radio" name="q12_14" value="c" /><span>Non-volatile paměť je primárně určena pro zálohování dat</span></label>
+                                <label class="option"><input type="radio" name="q12_14" value="d" /><span>Volatile paměť je určena pro dlouhodobé ukládání dat</span></label>
+                            </div>
+                            <div class="feedback" id="q12_14-fb"></div>
+                        </div>
+
+                        <div class="question" id="q12_15" data-answer="a">
+                            <div class="question-label">15. Jak DM-verity ověřuje integritu souborového systému?</div>
+                            <div class="options">
+                                <label class="option"><input type="radio" name="q12_15" value="a" /><span>Pomocí hash stromu, který začíná od kořenového hashe</span></label>
+                                <label class="option"><input type="radio" name="q12_15" value="b" /><span>Pomocí pravidelného skenování souborů</span></label>
+                                <label class="option"><input type="radio" name="q12_15" value="c" /><span>Pomocí kontrolních součtů uložených na serveru</span></label>
+                                <label class="option"><input type="radio" name="q12_15" value="d" /><span>Pomocí digitálních podpisů uživatelů</span></label>
+                            </div>
+                            <div class="feedback" id="q12_15-fb"></div>
+                        </div>
+
+                        <div class="question" id="q12_16" data-answer="a">
+                            <div class="question-label">16. Jaké jsou základní stavební prvky v TPM?</div>
+                            <div class="options">
+                                <label class="option"><input type="radio" name="q12_16" value="a" /><span>Kryptografický procesor, RSA klíčový generátor, SHA-1 hash generátor</span></label>
+                                <label class="option"><input type="radio" name="q12_16" value="b" /><span>CPU, GPU, RAM</span></label>
+                                <label class="option"><input type="radio" name="q12_16" value="c" /><span>HDD, SSD, USB porty</span></label>
+                                <label class="option"><input type="radio" name="q12_16" value="d" /><span>Wi-Fi, Bluetooth, NFC</span></label>
+                            </div>
+                            <div class="feedback" id="q12_16-fb"></div>
+                        </div>
+                    </div>
+
                     <div class="section" id="sec_2" data-section="2">
                         <div class="section-title">
                             2 – Správa zdrojových souborů (Git)
@@ -2118,6 +2421,103 @@
                                 >
                             </div>
                             <div class="feedback" id="q3_14-fb"></div>
+                        </div>
+                    </div>
+
+                    <div class="section" id="sec_4" data-section="4">
+                        <div class="section-title">4. Kontrolní součty</div>
+
+                        <div class="question" id="q04_1" data-answer="b">
+                            <div class="question-label">
+                                1. Který příkaz otevře soubor <code>data.bin</code> pouze pro čtení binárních dat?
+                            </div>
+                            <div class="options">
+                                <label class="option"><input type="radio" name="q04_1" value="a" /><span><code>fopen("data.bin", "w")</code></span></label>
+                                <label class="option"><input type="radio" name="q04_1" value="b" /><span><code>fopen("data.bin", "rb")</code></span></label>
+                                <label class="option"><input type="radio" name="q04_1" value="c" /><span><code>fopen("data.bin", "ab")</code></span></label>
+                                <label class="option"><input type="radio" name="q04_1" value="d" /><span><code>fopen("data.bin", "r")</code></span></label>
+                            </div>
+                            <div class="feedback" id="q04_1-fb"></div>
+                        </div>
+
+                        <div class="question" id="q04_2" data-answer="b">
+                            <div class="question-label">
+                                2. Pokud soubor <code>data.bin</code> existuje a není prázdný, co udělá <code>fopen("data.bin", "w")</code>?
+                            </div>
+                            <div class="options">
+                                <label class="option"><input type="radio" name="q04_2" value="a" /><span>Soubor otevře pro čtení i zápis</span></label>
+                                <label class="option"><input type="radio" name="q04_2" value="b" /><span>Zkrátí jeho velikost na nulovou délku a otevře ho pro zápis</span></label>
+                                <label class="option"><input type="radio" name="q04_2" value="c" /><span>Soubor vyplní nulami a otevře ho pro čtení i zápis</span></label>
+                                <label class="option"><input type="radio" name="q04_2" value="d" /><span>Soubor otevře a umožní přidávat data za konec souboru</span></label>
+                            </div>
+                            <div class="feedback" id="q04_2-fb"></div>
+                        </div>
+
+                        <div class="question" id="q04_3" data-answer="c">
+                            <div class="question-label">
+                                3. Funkce <code>ferror</code> slouží pro:
+                            </div>
+                            <div class="options">
+                                <label class="option"><input type="radio" name="q04_3" value="a" /><span>Otestování konce souboru</span></label>
+                                <label class="option"><input type="radio" name="q04_3" value="b" /><span>Získání kódu chyby</span></label>
+                                <label class="option"><input type="radio" name="q04_3" value="c" /><span>Testování, zda došlo k chybě</span></label>
+                                <label class="option"><input type="radio" name="q04_3" value="d" /><span>Vyvolání chyby v souboru</span></label>
+                            </div>
+                            <div class="feedback" id="q04_3-fb"></div>
+                        </div>
+
+                        <div class="question" id="q04_4" data-answer="c">
+                            <div class="question-label">
+                                4. Jaká bude hodnota v symbolu <code>MD5_WORDS</code> v následujícím kódu?<br /><br />
+                                <code>#define MD5_BITS 512</code><br />
+                                <code>#define MD5_WORDS (MD5_BITS >> 3)</code>
+                            </div>
+                            <div class="options">
+                                <label class="option"><input type="radio" name="q04_4" value="a" /><span>5</span></label>
+                                <label class="option"><input type="radio" name="q04_4" value="b" /><span>256</span></label>
+                                <label class="option"><input type="radio" name="q04_4" value="c" /><span>64</span></label>
+                                <label class="option"><input type="radio" name="q04_4" value="d" /><span>170</span></label>
+                            </div>
+                            <div class="feedback" id="q04_4-fb"></div>
+                        </div>
+
+                        <div class="question" id="q04_5" data-answer="b">
+                            <div class="question-label">
+                                5. Pokud chci omezit hodnotu proměnné <code>x</code> na maximálně 7 (modulo 8), mohu použít příkaz:
+                            </div>
+                            <div class="options">
+                                <label class="option"><input type="radio" name="q04_5" value="a" /><span><code>x &amp; 8</code></span></label>
+                                <label class="option"><input type="radio" name="q04_5" value="b" /><span><code>x &amp; 7</code></span></label>
+                                <label class="option"><input type="radio" name="q04_5" value="c" /><span><code>x &amp; 3</code></span></label>
+                                <label class="option"><input type="radio" name="q04_5" value="d" /><span>Žádný z uvedených</span></label>
+                            </div>
+                            <div class="feedback" id="q04_5-fb"></div>
+                        </div>
+
+                        <div class="question" id="q04_6" data-answer="c">
+                            <div class="question-label">
+                                6. Pokud chci omezit hodnotu proměnné <code>x</code> na maximálně 15 (modulo 16), mohu použít příkaz:
+                            </div>
+                            <div class="options">
+                                <label class="option"><input type="radio" name="q04_6" value="a" /><span><code>x &amp; (1 &lt;&lt; 15)</code></span></label>
+                                <label class="option"><input type="radio" name="q04_6" value="b" /><span><code>x &amp; ((1 &lt;&lt; 16) - 1)</code></span></label>
+                                <label class="option"><input type="radio" name="q04_6" value="c" /><span><code>x &amp; ((1 &lt;&lt; 4) - 1)</code></span></label>
+                                <label class="option"><input type="radio" name="q04_6" value="d" /><span>Žádný z uvedených</span></label>
+                            </div>
+                            <div class="feedback" id="q04_6-fb"></div>
+                        </div>
+
+                        <div class="question" id="q04_7" data-answer="d">
+                            <div class="question-label">
+                                7. Symbol <code>Ki</code> v diagramu MD5 označuje:
+                            </div>
+                            <div class="options">
+                                <label class="option"><input type="radio" name="q04_7" value="a" /><span>Vstupní data</span></label>
+                                <label class="option"><input type="radio" name="q04_7" value="b" /><span>Hodnoty posunutí</span></label>
+                                <label class="option"><input type="radio" name="q04_7" value="c" /><span>Indexy dané iterace</span></label>
+                                <label class="option"><input type="radio" name="q04_7" value="d" /><span>Předdefinované konstanty</span></label>
+                            </div>
+                            <div class="feedback" id="q04_7-fb"></div>
                         </div>
                     </div>
 
