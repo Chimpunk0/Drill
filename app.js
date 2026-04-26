@@ -1,5 +1,6 @@
 // ─── EXPLANATIONS (quiz_sets/<id>.explanations.js, cez window.QUIZ_EXPLANATIONS) ──
-const EXPLANATIONS = window.QUIZ_EXPLANATIONS || {};
+// Populated after quiz set scripts are dynamically loaded (see loadQuizSetScripts)
+let EXPLANATIONS = {};
 
 // ─── localStorage (oddelené per set, ak nepoužijete QUIZ_STORAGE_KEY) ────
 const STORAGE_KEY =
@@ -131,7 +132,7 @@ function practiceWrongAnswers() {
     document.getElementById("result-container").style.display =
         "none";
     const btn = document.getElementById("practice-btn");
-    btn.textContent = "✖ Ukončiť precvičovanie";
+    btn.textContent = "Ukončiť precvičovanie";
     btn.onclick = exitPracticeMode;
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -145,12 +146,15 @@ function exitPracticeMode() {
     });
     applySectionFilter();
     const btn = document.getElementById("practice-btn");
-    btn.textContent = "🎯 Precvičiť chyby";
+    btn.textContent = "Precvičiť chyby";
     btn.onclick = practiceWrongAnswers;
 }
 
 // ─── Global state ────────────────────────────────────────────────────────
 let sidebarVisible = true;
+let rightSidebarVisible = false;
+let capturingShortcut = false;
+const SIDEBAR_SHORTCUT_STORAGE_KEY = "quiz_sidebar_shortcut";
 
 // Check if mobile on load
 if (window.innerWidth <= 768) {
@@ -159,6 +163,119 @@ if (window.innerWidth <= 768) {
     document
         .getElementById("main-content")
         .classList.add("full-width");
+}
+
+function getDefaultSidebarShortcut() {
+    const isMac = /Mac|iPhone|iPad|iPod/.test(navigator.platform);
+    return isMac
+        ? { key: "s", ctrl: true, meta: true, alt: false, shift: false }
+        : { key: "s", ctrl: true, meta: false, alt: true, shift: false };
+}
+
+function getSidebarShortcut() {
+    try {
+        const stored = localStorage.getItem(SIDEBAR_SHORTCUT_STORAGE_KEY);
+        if (stored) return JSON.parse(stored);
+    } catch (e) {}
+    return getDefaultSidebarShortcut();
+}
+
+function formatShortcut(shortcut) {
+    const parts = [];
+    if (shortcut.ctrl) parts.push("Ctrl");
+    if (shortcut.meta) parts.push("Cmd");
+    if (shortcut.alt) parts.push("Alt");
+    if (shortcut.shift) parts.push("Shift");
+    parts.push(shortcut.key.toUpperCase());
+    return parts.join(" + ");
+}
+
+function shortcutMatches(e, shortcut) {
+    return (
+        e.key.toLowerCase() === shortcut.key &&
+        e.ctrlKey === shortcut.ctrl &&
+        e.metaKey === shortcut.meta &&
+        e.altKey === shortcut.alt &&
+        e.shiftKey === shortcut.shift
+    );
+}
+
+function updateSidebarShortcutLabel() {
+    const label = document.getElementById("sidebar-shortcut-label");
+    if (label) label.textContent = formatShortcut(getSidebarShortcut());
+}
+
+function openShortcutSettings() {
+    const overlay = document.getElementById("shortcut-settings-overlay");
+    if (overlay) overlay.classList.add("visible");
+    capturingShortcut = false;
+    updateSidebarShortcutLabel();
+    const hint = document.getElementById("shortcut-capture-hint");
+    if (hint) hint.textContent = "";
+}
+
+function closeShortcutSettings() {
+    const overlay = document.getElementById("shortcut-settings-overlay");
+    if (overlay) overlay.classList.remove("visible");
+    capturingShortcut = false;
+}
+
+function startShortcutCapture() {
+    capturingShortcut = true;
+    const hint = document.getElementById("shortcut-capture-hint");
+    if (hint) hint.textContent = "Stlačte novú klávesovú skratku.";
+}
+
+function saveSidebarShortcut(e) {
+    const key = e.key.toLowerCase();
+    const ignored = ["control", "meta", "alt", "shift", "escape"];
+    if (ignored.includes(key)) return false;
+    if (!e.ctrlKey && !e.metaKey && !e.altKey) return false;
+    const shortcut = {
+        key,
+        ctrl: e.ctrlKey,
+        meta: e.metaKey,
+        alt: e.altKey,
+        shift: e.shiftKey,
+    };
+    try {
+        localStorage.setItem(
+            SIDEBAR_SHORTCUT_STORAGE_KEY,
+            JSON.stringify(shortcut),
+        );
+    } catch (err) {}
+    capturingShortcut = false;
+    updateSidebarShortcutLabel();
+    const hint = document.getElementById("shortcut-capture-hint");
+    if (hint) hint.textContent = "Skratka uložená.";
+    return true;
+}
+
+function updateRightSidebarAvailability() {
+    const btn = document.getElementById("right-sidebar-toggle");
+    const rightSidebar = document.getElementById("right-sidebar");
+    const mainContent = document.getElementById("main-content");
+    if (!btn || !rightSidebar || !mainContent) return;
+    if (!sidebarVisible) {
+        btn.classList.add("hidden");
+        rightSidebar.classList.add("hidden");
+        mainContent.classList.remove("with-right-sidebar");
+        rightSidebarVisible = false;
+    } else {
+        btn.classList.remove("hidden");
+    }
+}
+
+function toggleRightSidebar() {
+    if (!sidebarVisible) return;
+    const rightSidebar = document.getElementById("right-sidebar");
+    const mainContent = document.getElementById("main-content");
+    if (!rightSidebar || !mainContent) return;
+    rightSidebarVisible = !rightSidebarVisible;
+    rightSidebar.classList.toggle("hidden", !rightSidebarVisible);
+    if (window.innerWidth > 768) {
+        mainContent.classList.toggle("with-right-sidebar", rightSidebarVisible);
+    }
 }
 
 function toggleSidebar() {
@@ -182,6 +299,7 @@ function toggleSidebar() {
             mainContent.classList.add("full-width");
         }
     }
+    updateRightSidebarAvailability();
 }
 
 // Generate Tree Navigation
@@ -283,6 +401,16 @@ function toggleFilter() {
     document
         .querySelector(".filter-section")
         .classList.toggle("collapsed");
+    const icon = document.getElementById("filter-icon");
+    if (icon) icon.classList.toggle("collapsed");
+}
+
+function toggleQuizSetSelector() {
+    document
+        .querySelector(".quiz-set-selector")
+        .classList.toggle("collapsed");
+    const icon = document.getElementById("quiz-set-icon");
+    if (icon) icon.classList.toggle("collapsed");
 }
 
 function selectAllSections(select) {
@@ -394,10 +522,10 @@ function buildFeedbackHTML(
     let html = `<div class="feedback ${cssClass}" style="display:block">`;
     html += `<span>${statusText}</span>`;
     if (correctAnswerText) {
-        html += `<div style="margin-top:0.4rem;font-size:0.92rem;opacity:0.9">✅ Správna odpoveď: <strong>${correctAnswerText}</strong></div>`;
+        html += `<div style="margin-top:0.4rem;font-size:0.92rem;opacity:0.9">Správna odpoveď: <strong>${correctAnswerText}</strong></div>`;
     }
     if (explanation) {
-        html += `<div style="margin-top:0.5rem;padding-top:0.5rem;border-top:1px solid rgba(255,255,255,0.12);font-size:0.88rem;opacity:0.85;font-style:italic">💡 ${explanation}</div>`;
+        html += `<div style="margin-top:0.5rem;padding-top:0.5rem;border-top:1px solid var(--border-color);font-size:0.88rem;opacity:0.85;font-style:italic">${explanation}</div>`;
     }
     html += `</div>`;
     return html;
@@ -436,7 +564,7 @@ function evaluateQuiz() {
                     incorrectQuestionIds.push(qId);
                     feedbackEl.outerHTML = buildFeedbackHTML(
                         qId,
-                        "⚠️ Nezodpovedané.",
+                        "Nezodpovedané.",
                         "incorrect",
                         explanation,
                         correctText,
@@ -446,7 +574,7 @@ function evaluateQuiz() {
                     answered++;
                     feedbackEl.outerHTML = buildFeedbackHTML(
                         qId,
-                        "✓ Správne!",
+                        "Správne!",
                         "correct",
                         explanation,
                         null,
@@ -456,7 +584,7 @@ function evaluateQuiz() {
                     incorrectQuestionIds.push(qId);
                     feedbackEl.outerHTML = buildFeedbackHTML(
                         qId,
-                        "✗ Nesprávne.",
+                        "Nesprávne.",
                         "incorrect",
                         explanation,
                         correctText,
@@ -480,7 +608,7 @@ function evaluateQuiz() {
                     incorrectQuestionIds.push(qId);
                     feedbackEl.outerHTML = buildFeedbackHTML(
                         qId,
-                        "⚠️ Nezodpovedané.",
+                        "Nezodpovedané.",
                         "incorrect",
                         explanation,
                         acceptedAnswers.length
@@ -510,7 +638,7 @@ function evaluateQuiz() {
                         score++;
                         feedbackEl.outerHTML = buildFeedbackHTML(
                             qId,
-                            "✓ Správne!",
+                            "Správne!",
                             "correct",
                             explanation,
                             null,
@@ -519,7 +647,7 @@ function evaluateQuiz() {
                         incorrectQuestionIds.push(qId);
                         feedbackEl.outerHTML = buildFeedbackHTML(
                             qId,
-                            "✗ Nesprávne.",
+                            "Nesprávne.",
                             "incorrect",
                             explanation,
                             acceptedAnswers.length
@@ -543,10 +671,10 @@ function evaluateQuiz() {
     } else {
         const percent = Math.round((score / total) * 100);
         let message = "";
-        if (percent >= 90) message = "🎉 Výborné!";
-        else if (percent >= 70) message = "👍 Dobré!";
-        else if (percent >= 50) message = "📚 Treba precvičiť";
-        else message = "💪 Nevzdávaj to!";
+        if (percent >= 90) message = "Výborné!";
+        else if (percent >= 70) message = "Dobré!";
+        else if (percent >= 50) message = "Treba precvičiť";
+        else message = "Nevzdávaj to!";
 
         const wrongCount = incorrectQuestionIds.length;
         resText.innerHTML = `
@@ -716,11 +844,11 @@ function updateFcProgress() {
     document.getElementById("fc-progress-fill").style.width =
         pct + "%";
     document.getElementById("fc-correct-count").textContent =
-        `✓ ${fcCorrect} správnych`;
+        `${fcCorrect} správnych`;
     document.getElementById("fc-wrong-count").textContent =
-        `✗ ${fcWrong} nesprávnych`;
+        `${fcWrong} nesprávnych`;
     document.getElementById("fc-left-count").textContent =
-        `⬜ ${Math.max(left, 0)} zostáva`;
+        `${Math.max(left, 0)} zostáva`;
 }
 
 function renderFcCard() {
@@ -801,16 +929,16 @@ function fcShowFeedback(isCorrect, correctText, qId) {
     const exp = EXPLANATIONS[qId] || null;
     const correctBlock =
         !isCorrect && correctText
-            ? `<div class="fc-correct-answer">✅ Správna odpoveď: ${correctText}</div>`
+            ? `<div class="fc-correct-answer">Správna odpoveď: ${correctText}</div>`
             : "";
     const expBlock = exp
-        ? `<div class="fc-explanation">💡 ${exp}</div>`
+        ? `<div class="fc-explanation">${exp}</div>`
         : "";
 
     fb.className =
         "fc-feedback active " + (isCorrect ? "correct" : "wrong");
     fb.innerHTML =
-        (isCorrect ? "✓ Správne!" : "✗ Nesprávne.") +
+        (isCorrect ? "Správne!" : "Nesprávne.") +
         correctBlock +
         expBlock;
 
@@ -928,20 +1056,46 @@ document.addEventListener("keydown", (e) => {
     }
 });
 
+document.addEventListener("keydown", (e) => {
+    if (capturingShortcut) {
+        if (e.key === "Escape") {
+            capturingShortcut = false;
+            const hint = document.getElementById("shortcut-capture-hint");
+            if (hint) hint.textContent = "";
+            return;
+        }
+        if (saveSidebarShortcut(e)) e.preventDefault();
+        return;
+    }
+    const overlay = document.getElementById("shortcut-settings-overlay");
+    if (
+        e.key === "Escape" &&
+        overlay &&
+        overlay.classList.contains("visible")
+    ) {
+        closeShortcutSettings();
+        return;
+    }
+    if (shortcutMatches(e, getSidebarShortcut())) {
+        e.preventDefault();
+        toggleSidebar();
+    }
+});
+
 function renderFcFinal() {
     const total = fcQueue.length;
     const pct =
         total > 0 ? Math.round((fcCorrect / total) * 100) : 0;
-    let emoji = "💪";
+    let emoji = "";
     let msg = "Nevzdávaj to!";
     if (pct >= 90) {
-        emoji = "🎉";
+        emoji = "";
         msg = "Výborné!";
     } else if (pct >= 70) {
-        emoji = "👍";
+        emoji = "";
         msg = "Dobré!";
     } else if (pct >= 50) {
-        emoji = "📚";
+        emoji = "";
         msg = "Treba precvičiť";
     }
 
@@ -951,11 +1105,11 @@ function renderFcFinal() {
             <div class="fc-final-score">${msg}</div>
             <div class="fc-final-score" style="font-size:2rem">${fcCorrect} / ${total} (${pct}%)</div>
             <div class="fc-final-detail">
-                ✓ ${fcCorrect} správnych &nbsp;|&nbsp; ✗ ${fcWrong} nesprávnych
+                ${fcCorrect} správnych &nbsp;|&nbsp; ${fcWrong} nesprávnych
             </div>
             <div class="fc-final-actions">
-                <button class="fc-btn fc-btn-next" onclick="openFlashcards()">🔄 Znovu (zamiešaj)</button>
-                <button class="fc-btn fc-btn-end"  onclick="closeFlashcards()">✖ Zavrieť</button>
+                <button class="fc-btn fc-btn-next" onclick="openFlashcards()">Znovu (zamiešaj)</button>
+                <button class="fc-btn fc-btn-end"  onclick="closeFlashcards()">Zavrieť</button>
             </div>
         </div>`;
     document.getElementById("fc-footer").style.display = "none";
@@ -965,7 +1119,91 @@ function renderFcFinal() {
         `Hotovo! ${total} z ${total}`;
     document.getElementById("fc-progress-pct").textContent = "100%";
     document.getElementById("fc-left-count").textContent =
-        "⬜ 0 zostáva";
+        "0 zostáva";
+}
+
+// ─── Dynamic quiz-set script loader ─────────────────────────────────────────
+function loadScript(src) {
+    return new Promise((resolve, reject) => {
+        const el = document.createElement("script");
+        el.src = src;
+        el.onload = resolve;
+        el.onerror = () => reject(new Error(`Failed to load script: ${src}`));
+        document.head.appendChild(el);
+    });
+}
+
+async function loadQuizSetScripts() {
+    const id = window.QUIZ_SET_ID;
+    const sets = window.QUIZ_SETS || [];
+    const set = sets.find((s) => s.id === id);
+    if (!set) return;
+    window.QUIZ_FRAGMENT_HTML = undefined;
+    window.QUIZ_EXPLANATIONS = undefined;
+    try {
+        await loadScript(set.fragEmbed);
+        await loadScript(set.explanations);
+    } catch (err) {
+        console.error("loadQuizSetScripts", err);
+    }
+}
+
+function renderQuizSetSelector() {
+    const sets = window.QUIZ_SETS || [];
+    const current = window.QUIZ_SET_ID;
+    const container = document.getElementById("quiz-set-list");
+    if (!container) return;
+    container.innerHTML = sets
+        .map(
+            (s) =>
+                `<button class="quiz-set-btn${s.id === current ? " active" : ""}" onclick="selectQuizSet('${s.id}')">${s.label}</button>`,
+        )
+        .join("");
+}
+
+function selectQuizSet(id) {
+    const url = new URL(window.location.href);
+    url.searchParams.set("set", id);
+    window.location.href = url.toString();
+}
+
+/* ─── Theme Toggle ─────────────────────────────────────────────────── */
+const THEME_STORAGE_KEY = "quiz_theme_preference";
+
+function applyTheme(theme) {
+    const html = document.documentElement;
+    const icon = document.getElementById("theme-toggle-icon");
+    if (theme === "dark") {
+        html.setAttribute("data-theme", "dark");
+        if (icon) {
+            icon.src = "sun-svgrepo-com.svg";
+            icon.alt = "Svetlý režim";
+        }
+    } else {
+        html.removeAttribute("data-theme");
+        if (icon) {
+            icon.src = "moon-stars-svgrepo-com.svg";
+            icon.alt = "Tmavý režim";
+        }
+    }
+}
+
+function toggleTheme() {
+    const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+    const next = isDark ? "light" : "dark";
+    applyTheme(next);
+    try {
+        localStorage.setItem(THEME_STORAGE_KEY, next);
+    } catch (e) {}
+}
+
+function loadTheme() {
+    let theme = "light";
+    try {
+        const stored = localStorage.getItem(THEME_STORAGE_KEY);
+        if (stored) theme = stored;
+    } catch (e) {}
+    applyTheme(theme);
 }
 
 function getHtmlFragmentUrl() {
@@ -1036,6 +1274,14 @@ async function loadQuizContent() {
 
 // Initialize
 document.addEventListener("DOMContentLoaded", async () => {
+    loadTheme();
+    renderQuizSetSelector();
+    updateSidebarShortcutLabel();
+    updateRightSidebarAvailability();
+
+    await loadQuizSetScripts();
+    EXPLANATIONS = window.QUIZ_EXPLANATIONS || {};
+
     const ok = await loadQuizContent();
     if (!ok) return;
 
@@ -1078,10 +1324,13 @@ document.addEventListener("DOMContentLoaded", async () => {
             } else {
                 mainContent.classList.add("full-width");
             }
+            mainContent.classList.toggle("with-right-sidebar", rightSidebarVisible);
         } else {
             if (sidebarVisible) {
                 overlay.classList.add("visible");
             }
+            mainContent.classList.remove("with-right-sidebar");
         }
+        updateRightSidebarAvailability();
     });
 });
