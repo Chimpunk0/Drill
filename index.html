@@ -15,25 +15,24 @@
                 <!-- 1. Header (len nadpis a tlačidlo zavrieť) -->
                 <div class="sidebar-header">
                     <h2>Obsah</h2>
-                    <div style="display:flex;gap:0.4rem;align-items:center;">
+                    <div class="sidebar-header-actions">
                         <button
                             class="theme-toggle"
                             id="theme-toggle"
-                            onclick="toggleTheme()"
                             title="Prepnúť tmavý / svetlý režim"
                         >
                             <img id="theme-toggle-icon" src="moon-stars-svgrepo-com.svg" alt="Tmavý režim" width="20" height="20" />
                         </button>
                         <button
                             class="shortcut-settings-btn"
-                            onclick="openShortcutSettings()"
+                            id="shortcut-settings-btn"
                             title="Nastavenia klávesových skratiek"
                         >
                             Skratky
                         </button>
                         <button
                             class="close-sidebar"
-                            onclick="toggleSidebar()"
+                            id="close-sidebar-btn"
                             title="Zavrieť sidebar"
                         >
                             ×
@@ -43,7 +42,7 @@
 
                 <!-- 2. Quiz Set Selector -->
                 <div class="quiz-set-selector" id="quiz-set-selector">
-                    <div class="quiz-set-selector-header" onclick="toggleQuizSetSelector()">
+                    <div class="quiz-set-selector-header" id="quiz-set-selector-header">
                         <span class="filter-icon" id="quiz-set-icon">▼</span>
                         <span>Kvízový set</span>
                     </div>
@@ -54,16 +53,16 @@
 
                 <!-- 3. Filter sekcia (SAMOSTATNE pod headerom, nie vnútri neho!) -->
                 <div class="filter-section" id="filter-section">
-                    <div class="filter-header" onclick="toggleFilter()">
+                    <div class="filter-header" id="filter-header">
                         <span class="filter-icon" id="filter-icon">▼</span>
                         <span>Zobraziť sekcie</span>
                     </div>
                     <div class="filter-content" id="filter-content">
                         <div class="filter-actions">
-                            <button onclick="selectAllSections(true)">
+                            <button id="select-all-sections-btn">
                                 Všetky
                             </button>
-                            <button onclick="selectAllSections(false)">
+                            <button id="select-no-sections-btn">
                                 Žiadne
                             </button>
                         </div>
@@ -72,7 +71,7 @@
                         </div>
                         <button
                             class="apply-filter-btn"
-                            onclick="applySectionFilter()"
+                            id="apply-filter-btn"
                         >
                             Použiť filter
                         </button>
@@ -82,7 +81,7 @@
                 <!-- Flashcard Mode Button -->
                 <button
                     class="flashcard-btn-sidebar"
-                    onclick="openFlashcards()"
+                    id="open-flashcards-btn"
                 >
                     Flashcard – otázka po otázke
                 </button>
@@ -94,13 +93,11 @@
             <div
                 class="sidebar-overlay"
                 id="sidebar-overlay"
-                onclick="toggleSidebar()"
             ></div>
 
             <button
                 class="right-sidebar-toggle"
                 id="right-sidebar-toggle"
-                onclick="toggleRightSidebar()"
                 title="Zobraziť štruktúru kvízu"
             >
                 Štruktúra
@@ -111,7 +108,7 @@
                     <h2>Štruktúra kvízu</h2>
                     <button
                         class="close-sidebar"
-                        onclick="toggleRightSidebar()"
+                        id="close-right-sidebar-btn"
                         title="Zavrieť štruktúru"
                     >
                         ×
@@ -128,7 +125,7 @@
                         <h2>Klávesové skratky</h2>
                         <button
                             class="close-sidebar"
-                            onclick="closeShortcutSettings()"
+                            id="close-shortcut-settings-btn"
                             title="Zavrieť nastavenia"
                         >
                             ×
@@ -139,11 +136,24 @@
                             <strong>Ľavý sidebar</strong>
                             <p id="sidebar-shortcut-label"></p>
                         </div>
-                        <button class="btn btn-secondary" onclick="startShortcutCapture()">
+                        <button class="btn btn-secondary" id="start-shortcut-capture-btn">
                             Zmeniť
                         </button>
                     </div>
                     <p class="shortcut-capture-hint" id="shortcut-capture-hint"></p>
+                </div>
+            </div>
+
+            <div class="command-palette-overlay" id="command-palette-overlay">
+                <div class="command-palette">
+                    <input
+                        id="command-palette-input"
+                        class="command-palette-input"
+                        type="text"
+                        placeholder="Vyhľadať príkaz..."
+                        autocomplete="off"
+                    />
+                    <div class="command-palette-list" id="command-palette-list"></div>
                 </div>
             </div>
 
@@ -152,7 +162,6 @@
                 <button
                     class="menu-toggle"
                     id="menu-toggle"
-                    onclick="toggleSidebar()"
                 >
                     <span>Menu</span>
                 </button>
@@ -169,49 +178,34 @@
                             Vyhodnotiť kvíz
                         </button>
                     </div>
-                    <div class="actions" style="margin-top: 0">
+                    <div class="actions actions-secondary">
                         <button
-                            class="btn"
                             id="shuffle-btn"
-                            style="
-                                background: #7c3aed;
-                                color: white;
-                                font-size: 0.95rem;
-                                padding: 0.6rem 1.4rem;
-                            "
-                            onclick="shuffleQuestions(); shuffleOptions(); clearQuiz();"
+                            class="btn action-btn action-btn-shuffle"
                         >
                             Zamiešať otázky &amp; odpovede
                         </button>
                         <button
-                            class="btn"
+                            class="btn action-btn action-btn-practice"
                             id="practice-btn"
-                            style="
-                                background: #b45309;
-                                color: white;
-                                font-size: 0.95rem;
-                                padding: 0.6rem 1.4rem;
-                                display: none;
-                            "
-                            onclick="practiceWrongAnswers()"
                         >
                             Precvičiť chyby
                         </button>
-                    </div>
-                    <div
-                        style="
-                            text-align: center;
-                            margin-top: 0.5rem;
-                            margin-bottom: 1rem;
-                        "
-                    >
-                        <small
-                            id="storage-info"
-                            style="
-                                color: var(--text-secondary);
-                                font-size: 0.82rem;
-                            "
+                        <button
+                            class="btn action-btn action-btn-review"
+                            id="review-wrong-btn"
                         >
+                            Zobraziť chyby
+                        </button>
+                        <button
+                            class="btn action-btn action-btn-clear-wrong"
+                            id="clear-wrong-btn"
+                        >
+                            Vymazať históriu chýb
+                        </button>
+                    </div>
+                    <div class="storage-info-wrap">
+                        <small id="storage-info">
                             Odpovede sa automaticky ukladajú do prehliadača
                         </small>
                     </div>
@@ -222,7 +216,6 @@
                             <div
                                 class="progress-fill"
                                 id="progress-fill"
-                                style="width: 0%"
                             ></div>
                         </div>
                     </div>
@@ -240,7 +233,7 @@
                     >
                     <button
                         class="fc-close"
-                        onclick="closeFlashcards()"
+                        id="fc-close-btn"
                         title="Zavrieť"
                     >
                         ×
@@ -255,7 +248,6 @@
                         <div
                             class="fc-progress-fill"
                             id="fc-progress-fill"
-                            style="width: 0%"
                         ></div>
                     </div>
                     <div class="fc-score-row">
@@ -275,17 +267,16 @@
                 </div>
                 <div class="fc-footer" id="fc-footer">
                     <span class="fc-hint" id="fc-hint"></span>
-                    <div style="display: flex; gap: 0.5rem">
+                    <div class="fc-footer-actions">
                         <button
                             class="fc-btn fc-btn-end"
-                            onclick="closeFlashcards()"
+                            id="fc-end-btn"
                         >
                             Skončiť
                         </button>
                         <button
                             class="fc-btn fc-btn-next"
                             id="fc-next-btn"
-                            onclick="fcNext()"
                             disabled
                         >
                             Ďalšia →

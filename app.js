@@ -1,27 +1,146 @@
-// ─── EXPLANATIONS (quiz_sets/<id>.explanations.js, cez window.QUIZ_EXPLANATIONS) ──
-// Populated after quiz set scripts are dynamically loaded (see loadQuizSetScripts)
-let EXPLANATIONS = {};
+// ─── Centralized application state ───────────────────────────────────────
+const state = {
+    explanations: {},
+    saveIndicatorTimer: null,
+    practiceMode: false,
+    incorrectQuestionIds: [],
+    sidebarVisible: window.innerWidth > 768,
+    rightSidebarVisible: false,
+    capturingShortcut: false,
+    flashcards: {
+        queue: [],
+        index: 0,
+        correct: 0,
+        wrong: 0,
+        answered: false,
+    },
+};
+
+Object.defineProperties(window, {
+    EXPLANATIONS: {
+        get: () => state.explanations,
+        set: (value) => (state.explanations = value),
+    },
+    saveIndicatorTimer: {
+        get: () => state.saveIndicatorTimer,
+        set: (value) => (state.saveIndicatorTimer = value),
+    },
+    practiceMode: {
+        get: () => state.practiceMode,
+        set: (value) => (state.practiceMode = value),
+    },
+    incorrectQuestionIds: {
+        get: () => state.incorrectQuestionIds,
+        set: (value) => (state.incorrectQuestionIds = value),
+    },
+    sidebarVisible: {
+        get: () => state.sidebarVisible,
+        set: (value) => (state.sidebarVisible = value),
+    },
+    rightSidebarVisible: {
+        get: () => state.rightSidebarVisible,
+        set: (value) => (state.rightSidebarVisible = value),
+    },
+    capturingShortcut: {
+        get: () => state.capturingShortcut,
+        set: (value) => (state.capturingShortcut = value),
+    },
+    fcQueue: {
+        get: () => state.flashcards.queue,
+        set: (value) => (state.flashcards.queue = value),
+    },
+    fcIndex: {
+        get: () => state.flashcards.index,
+        set: (value) => (state.flashcards.index = value),
+    },
+    fcCorrect: {
+        get: () => state.flashcards.correct,
+        set: (value) => (state.flashcards.correct = value),
+    },
+    fcWrong: {
+        get: () => state.flashcards.wrong,
+        set: (value) => (state.flashcards.wrong = value),
+    },
+    fcAnswered: {
+        get: () => state.flashcards.answered,
+        set: (value) => (state.flashcards.answered = value),
+    },
+});
 
 // ─── localStorage (oddelené per set, ak nepoužijete QUIZ_STORAGE_KEY) ────
 const STORAGE_KEY =
     window.QUIZ_STORAGE_KEY ||
     `vba_kviz_answers_${window.QUIZ_SET_ID || "default"}`;
+const WRONG_STORAGE_KEY = `${STORAGE_KEY}_wrong_answers`;
 
 function saveAnswers() {
-    const state = {};
+    const answersState = {};
     document
         .querySelectorAll('input[type="radio"]:checked')
         .forEach((r) => {
-            state["r_" + r.name] = r.value;
+            answersState["r_" + r.name] = r.value;
         });
     document
         .querySelectorAll('input[type="text"]')
         .forEach((inp) => {
-            if (inp.value) state["t_" + inp.id] = inp.value;
+            if (inp.value) answersState["t_" + inp.id] = inp.value;
         });
     try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(answersState));
+        updateSaveIndicator("Uložené");
     } catch (e) {}
+}
+
+function updateSaveIndicator(status) {
+    const el = document.getElementById("storage-info");
+    if (!el) return;
+    const now = new Date();
+    el.textContent = `${status} ${now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`;
+    el.classList.add("storage-info-active");
+    clearTimeout(saveIndicatorTimer);
+    saveIndicatorTimer = setTimeout(() => {
+        el.classList.remove("storage-info-active");
+    }, 1200);
+}
+
+function loadWrongAnswerIds() {
+    try {
+        const raw = localStorage.getItem(WRONG_STORAGE_KEY);
+        return raw ? JSON.parse(raw) : [];
+    } catch (e) {
+        return [];
+    }
+}
+
+function saveWrongAnswerIds(ids) {
+    const unique = Array.from(new Set(ids)).filter(Boolean);
+    try {
+        localStorage.setItem(WRONG_STORAGE_KEY, JSON.stringify(unique));
+    } catch (e) {}
+    incorrectQuestionIds = unique;
+    updateWrongAnswerControls();
+}
+
+function clearWrongAnswerHistory() {
+    try {
+        localStorage.removeItem(WRONG_STORAGE_KEY);
+    } catch (e) {}
+    incorrectQuestionIds = [];
+    updateWrongAnswerControls();
+    exitPracticeMode();
+}
+
+function updateWrongAnswerControls() {
+    const ids = incorrectQuestionIds.length
+        ? incorrectQuestionIds
+        : loadWrongAnswerIds();
+    const hasWrong = ids.length > 0;
+    const practiceBtn = document.getElementById("practice-btn");
+    const reviewBtn = document.getElementById("review-wrong-btn");
+    const clearBtn = document.getElementById("clear-wrong-btn");
+    if (practiceBtn) practiceBtn.style.display = hasWrong ? "inline-flex" : "none";
+    if (reviewBtn) reviewBtn.style.display = hasWrong ? "inline-flex" : "none";
+    if (clearBtn) clearBtn.style.display = hasWrong ? "inline-flex" : "none";
 }
 
 function loadAnswers() {
@@ -88,19 +207,20 @@ function shuffleOptions() {
 }
 
 // ─── Practice mistakes mode ──────────────────────────────────────────────
-let practiceMode = false;
-let incorrectQuestionIds = [];
-
 function practiceWrongAnswers() {
-    if (incorrectQuestionIds.length === 0) {
+    const ids = incorrectQuestionIds.length
+        ? incorrectQuestionIds
+        : loadWrongAnswerIds();
+    if (ids.length === 0) {
         alert(
             "Žiadne nesprávne odpovede na precvičenie!\nNajprv klikni na Vyhodnotiť kvíz.",
         );
         return;
     }
+    incorrectQuestionIds = ids;
     practiceMode = true;
     document.querySelectorAll(".question").forEach((q) => {
-        if (incorrectQuestionIds.includes(q.id)) {
+        if (ids.includes(q.id)) {
             q.style.display = "";
             q.style.outline = "2px solid rgba(239,68,68,0.45)";
             q.style.borderRadius = "8px";
@@ -137,6 +257,31 @@ function practiceWrongAnswers() {
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
+function reviewWrongAnswers() {
+    const ids = incorrectQuestionIds.length
+        ? incorrectQuestionIds
+        : loadWrongAnswerIds();
+    if (ids.length === 0) {
+        alert("Nie sú uložené žiadne nesprávne odpovede.");
+        return;
+    }
+    document.querySelectorAll(".question").forEach((q) => {
+        q.style.display = ids.includes(q.id) ? "" : "none";
+        q.style.outline = ids.includes(q.id)
+            ? "2px solid rgba(239,68,68,0.45)"
+            : "";
+        q.style.borderRadius = ids.includes(q.id) ? "8px" : "";
+    });
+    document.querySelectorAll(".section").forEach((section) => {
+        const visible = Array.from(
+            section.querySelectorAll(".question"),
+        ).some((q) => q.style.display !== "none");
+        section.style.display = visible ? "block" : "none";
+    });
+    document.getElementById("result-container").style.display = "none";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
 function exitPracticeMode() {
     practiceMode = false;
     document.querySelectorAll(".question").forEach((q) => {
@@ -148,12 +293,10 @@ function exitPracticeMode() {
     const btn = document.getElementById("practice-btn");
     btn.textContent = "Precvičiť chyby";
     btn.onclick = practiceWrongAnswers;
+    updateWrongAnswerControls();
 }
 
 // ─── Global state ────────────────────────────────────────────────────────
-let sidebarVisible = true;
-let rightSidebarVisible = false;
-let capturingShortcut = false;
 const SIDEBAR_SHORTCUT_STORAGE_KEY = "quiz_sidebar_shortcut";
 
 // Check if mobile on load
@@ -278,6 +421,137 @@ function toggleRightSidebar() {
     }
 }
 
+const COMMANDS = [
+    { id: "toggle-sidebar", label: "Prepnúť ľavý sidebar", action: () => toggleSidebar() },
+    { id: "toggle-structure", label: "Prepnúť štruktúru kvízu", action: () => toggleRightSidebar() },
+    { id: "toggle-theme", label: "Prepnúť svetlý / tmavý režim", action: () => toggleTheme() },
+    { id: "evaluate", label: "Vyhodnotiť kvíz", action: () => evaluateQuiz() },
+    { id: "clear", label: "Vymazať odpovede", action: () => clearQuiz() },
+    { id: "flashcards", label: "Spustiť flashcard režim", action: () => openFlashcards() },
+    { id: "practice-wrong", label: "Precvičiť chyby", action: () => practiceWrongAnswers() },
+    { id: "review-wrong", label: "Zobraziť chyby", action: () => reviewWrongAnswers() },
+    { id: "shortcuts", label: "Nastavenia skratiek", action: () => openShortcutSettings() },
+];
+
+function isCommandPaletteOpen() {
+    const overlay = document.getElementById("command-palette-overlay");
+    return !!overlay && overlay.classList.contains("visible");
+}
+
+function renderCommandPalette(query = "") {
+    const list = document.getElementById("command-palette-list");
+    if (!list) return;
+    const normalized = query.trim().toLowerCase();
+    const matches = COMMANDS.filter((command) =>
+        command.label.toLowerCase().includes(normalized),
+    );
+    list.innerHTML = matches
+        .map(
+            (command, index) =>
+                `<button class="command-palette-item${index === 0 ? " active" : ""}" data-command-id="${command.id}">${command.label}</button>`,
+        )
+        .join("");
+}
+
+function openCommandPalette() {
+    const overlay = document.getElementById("command-palette-overlay");
+    const input = document.getElementById("command-palette-input");
+    if (!overlay || !input) return;
+    overlay.classList.add("visible");
+    input.value = "";
+    renderCommandPalette();
+    setTimeout(() => input.focus(), 0);
+}
+
+function closeCommandPalette() {
+    const overlay = document.getElementById("command-palette-overlay");
+    if (overlay) overlay.classList.remove("visible");
+}
+
+function runCommand(commandId) {
+    const command = COMMANDS.find((item) => item.id === commandId);
+    if (!command) return;
+    closeCommandPalette();
+    command.action();
+}
+
+function runFirstVisibleCommand() {
+    const first = document.querySelector(".command-palette-item");
+    if (first) runCommand(first.dataset.commandId);
+}
+
+function bindUiEvents() {
+    const bind = (id, event, handler) => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener(event, handler);
+    };
+
+    // Sidebar / header controls
+    bind("theme-toggle",             "click", toggleTheme);
+    bind("shortcut-settings-btn",    "click", openShortcutSettings);
+    bind("close-sidebar-btn",        "click", toggleSidebar);
+    bind("quiz-set-selector-header", "click", toggleQuizSetSelector);
+    bind("filter-header",            "click", toggleFilter);
+    bind("select-all-sections-btn",  "click", () => selectAllSections(true));
+    bind("select-no-sections-btn",   "click", () => selectAllSections(false));
+    bind("apply-filter-btn",         "click", applySectionFilter);
+    bind("open-flashcards-btn",      "click", openFlashcards);
+    bind("sidebar-overlay",          "click", toggleSidebar);
+
+    // Right sidebar
+    bind("right-sidebar-toggle",     "click", toggleRightSidebar);
+    bind("close-right-sidebar-btn",  "click", toggleRightSidebar);
+
+    // Shortcut settings
+    bind("close-shortcut-settings-btn", "click", closeShortcutSettings);
+    bind("start-shortcut-capture-btn",  "click", startShortcutCapture);
+
+    // Main content controls
+    bind("menu-toggle",   "click", toggleSidebar);
+    bind("shuffle-btn",   "click", () => { shuffleQuestions(); shuffleOptions(); clearQuiz(); });
+    bind("practice-btn",  "click", practiceWrongAnswers);
+    bind("review-wrong-btn",   "click", reviewWrongAnswers);
+    bind("clear-wrong-btn",    "click", clearWrongAnswerHistory);
+    bind("eval-btn",      "click", evaluateQuiz);
+    bind("clear-btn",     "click", clearQuiz);
+
+    // Flashcard footer
+    bind("fc-close-btn", "click", closeFlashcards);
+    bind("fc-end-btn",   "click", closeFlashcards);
+    bind("fc-next-btn",  "click", fcNext);
+
+    // Quiz set selector – event delegation on container
+    const quizSetList = document.getElementById("quiz-set-list");
+    if (quizSetList) {
+        quizSetList.addEventListener("click", (e) => {
+            const btn = e.target.closest(".quiz-set-btn");
+            if (btn && btn.dataset.quizSetId) selectQuizSet(btn.dataset.quizSetId);
+        });
+    }
+
+    // Flashcard body – event delegation for options + submit + final actions
+    const flashcardOverlay = document.getElementById("flashcard-overlay");
+    if (flashcardOverlay) {
+        flashcardOverlay.addEventListener("click", (e) => {
+            const opt = e.target.closest(".fc-option[data-fc-value]");
+            if (opt) {
+                fcSelectOption(opt, opt.dataset.fcValue, opt.dataset.fcCorrect, opt.dataset.fcQid);
+                return;
+            }
+            const submitBtn = e.target.closest("[data-fc-submit]");
+            if (submitBtn) {
+                submitCurrentFlashcardText();
+                return;
+            }
+            const action = e.target.closest("[data-fc-action]");
+            if (action) {
+                if (action.dataset.fcAction === "restart") openFlashcards();
+                else if (action.dataset.fcAction === "close") closeFlashcards();
+            }
+        });
+    }
+}
+
 function toggleSidebar() {
     const sidebar = document.getElementById("sidebar");
     const overlay = document.getElementById("sidebar-overlay");
@@ -307,6 +581,9 @@ function generateTreeNav() {
     const treeNav = document.getElementById("tree-nav");
     const filterList = document.getElementById("filter-list");
     const sections = document.querySelectorAll(".section");
+
+    if (treeNav) treeNav.innerHTML = "";
+    if (filterList) filterList.innerHTML = "";
 
     sections.forEach((section, index) => {
         const sectionId = section.id;
@@ -519,13 +796,13 @@ function buildFeedbackHTML(
     explanation,
     correctAnswerText,
 ) {
-    let html = `<div class="feedback ${cssClass}" style="display:block">`;
+    let html = `<div class="feedback ${cssClass} feedback-visible">`;
     html += `<span>${statusText}</span>`;
     if (correctAnswerText) {
-        html += `<div style="margin-top:0.4rem;font-size:0.92rem;opacity:0.9">Správna odpoveď: <strong>${correctAnswerText}</strong></div>`;
+        html += `<div class="feedback-correct-answer">Správna odpoveď: <strong>${correctAnswerText}</strong></div>`;
     }
     if (explanation) {
-        html += `<div style="margin-top:0.5rem;padding-top:0.5rem;border-top:1px solid var(--border-color);font-size:0.88rem;opacity:0.85;font-style:italic">${explanation}</div>`;
+        html += `<div class="feedback-explanation">${explanation}</div>`;
     }
     html += `</div>`;
     return html;
@@ -684,14 +961,7 @@ function evaluateQuiz() {
         `;
         progressFill.style.width = `${percent}%`;
     }
-    // Update practice button visibility
-    const practiceBtn = document.getElementById("practice-btn");
-    if (practiceBtn) {
-        practiceBtn.style.display =
-            incorrectQuestionIds.length > 0
-                ? "inline-flex"
-                : "none";
-    }
+    saveWrongAnswerIds(incorrectQuestionIds);
     resContainer.style.display = "block";
     resContainer.scrollIntoView({
         behavior: "smooth",
@@ -727,8 +997,7 @@ function clearQuiz() {
         "none";
     document.getElementById("progress-fill").style.width = "0%";
     incorrectQuestionIds = [];
-    const practiceBtn = document.getElementById("practice-btn");
-    if (practiceBtn) practiceBtn.style.display = "none";
+    updateWrongAnswerControls();
     clearStorage();
 }
 
@@ -744,12 +1013,6 @@ function getOptionText(questionEl, val) {
 }
 
 // ── FLASHCARD MODE ────────────────────────────────────────────────────────
-let fcQueue = []; // shuffled question objects
-let fcIndex = 0; // current position in queue
-let fcCorrect = 0;
-let fcWrong = 0;
-let fcAnswered = false; // has user answered current card?
-
 function getActiveSectionIds() {
     return Array.from(
         document.querySelectorAll(
@@ -832,6 +1095,16 @@ function closeFlashcards() {
     document.body.style.overflow = "";
 }
 
+function submitCurrentFlashcardText() {
+    const input = document.getElementById("fc-text-input");
+    if (!input) return;
+    fcSubmitText(
+        input.dataset.fcQid,
+        input.dataset.fcKeywords || "",
+        input.dataset.fcCorrect,
+    );
+}
+
 function updateFcProgress() {
     const total = fcQueue.length;
     const done = fcIndex; // cards already answered (0-based before current)
@@ -880,7 +1153,7 @@ function renderFcCard() {
             opts
                 .map(
                     (o, i) => `
-                <button class="fc-option" onclick="fcSelectOption(this, '${o.value}', '${q.correctVal}', '${q.qId}')">
+                <button class="fc-option" data-fc-value="${o.value}" data-fc-correct="${q.correctVal}" data-fc-qid="${q.qId}">
                     <span class="fc-option-letter">${letters[i]}</span>
                     <span>${o.html}</span>
                 </button>`,
@@ -892,13 +1165,13 @@ function renderFcCard() {
             .getElementById(q.qId)
             ?.querySelector(".text-answer-hint");
         const hintHTML = hint
-            ? `<div style="font-size:0.82rem;color:var(--text-secondary);font-style:italic">${hint.innerHTML}</div>`
+            ? `<div class="fc-text-hint">${hint.innerHTML}</div>`
             : "";
         optionsHTML = `<div class="fc-text-wrap">
             <input class="fc-text-input" id="fc-text-input" type="text" placeholder="Napíšte odpoveď..." autocomplete="off" spellcheck="false"
-                onkeydown="if(event.key==='Enter')fcSubmitText('${q.qId}','${(q.keywords || "").replace(/'/g, "\\'")}','${q.correctVal}')">
+                data-fc-qid="${q.qId}" data-fc-keywords="${(q.keywords || "").replace(/"/g, "&quot;")}" data-fc-correct="${q.correctVal}">
             ${hintHTML}
-            <button class="fc-submit-text" onclick="fcSubmitText('${q.qId}','${(q.keywords || "").replace(/'/g, "\\'")}','${q.correctVal}')">Overiť</button>
+            <button class="fc-submit-text" data-fc-submit="true">Overiť</button>
         </div>`;
     }
 
@@ -1036,27 +1309,36 @@ function fcNext() {
     renderFcCard();
 }
 
-// Keyboard: Enter/ArrowRight = next when answered
-document.addEventListener("keydown", (e) => {
-    if (
-        !document
-            .getElementById("flashcard-overlay")
-            .classList.contains("active")
-    )
-        return;
-    if (e.key === "Escape") {
-        closeFlashcards();
-        return;
-    }
-    if (
-        (e.key === "Enter" || e.key === "ArrowRight") &&
-        fcAnswered
-    ) {
-        fcNext();
-    }
-});
+function fcPrev() {
+    if (fcIndex <= 0) return;
+    fcIndex--;
+    renderFcCard();
+}
 
 document.addEventListener("keydown", (e) => {
+    const target = e.target;
+    const isTyping =
+        target &&
+        (target.tagName === "INPUT" ||
+            target.tagName === "TEXTAREA" ||
+            target.isContentEditable);
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        if (isCommandPaletteOpen()) closeCommandPalette();
+        else openCommandPalette();
+        return;
+    }
+    if (isCommandPaletteOpen()) {
+        if (e.key === "Escape") {
+            closeCommandPalette();
+            return;
+        }
+        if (e.key === "Enter") {
+            e.preventDefault();
+            runFirstVisibleCommand();
+            return;
+        }
+    }
     if (capturingShortcut) {
         if (e.key === "Escape") {
             capturingShortcut = false;
@@ -1074,6 +1356,39 @@ document.addEventListener("keydown", (e) => {
         overlay.classList.contains("visible")
     ) {
         closeShortcutSettings();
+        return;
+    }
+    const flashcardOverlay = document.getElementById("flashcard-overlay");
+    const flashcardsOpen =
+        flashcardOverlay && flashcardOverlay.classList.contains("active");
+    if (flashcardsOpen) {
+        if (e.key === "Escape") {
+            closeFlashcards();
+            return;
+        }
+        if (isTyping && e.key === "Enter" && !fcAnswered) {
+            e.preventDefault();
+            submitCurrentFlashcardText();
+            return;
+        }
+        if (e.key === "ArrowLeft") {
+            e.preventDefault();
+            fcPrev();
+            return;
+        }
+        if ((e.key === "Enter" || e.key === "ArrowRight" || e.key === " ") && fcAnswered) {
+            e.preventDefault();
+            fcNext();
+            return;
+        }
+        if (!isTyping && /^[1-9]$/.test(e.key) && !fcAnswered) {
+            const index = Number(e.key) - 1;
+            const option = document.querySelectorAll(".fc-option")[index];
+            if (option) {
+                e.preventDefault();
+                option.click();
+            }
+        }
         return;
     }
     if (shortcutMatches(e, getSidebarShortcut())) {
@@ -1103,13 +1418,13 @@ function renderFcFinal() {
         <div class="fc-final">
             <div class="fc-final-emoji">${emoji}</div>
             <div class="fc-final-score">${msg}</div>
-            <div class="fc-final-score" style="font-size:2rem">${fcCorrect} / ${total} (${pct}%)</div>
+            <div class="fc-final-score fc-final-score-large">${fcCorrect} / ${total} (${pct}%)</div>
             <div class="fc-final-detail">
                 ${fcCorrect} správnych &nbsp;|&nbsp; ${fcWrong} nesprávnych
             </div>
             <div class="fc-final-actions">
-                <button class="fc-btn fc-btn-next" onclick="openFlashcards()">Znovu (zamiešaj)</button>
-                <button class="fc-btn fc-btn-end"  onclick="closeFlashcards()">Zavrieť</button>
+                <button class="fc-btn fc-btn-next" data-fc-action="restart">Znovu (zamiešaj)</button>
+                <button class="fc-btn fc-btn-end" data-fc-action="close">Zavrieť</button>
             </div>
         </div>`;
     document.getElementById("fc-footer").style.display = "none";
@@ -1133,18 +1448,41 @@ function loadScript(src) {
     });
 }
 
+function showAppError(title, detail) {
+    const mount = document.getElementById("quiz-sections-mount");
+    if (!mount) return;
+    mount.innerHTML = `
+        <div class="app-error">
+            <strong>${title}</strong>
+            <p>${detail}</p>
+        </div>
+    `;
+}
+
 async function loadQuizSetScripts() {
     const id = window.QUIZ_SET_ID;
     const sets = window.QUIZ_SETS || [];
     const set = sets.find((s) => s.id === id);
-    if (!set) return;
+    if (!set) {
+        showAppError(
+            "Neznámy kvízový set.",
+            `Set "${id}" nie je zaregistrovaný v confg.js.`,
+        );
+        return false;
+    }
     window.QUIZ_FRAGMENT_HTML = undefined;
     window.QUIZ_EXPLANATIONS = undefined;
     try {
         await loadScript(set.fragEmbed);
         await loadScript(set.explanations);
+        return true;
     } catch (err) {
         console.error("loadQuizSetScripts", err);
+        showAppError(
+            "Nepodarilo sa načítať kvízový set.",
+            err.message || "Skontrolujte cesty ku quiz set súborom.",
+        );
+        return false;
     }
 }
 
@@ -1156,7 +1494,7 @@ function renderQuizSetSelector() {
     container.innerHTML = sets
         .map(
             (s) =>
-                `<button class="quiz-set-btn${s.id === current ? " active" : ""}" onclick="selectQuizSet('${s.id}')">${s.label}</button>`,
+                `<button class="quiz-set-btn${s.id === current ? " active" : ""}" data-quiz-set-id="${s.id}">${s.label}</button>`,
         )
         .join("");
 }
@@ -1258,15 +1596,15 @@ async function loadQuizContent() {
     } catch (err) {
         console.error("loadQuizContent", err);
         mount.innerHTML =
-            `<p class="quiz-load-error" style="color:var(--error);padding:1rem;line-height:1.5;">` +
+            `<p class="quiz-load-error">` +
             `Nepodarilo sa načítať otázky. Bez HTTP servera musí byť načítaný súbor ` +
-            `<code style="color:var(--accent-color);">quiz_sets/&lt;id&gt;.frag.embed.js</code> ` +
+            `<code>quiz_sets/&lt;id&gt;.frag.embed.js</code> ` +
             `(vygenerujte ho príkazom ` +
-            `<code style="color:var(--accent-color);">python3 embed_quiz_fragment.py</code>). ` +
+            `<code>python3 embed_quiz_fragment.py</code>). ` +
             `Alternatíva: spustite server v koreňovom priečinku ` +
-            `(napr. <code style="color:var(--accent-color);">python3 -m http.server</code>) ` +
+            `(napr. <code>python3 -m http.server</code>) ` +
             `a otvorte stránku cez HTTP; fetch sa pokúsi stiahnuť ` +
-            `<code style="color:var(--accent-color);">${url}</code>.` +
+            `<code>${url}</code>.` +
             `</p>`;
         return false;
     }
@@ -1278,8 +1616,25 @@ document.addEventListener("DOMContentLoaded", async () => {
     renderQuizSetSelector();
     updateSidebarShortcutLabel();
     updateRightSidebarAvailability();
+    bindUiEvents();
 
-    await loadQuizSetScripts();
+    // Command palette input
+    const commandInput = document.getElementById("command-palette-input");
+    const commandList = document.getElementById("command-palette-list");
+    if (commandInput) {
+        commandInput.addEventListener("input", (e) =>
+            renderCommandPalette(e.target.value),
+        );
+    }
+    if (commandList) {
+        commandList.addEventListener("click", (e) => {
+            const item = e.target.closest(".command-palette-item");
+            if (item) runCommand(item.dataset.commandId);
+        });
+    }
+
+    const scriptsOk = await loadQuizSetScripts();
+    if (!scriptsOk) return;
     EXPLANATIONS = window.QUIZ_EXPLANATIONS || {};
 
     const ok = await loadQuizContent();
@@ -1287,27 +1642,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     generateTreeNav();
     loadAnswers();
+    updateWrongAnswerControls();
 
     // Auto-save on any input change
     document.addEventListener("change", (e) => {
-        if (
-            e.target.matches(
-                'input[type="radio"], input[type="text"]',
-            )
-        ) {
+        if (e.target.matches('input[type="radio"], input[type="text"]')) {
             saveAnswers();
         }
     });
     document.addEventListener("input", (e) => {
         if (e.target.matches('input[type="text"]')) saveAnswers();
     });
-
-    document
-        .getElementById("eval-btn")
-        .addEventListener("click", evaluateQuiz);
-    document
-        .getElementById("clear-btn")
-        .addEventListener("click", clearQuiz);
 
     window.addEventListener("scroll", handleScroll);
 
