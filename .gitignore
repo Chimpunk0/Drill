@@ -1,4 +1,22 @@
 # MAC OS
 .DS_Store
 
+# Aider AI
 .aider*
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Node (if tooling is added later)
+node_modules/
+
+# IDE
+.windsurf/
+.vscode/
+
+# Quiz files
+*.pdf
+*.txt
+
