@@ -27,6 +27,12 @@ window.QUIZ_SETS = window.QUIZ_SETS || [
         explanations:
             "quiz_sets/bpc-sos-2026/bpc-sos-2026-polsemestralka.explanations.js",
     },
+    {
+        id: "sos-skuska/sos-skuska",
+        label: "SOS-SKUSKA (Skúška)",
+        fragEmbed: "quiz_sets/sos-skuska/sos-skuska.frag.embed.js",
+        explanations: "quiz_sets/sos-skuska/sos-skuska.explanations.js",
+    },
 ];
 
 // Read active set from URL param ?set=<id>, fall back to first registered set
