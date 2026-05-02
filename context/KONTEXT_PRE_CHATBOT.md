@@ -5,10 +5,10 @@ Tento projekt je **jednostránkový kvíz** bez backendu: `vba_kviz_v3_1.html` +
 ## Čo má chatbot dodávať
 
 1. **Fragment HTML** – súbor typu `quiz_sets/<id>.frag.html`  
-   Štruktúra a pravidlá: pozri **`templates/quiz_set.template.frag.html`** (kopíruj ako východzí bod).
+   Štruktúra a pravidlá: pozri **`context/quiz_set.template.frag.html`** (kopíruj ako východzí bod).
 
 2. **Vysvetlenia** – súbor `quiz_sets/<id>.explanations.js`  
-   Formát: pozri **`templates/quiz_set.template.explanations.js`**.
+   Formát: pozri **`context/quiz_set.template.explanations.js`**.
 
 3. (Voliteľné) Pripomenúť používateľovi po úprave fragmentu spustiť z koreňa projektu:  
    `python3 embed_quiz_fragment.py --id <id>`  
@@ -36,15 +36,15 @@ Tento projekt je **jednostránkový kvíz** bez backendu: `vba_kviz_v3_1.html` +
 
 ## Integrácia do projektu (pre človeka)
 
-- `quiz_config.js`: `QUIZ_SET_ID` alebo vlastné URL fragmentu.
-- `vba_kviz_v3_1.html`: skripty  
+- `confg.js`: zaregistrujte set vo `window.QUIZ_SETS`, aby sa zobrazil v sidebari.
+- `index.html`: skripty  
   `quiz_sets/<id>.frag.embed.js` a `quiz_sets/<id>.explanations.js` musia zodpovedať zvolenému setu.
 - Po zmene `.frag.html` znova: **`python3 embed_quiz_fragment.py --id <id>`**.
 
 ## Referenčná implementácia
 
-Kompletný reálny set: `quiz_sets/default.frag.html` + `quiz_sets/default.explanations.js`.
+Kompletný reálny set: `quiz_sets/bpc-vba-2026/default.frag.html` + `quiz_sets/bpc-vba-2026/default.explanations.js`.
 
 ---
 
-*Pri odovzdávaní úlohy chatbotovi môžete pripojiť tento súbor + obe šablóny z priečinka `templates/` ako jeden balík kontextu.*
+*Pri odovzdávaní úlohy chatbotovi môžete pripojiť tento súbor + obe šablóny z priečinka `context/` ako jeden balík kontextu.*
