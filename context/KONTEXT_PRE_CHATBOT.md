@@ -22,6 +22,7 @@ Tento projekt je **jednostránkový kvíz** bez backendu: `vba_kviz_v3_1.html` +
 | Názov sekcie | `<div class="section-title">…</div>` – viditeľný text pre sidebar. |
 | Otázka | `<div class="question" id="qS_N" …>` – **unikátne** id; `S` = číslo sekcie, `N` = poradie v sekcii. |
 | MCQ | `data-answer="a"` (alebo b,c,…) = hodnota **`value`** správneho `<input type="radio">`. Atribút **`name`** na rádiách = **rovnaké ako id otázky**. |
+| Možnosti MCQ | Text v `<span>` píšte bez prefixov `a)`, `b)`, `c)`… Písmeno odpovede patrí iba do `value` inputu a UI si značenie rieši samo. |
 | Otvorená odpoveď | `data-answer="text"` + **`data-keywords="var1,var2,…"`** (čiarkou; vyhodnotenie: normalizovaná odpoveď musí **obsahovať** aspoň jednu variantu). |
 | Textový vstup | `<input type="text" id="{questionId}-input" …>` – **povinne** suffix `-input` za id otázky. |
 | Spätná väzba | `<div class="feedback" id="{questionId}-fb"></div>` na konci každej otázky. |
@@ -33,6 +34,7 @@ Tento projekt je **jednostránkový kvíz** bez backendu: `vba_kviz_v3_1.html` +
 - Súbor musí nastaviť **`window.QUIZ_EXPLANATIONS`** (objekt).
 - Kľúče musia **presne** sedieť s `id` otázok v fragmente (`q1_1`, `q2_8`, …).
 - Používajú ich vyhodnotenie kvízu a flashcard režim.
+- Hodnoty majú byť krátke vysvetlenia **prečo** je odpoveď správna, nie iba text typu `Správna odpoveď: ...`.
 
 ## Integrácia do projektu (pre človeka)
 
