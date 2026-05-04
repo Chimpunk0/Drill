@@ -311,6 +311,17 @@
         <div class="feedback" id="q1_28-fb"></div>
     </div>
 
+    <div class="question" id="q1_29" data-answer="b">
+        <div class="question-label">29. Stavový firewall využívá informace o stavu spojení - dokáže rozlišit zprávy, které zahajují nové spojení od zpráv již sestaveného spojení pomocí:</div>
+        <div class="options">
+            <label class="option"><input type="radio" name="q1_29" value="a" /><span>Čísel procesů na komunikujících stanicích.</span></label>
+            <label class="option"><input type="radio" name="q1_29" value="b" /><span>Příznaků (flags) v segmentech TCP.</span></label>
+            <label class="option"><input type="radio" name="q1_29" value="c" /><span>Statistiky způsobu navazování předchozích spojení.</span></label>
+            <label class="option"><input type="radio" name="q1_29" value="d" /><span>Příznaků (flags) v datagramech UDP.</span></label>
+        </div>
+        <div class="feedback" id="q1_29-fb"></div>
+    </div>
+
 </div>
 
 <div class="section" id="sec_2" data-section="2">
@@ -490,6 +501,39 @@
             <label class="option"><input type="radio" name="q2_16" value="d" /><span>Vykoná se instrukce trap pro přepnutí do režimu jádra; uloží se číslo systémového volání na místo, kde jej očekává jádro operačního systému; volající program uloží parametry na zásobník; volá se knihovní funkce pro systém</span></label>
         </div>
         <div class="feedback" id="q2_16-fb"></div>
+    </div>
+
+    <div class="question" id="q2_17" data-answer="b">
+        <div class="question-label">17. Výhodou monolitického jádra operačního systému oproti mikrojádru je:</div>
+        <div class="options">
+            <label class="option"><input type="radio" name="q2_17" value="a" /><span>Malé množství paměti zabrané jádrem.</span></label>
+            <label class="option"><input type="radio" name="q2_17" value="b" /><span>Větší rychlost.</span></label>
+            <label class="option"><input type="radio" name="q2_17" value="c" /><span>Větší stabilita.</span></label>
+            <label class="option"><input type="radio" name="q2_17" value="d" /><span>Lepší zabezpečení proti síťovým útokům typu DDoS.</span></label>
+        </div>
+        <div class="feedback" id="q2_17-fb"></div>
+    </div>
+
+    <div class="question" id="q2_18" data-answer="a">
+        <div class="question-label">18. V konceptu stavby operačního systému pro model klient-server platí, že:</div>
+        <div class="options">
+            <label class="option"><input type="radio" name="q2_18" value="a" /><span>Servery realizující služby jádra mohou být realizovány procesy v uživatelském režimu.</span></label>
+            <label class="option"><input type="radio" name="q2_18" value="b" /><span>Obsahuje monolitické jádro.</span></label>
+            <label class="option"><input type="radio" name="q2_18" value="c" /><span>Tento model svým návrhem zaručuje, že procesy v operačním systému nemohou přijít do stavu uvíznutí (deadlock).</span></label>
+            <label class="option"><input type="radio" name="q2_18" value="d" /><span>Případná chyba v kódu serveru realizujícího danou službu jádra vždy způsobí pád celého systému.</span></label>
+        </div>
+        <div class="feedback" id="q2_18-fb"></div>
+    </div>
+
+    <div class="question" id="q2_19" data-answer="b">
+        <div class="question-label">19. Monolitické jádro operačního systému vznikne tak, že:</div>
+        <div class="options">
+            <label class="option"><input type="radio" name="q2_19" value="a" /><span>Rozdělíme funkce jádra na klienty a servery. V systému jsou monolitická jádra vždy dvě - jádro klientů a jádro serveru.</span></label>
+            <label class="option"><input type="radio" name="q2_19" value="b" /><span>Zkompilujeme všechny procedury jádra do jednoho souboru.</span></label>
+            <label class="option"><input type="radio" name="q2_19" value="c" /><span>Použijeme speciální komprimační technologii s využitím velkého tlaku.</span></label>
+            <label class="option"><input type="radio" name="q2_19" value="d" /><span>Oddělíme grafické a uživatelské rozhraní do samostatných souborů. Tyto soubory pak tvoří monolitické jádro.</span></label>
+        </div>
+        <div class="feedback" id="q2_19-fb"></div>
     </div>
 
 </div>
@@ -726,6 +770,28 @@
             <label class="option"><input type="radio" name="q3_21" value="d" /><span>Zablokován a uložen v odkládací paměti (sleep, swapped).</span></label>
         </div>
         <div class="feedback" id="q3_21-fb"></div>
+    </div>
+
+    <div class="question" id="q3_22" data-answer="a">
+        <div class="question-label">22. Co mimo jiné platí o řídící tabulce procesů (PCB) v operačním systému?</div>
+        <div class="options">
+            <label class="option"><input type="radio" name="q3_22" value="a" /><span>Procesy zde mají uloženou hodnotu programového čítače.</span></label>
+            <label class="option"><input type="radio" name="q3_22" value="b" /><span>Jednotlivé řádky tabulky jsou uloženy v paměti daného procesu, jádro k nim nemá přístup.</span></label>
+            <label class="option"><input type="radio" name="q3_22" value="c" /><span>Tabulka procesů se používala dříve v jednoprocesorových systémech. Ve víceprocesorových systémech se nepoužívá.</span></label>
+            <label class="option"><input type="radio" name="q3_22" value="d" /><span>Procesy do ní ukládají data, ke kterým je potřeba mít rychlý přístup.</span></label>
+        </div>
+        <div class="feedback" id="q3_22-fb"></div>
+    </div>
+
+    <div class="question" id="q3_23" data-answer="d">
+        <div class="question-label">23. Vyberte pravdivé tvrzení týkající se plánování procesů:</div>
+        <div class="options">
+            <label class="option"><input type="radio" name="q3_23" value="a" /><span>Kooperativní multitasking znamená, že procesy jsou přepínány podle jejich aktuálního čísla (PID).</span></label>
+            <label class="option"><input type="radio" name="q3_23" value="b" /><span>Preemptivní multitasking znamená, že procesy jsou přepínány podle velikosti zabrané paměti.</span></label>
+            <label class="option"><input type="radio" name="q3_23" value="c" /><span>Preemptivní multitasking znamená, že procesy jsou přepínány podle jejich aktuálního čísla PID.</span></label>
+            <label class="option"><input type="radio" name="q3_23" value="d" /><span>Na počítači s jedním procesorem může v jednom okamžiku být vykonáván vždy jen jeden proces a ostatní musí čekat.</span></label>
+        </div>
+        <div class="feedback" id="q3_23-fb"></div>
     </div>
 
 </div>
@@ -1068,6 +1134,28 @@
         <div class="feedback" id="q5_15-fb"></div>
     </div>
 
+    <div class="question" id="q5_16" data-answer="b">
+        <div class="question-label">16. U algoritmu NFU je aktuální hodnota 4bitového čítače přiřazeného k paměťové stránce 0010. Následně se 2x provede algoritmus. Zvolte správnou hodnotu čítače:</div>
+        <div class="options">
+            <label class="option"><input type="radio" name="q5_16" value="a" /><span>0100</span></label>
+            <label class="option"><input type="radio" name="q5_16" value="b" /><span>1100</span></label>
+            <label class="option"><input type="radio" name="q5_16" value="c" /><span>1110</span></label>
+            <label class="option"><input type="radio" name="q5_16" value="d" /><span>0111</span></label>
+        </div>
+        <div class="feedback" id="q5_16-fb"></div>
+    </div>
+
+    <div class="question" id="q5_17" data-answer="c">
+        <div class="question-label">17. V OS Linux lze odkládací prostor pro virtuální paměť realizovat:</div>
+        <div class="options">
+            <label class="option"><input type="radio" name="q5_17" value="a" /><span>Pouze oddílem na disku.</span></label>
+            <label class="option"><input type="radio" name="q5_17" value="b" /><span>Pouze souborem v souborovém systému.</span></label>
+            <label class="option"><input type="radio" name="q5_17" value="c" /><span>Oddílem na disku a souborem v souborovém systému - lze provozovat současně.</span></label>
+            <label class="option"><input type="radio" name="q5_17" value="d" /><span>Oddílem na disku a souborem v souborovém systému - nelze provozovat současně.</span></label>
+        </div>
+        <div class="feedback" id="q5_17-fb"></div>
+    </div>
+
 </div>
 
 <div class="section" id="sec_6" data-section="6">
@@ -1203,6 +1291,39 @@
             <label class="option"><input type="radio" name="q6_12" value="d" /><span>/var</span></label>
         </div>
         <div class="feedback" id="q6_12-fb"></div>
+    </div>
+
+    <div class="question" id="q6_13" data-answer="a">
+        <div class="question-label">13. Pro speciální soubory zařízení /dev/zero a /dev/random platí:</div>
+        <div class="options">
+            <label class="option"><input type="radio" name="q6_13" value="a" /><span>Lze z nich číst data jako u normálních souborů.</span></label>
+            <label class="option"><input type="radio" name="q6_13" value="b" /><span>Nelze na ně vytvořit symbolický odkaz.</span></label>
+            <label class="option"><input type="radio" name="q6_13" value="c" /><span>Jsou vytvářeny až při připojení daného zařízení do systému.</span></label>
+            <label class="option"><input type="radio" name="q6_13" value="d" /><span>Reprezentují bloková zařízení.</span></label>
+        </div>
+        <div class="feedback" id="q6_13-fb"></div>
+    </div>
+
+    <div class="question" id="q6_14" data-answer="b">
+        <div class="question-label">14. Pro všechny žurnálovací souborové systémy platí:</div>
+        <div class="options">
+            <label class="option"><input type="radio" name="q6_14" value="a" /><span>Žurnál musí být umístěn na jiném paměťovém médiu, než kde jsou ukládána vlastní data souborů.</span></label>
+            <label class="option"><input type="radio" name="q6_14" value="b" /><span>Každou plánovanou operaci v žurnálu lze provést pouze atomicky, tedy jako jeden celek.</span></label>
+            <label class="option"><input type="radio" name="q6_14" value="c" /><span>Pracují pouze s vlastním obsahem souborů.</span></label>
+            <label class="option"><input type="radio" name="q6_14" value="d" /><span>Pracují pouze s metadaty souborů.</span></label>
+        </div>
+        <div class="feedback" id="q6_14-fb"></div>
+    </div>
+
+    <div class="question" id="q6_15" data-answer="d">
+        <div class="question-label">15. Níže uvedené nežádoucí situace jsou následkem kolapsu systému. Kterou z nich je možno napravit použitím žurnálovacího systému?</div>
+        <div class="options">
+            <label class="option"><input type="radio" name="q6_15" value="a" /><span>Bylo poškozeno několik sektorů na disku.</span></label>
+            <label class="option"><input type="radio" name="q6_15" value="b" /><span>Byl poškozen zaváděcí sektor MBR.</span></label>
+            <label class="option"><input type="radio" name="q6_15" value="c" /><span>Byla porušena tabulka diskových oddílů.</span></label>
+            <label class="option"><input type="radio" name="q6_15" value="d" /><span>Při mazání souboru nebyly původně obsazené datové bloky začleněny do seznamu volných bloků.</span></label>
+        </div>
+        <div class="feedback" id="q6_15-fb"></div>
     </div>
 
 </div>

@@ -31,6 +31,7 @@ window.QUIZ_EXPLANATIONS = {
     q1_26: "Paket patrí na sieťovú vrstvu, kde sa rieši IP adresovanie a smerovanie.",
     q1_27: "Ak sa router spravuje cez web alebo SSH, okrem smerovania potrebuje aj transportnú a aplikačnú vrstvu pre správcu.",
     q1_28: "SYN slúži na synchronizáciu a začiatok nadväzovania TCP spojenia.",
+    q1_29: "Stavový firewall sleduje stav TCP spojenia najmä podľa príznakov v TCP segmentoch, napríklad SYN, ACK alebo FIN.",
 
     q2_1: "Operačný systém stojí medzi aplikáciami a hardvérom; aplikáciám poskytuje služby a hardvér ovláda cez nižšie vrstvy.",
     q2_2: "Modulárne jadro vie podľa potreby načítať ovládače zariadení a súborových systémov ako samostatné moduly.",
@@ -48,6 +49,9 @@ window.QUIZ_EXPLANATIONS = {
     q2_14: "Monolitické jadro Linuxu vzniká prekladom a prelinkovaním častí jadra do jedného spustiteľného celku.",
     q2_15: "Systémové programy poskytujú prostredie a nástroje, v ktorých sa spúšťajú a používajú aplikačné programy.",
     q2_16: "Systémové volanie sa pripraví v používateľskom programe, nastaví sa jeho číslo a trap prepne vykonávanie do jadra.",
+    q2_17: "Monolitické jadro má veľa služieb priamo v jadre, takže nemusí tak často prepínať kontext a posielať správy medzi procesmi ako mikrojadro.",
+    q2_18: "V klient-server modeli môžu byť služby systému realizované servermi bežiacimi v používateľskom režime a jadro sprostredkuje komunikáciu.",
+    q2_19: "Monolitické jadro je jeden veľký jadrový celok vytvorený kompiláciou a prelinkovaním jadrových procedúr.",
 
     q3_1: "Dávkové spracovanie je vhodné tam, kde sa úlohy hromadia a spracúvajú bez priamej interakcie používateľa, napríklad vo výpočtových centrách.",
     q3_2: "Proces musí byť najprv prebudený, potom dostať miesto v pamäti, zaradiť sa medzi pripravené procesy a až plánovač ho spustí.",
@@ -70,6 +74,8 @@ window.QUIZ_EXPLANATIONS = {
     q3_19: "Základný päťstavový model procesu zahŕňa nový, pripravený, bežiaci, čakajúci a ukončený stav.",
     q3_20: "Priepustnosť zbernice nie je typická plánovacia metrika dávkového systému; sledujú sa skôr časy, využitie a priepustnosť úloh.",
     q3_21: "Ak bežiaci proces čaká na diskové I/O, zablokuje sa a zostáva uložený v hlavnej pamäti.",
+    q3_22: "PCB uchováva procesový kontext vrátane programového čítača. Tieto údaje spravuje jadro, nie samotný používateľský proces.",
+    q3_23: "Na jednom procesore sa v konkrétnom okamihu vykonáva iba jeden proces; multitasking vzniká rýchlym striedaním procesov.",
 
     q4_1: "Proces sa môže blokovať pred kritickou sekciou vtedy, keď je v nej práve iný proces a treba chrániť zdieľaný prostriedok.",
     q4_2: "Vzájomné vylúčenie zabezpečuje, že ku kritickému zdieľanému prostriedku pristupuje naraz iba jeden proces.",
@@ -102,6 +108,8 @@ window.QUIZ_EXPLANATIONS = {
     q5_13: "Pri stránkovaní majú stránky procesu rovnakú veľkosť ako rámce fyzickej pamäte.",
     q5_14: "Výpadok stránky nastane vtedy, keď požadovaná stránka nie je v RAM, ale je odložená mimo hlavnej pamäte.",
     q5_15: "Stránkovanie nezaručuje súvislé uloženie logicky patriacich dát v hlavnej pamäti; práve naopak, stránky môžu byť roztrúsené.",
+    q5_16: "Pri aging variante NFU sa čítač posúva doprava a použitá stránka dostane jednotku do najvyššieho bitu; z 0010 po dvoch krokoch vznikne 1100.",
+    q5_17: "Linux vie používať swap ako samostatný diskový oddiel aj ako swap súbor a tieto formy sa dajú kombinovať.",
 
     q6_1: "Podľa FHS sú systémové konfiguračné súbory uložené v adresári /etc.",
     q6_2: "Súborové systémy ukladajú súbory do dátových blokov, ktoré nemusia fyzicky ležať za sebou.",
@@ -115,4 +123,7 @@ window.QUIZ_EXPLANATIONS = {
     q6_10: "Premenlivé dáta služieb patria do /var, pretože ich obsah sa počas behu systému mení.",
     q6_11: "Špeciálne súbory sa používajú aj pre blokové zariadenia, takže tvrdenie, že to nejde, je chybné.",
     q6_12: "Adresár /usr je sekundárna hierarchia s používateľskými programami, knižnicami a zdieľanými dátami.",
+    q6_13: "/dev/zero a /dev/random sú znakové špeciálne súbory, z ktorých možno čítať dáta bežnými operáciami nad súborom.",
+    q6_14: "Žurnál pracuje s transakciami: zmeny sa po páde systému buď dokončia, alebo vrátia tak, aby nevznikol nekonzistentný medzistav.",
+    q6_15: "Žurnálovanie rieši nekonzistenciu metadát súborového systému, napríklad nedokončené uvoľnenie blokov po mazání súboru.",
 };
