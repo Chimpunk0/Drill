@@ -13,6 +13,7 @@ const state = {
         correct: 0,
         wrong: 0,
         answered: false,
+        sessionInitialLength: 0,
     },
 };
 
@@ -64,6 +65,10 @@ Object.defineProperties(window, {
     fcAnswered: {
         get: () => state.flashcards.answered,
         set: (value) => (state.flashcards.answered = value),
+    },
+    fcSessionInitialLength: {
+        get: () => state.flashcards.sessionInitialLength,
+        set: (value) => (state.flashcards.sessionInitialLength = value),
     },
 });
 
@@ -169,6 +174,31 @@ function clearStorage() {
     try {
         localStorage.removeItem(STORAGE_KEY);
     } catch (e) {}
+}
+
+function syncFlashcardRadioAnswer(qId, value) {
+    const radio = document.querySelector(
+        `input[name="${qId}"][value="${value}"]`,
+    );
+    if (!radio) return;
+    radio.checked = true;
+    saveAnswers();
+}
+
+function syncFlashcardTextAnswer(qId, value) {
+    const input = document.getElementById(`${qId}-input`);
+    if (!input || input.type !== "text") return;
+    input.value = value;
+    saveAnswers();
+}
+
+function resetFlashcardFooter() {
+    const footer = document.getElementById("fc-footer");
+    const nextBtn = document.getElementById("fc-next-btn");
+    const hint = document.getElementById("fc-hint");
+    if (footer) footer.style.display = "flex";
+    if (nextBtn) nextBtn.disabled = true;
+    if (hint) hint.textContent = "";
 }
 
 // ─── Shuffle helpers ─────────────────────────────────────────────────────
@@ -1075,10 +1105,12 @@ function openFlashcards() {
     fcIndex = 0;
     fcCorrect = 0;
     fcWrong = 0;
+    fcSessionInitialLength = fcQueue.length;
     if (fcQueue.length === 0) {
         alert("Nie sú vybraté žiadne sekcie!");
         return;
     }
+    resetFlashcardFooter();
     document
         .getElementById("flashcard-overlay")
         .classList.add("active");
@@ -1126,8 +1158,7 @@ function updateFcProgress() {
 
 function renderFcCard() {
     fcAnswered = false;
-    document.getElementById("fc-next-btn").disabled = true;
-    document.getElementById("fc-hint").textContent = "";
+    resetFlashcardFooter();
     updateFcProgress();
 
     if (fcIndex >= fcQueue.length) {
@@ -1225,6 +1256,7 @@ function fcShowFeedback(isCorrect, correctText, qId) {
 
 function fcSelectOption(btn, selectedVal, correctVal, qId) {
     if (fcAnswered) return;
+    syncFlashcardRadioAnswer(qId, selectedVal);
     // Disable all options
     document
         .querySelectorAll(".fc-option")
@@ -1232,21 +1264,10 @@ function fcSelectOption(btn, selectedVal, correctVal, qId) {
     const isCorrect = selectedVal === correctVal;
     btn.classList.add(isCorrect ? "correct" : "wrong");
     if (!isCorrect) {
-        // highlight correct
         document.querySelectorAll(".fc-option").forEach((b) => {
-            const bVal = b.querySelector(".fc-option-letter")
-                ? null
-                : null;
-            // find button whose onclick contains correctVal
-            if (
-                b.getAttribute("onclick") &&
-                b
-                    .getAttribute("onclick")
-                    .includes(`'${correctVal}'`)
-            ) {
-                b.classList.add("correct");
-            }
+            if (b.dataset.fcValue === correctVal) b.classList.add("correct");
         });
+        fcQueue.push({ ...fcQueue[fcIndex] });
     }
     const correctText = fcGetCorrectText(qId, correctVal);
     fcShowFeedback(isCorrect, isCorrect ? null : correctText, qId);
@@ -1287,6 +1308,7 @@ function fcSubmitText(qId, keywords, correctVal) {
         isCorrect = userVal === correctVal.toLowerCase();
     }
 
+    syncFlashcardTextAnswer(qId, inp.value);
     inp.classList.add(isCorrect ? "correct" : "wrong");
     inp.disabled = true;
 
@@ -1297,6 +1319,9 @@ function fcSubmitText(qId, keywords, correctVal) {
           ? [correctVal]
           : [];
     const correctText = accepted.length ? accepted[0] : null;
+    if (!isCorrect) {
+        fcQueue.push({ ...fcQueue[fcIndex] });
+    }
     fcShowFeedback(isCorrect, isCorrect ? null : correctText, qId);
 }
 
@@ -1401,6 +1426,7 @@ function renderFcFinal() {
     const total = fcQueue.length;
     const pct =
         total > 0 ? Math.round((fcCorrect / total) * 100) : 0;
+    const extraRetries = Math.max(total - fcSessionInitialLength, 0);
     let emoji = "";
     let msg = "Nevzdávaj to!";
     if (pct >= 90) {
@@ -1421,6 +1447,9 @@ function renderFcFinal() {
             <div class="fc-final-score fc-final-score-large">${fcCorrect} / ${total} (${pct}%)</div>
             <div class="fc-final-detail">
                 ${fcCorrect} správnych &nbsp;|&nbsp; ${fcWrong} nesprávnych
+            </div>
+            <div class="fc-final-detail">
+                ${extraRetries > 0 ? `Vrátané otázky navyše: ${extraRetries}` : "Bez vrátených otázok navyše"}
             </div>
             <div class="fc-final-actions">
                 <button class="fc-btn fc-btn-next" data-fc-action="restart">Znovu (zamiešaj)</button>
