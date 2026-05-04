@@ -1,0 +1,54 @@
+# Example input for generate_quiz_set.py
+# Run:
+#   python3 generate_quiz_set.py context/quiz_set.example.yaml
+# By default this also registers the generated set in confg.js.
+# Use --no-register-config to skip that step.
+
+set_id: "example/demo-quiz"
+label: "Example Demo Quiz"
+title: "Ukážkový kvíz"
+sections:
+  - title: "1. Základy"
+    questions:
+      - type: "mcq"
+        label: "1. Ktorá dátová štruktúra funguje ako FIFO fronta?"
+        answer: "b"
+        options:
+          a: "Stack"
+          b: "Queue"
+          c: "Tree"
+          d: "Graph"
+        explanation: "FIFO znamená first in, first out, čo zodpovedá queue."
+
+      - type: "text"
+        label: "2. Rozpíš skratku API."
+        keywords:
+          - "application programming interface"
+          - "api = application programming interface"
+        placeholder: "Napíš odpoveď"
+        hint: "Stačí anglický plný názov."
+        explanation: "API je skratka pre Application Programming Interface."
+
+  - title: "2. HTML a CSS"
+    questions:
+      - type: "mcq"
+        label_html: "1. Ktorý HTML tag sa používa na vloženie inline <code>kódu</code>?"
+        answer: "c"
+        options:
+          a: "<pre>"
+          b: "<script>"
+          c: "<code>"
+          d: "<style>"
+        explanation: "Inline úseky kódu sa značia tagom <code>."
+
+      - type: "mcq_multi"
+        label: "2. Ktoré tvrdenia o CSS sú správne?"
+        answer:
+          - "a"
+          - "c"
+        options:
+          a: "CSS vie štýlovať HTML prvky."
+          b: "CSS je databázový jazyk."
+          c: "Jeden selektor môže cieliť viac prvkov."
+          d: "CSS nahrádza JavaScript."
+        explanation: "Správne sú a a c; CSS slúži na prezentáciu, nie na databázy ani plnú náhradu JS."

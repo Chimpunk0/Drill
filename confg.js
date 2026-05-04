@@ -33,6 +33,12 @@ window.QUIZ_SETS = window.QUIZ_SETS || [
         fragEmbed: "quiz_sets/sos-skuska/sos-skuska.frag.embed.js",
         explanations: "quiz_sets/sos-skuska/sos-skuska.explanations.js",
     },
+    {
+        id: "bpc-ic1-2026/skuska",
+        label: "BPC-IC1 2026 – Skúška",
+        fragEmbed: "quiz_sets/bpc-ic1-2026/skuska.frag.embed.js",
+        explanations: "quiz_sets/bpc-ic1-2026/skuska.explanations.js",
+    },
 ];
 
 // Read active set from URL param ?set=<id>, fall back to first registered set

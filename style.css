@@ -383,7 +383,8 @@ h1 {
     background: rgba(255, 255, 255, 0.06);
 }
 
-.option input[type="radio"] {
+.option input[type="radio"],
+.option input[type="checkbox"] {
     accent-color: var(--accent-color);
     width: 1.1rem;
     height: 1.1rem;
@@ -813,6 +814,10 @@ h1 {
     border-color: var(--success);
     background: color-mix(in srgb, var(--success) 10%, transparent);
     color: var(--success);
+}
+.fc-option.selected {
+    border-color: var(--accent-color);
+    background: color-mix(in srgb, var(--accent-color) 12%, transparent);
 }
 .fc-option.wrong {
     border-color: var(--error);
@@ -1457,19 +1462,24 @@ h1 {
     border-radius: 4px;
     transition: all 0.2s;
     color: var(--text-secondary);
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .theme-toggle img {
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     opacity: 0.7;
     transition: opacity 0.2s, filter 0.2s;
     filter: brightness(0) opacity(0.6);
+}
+
+.theme-toggle img[data-theme-icon="sun"] {
+    width: 28px;
+    height: 28px;
 }
 
 [data-theme="dark"] .theme-toggle img {

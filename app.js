@@ -86,6 +86,12 @@ function saveAnswers() {
             answersState["r_" + r.name] = r.value;
         });
     document
+        .querySelectorAll('input[type="checkbox"]')
+        .forEach((cb) => {
+            if (!answersState["c_" + cb.name]) answersState["c_" + cb.name] = [];
+            if (cb.checked) answersState["c_" + cb.name].push(cb.value);
+        });
+    document
         .querySelectorAll('input[type="text"]')
         .forEach((inp) => {
             if (inp.value) answersState["t_" + inp.id] = inp.value;
@@ -160,6 +166,14 @@ function loadAnswers() {
                     `input[name="${name}"][value="${val}"]`,
                 );
                 if (radio) radio.checked = true;
+            } else if (key.startsWith("c_")) {
+                const name = key.slice(2);
+                const values = Array.isArray(val) ? val : [];
+                document
+                    .querySelectorAll(`input[type="checkbox"][name="${name}"]`)
+                    .forEach((cb) => {
+                        cb.checked = values.includes(cb.value);
+                    });
             } else if (key.startsWith("t_")) {
                 const id = key.slice(2);
                 const textInput = document.getElementById(id);
@@ -189,6 +203,16 @@ function syncFlashcardTextAnswer(qId, value) {
     const input = document.getElementById(`${qId}-input`);
     if (!input || input.type !== "text") return;
     input.value = value;
+    saveAnswers();
+}
+
+function syncFlashcardCheckboxAnswer(qId, values) {
+    const selected = new Set(values);
+    document
+        .querySelectorAll(`input[type="checkbox"][name="${qId}"]`)
+        .forEach((cb) => {
+            cb.checked = selected.has(cb.value);
+        });
     saveAnswers();
 }
 
@@ -274,6 +298,9 @@ function practiceWrongAnswers() {
         if (!q) return;
         q.querySelectorAll('input[type="radio"]').forEach(
             (r) => (r.checked = false),
+        );
+        q.querySelectorAll('input[type="checkbox"]').forEach(
+            (c) => (c.checked = false),
         );
         q.querySelectorAll('input[type="text"]').forEach(
             (t) => (t.value = ""),
@@ -565,12 +592,22 @@ function bindUiEvents() {
         flashcardOverlay.addEventListener("click", (e) => {
             const opt = e.target.closest(".fc-option[data-fc-value]");
             if (opt) {
-                fcSelectOption(opt, opt.dataset.fcValue, opt.dataset.fcCorrect, opt.dataset.fcQid);
+                if (opt.dataset.fcKind === "checkbox") {
+                    fcToggleMultiOption(opt);
+                } else {
+                    fcSelectOption(opt, opt.dataset.fcValue, opt.dataset.fcCorrect, opt.dataset.fcQid);
+                }
                 return;
             }
             const submitBtn = e.target.closest("[data-fc-submit]");
             if (submitBtn) {
                 submitCurrentFlashcardText();
+                return;
+            }
+            const submitMultiBtn = e.target.closest("[data-fc-submit-multi]");
+            if (submitMultiBtn) {
+                const current = fcQueue[fcIndex];
+                if (current) fcSubmitMulti(current.qId, current.correctVal);
                 return;
             }
             const action = e.target.closest("[data-fc-action]");
@@ -897,6 +934,46 @@ function evaluateQuiz() {
                         correctText,
                     );
                 }
+            } else if (q.querySelector('input[type="checkbox"]')) {
+                const selected = Array.from(
+                    q.querySelectorAll(`input[type="checkbox"][name="${qId}"]:checked`),
+                ).map((cb) => cb.value);
+                const correctValues = parseMultiAnswerValues(correctVal);
+                const correctText = getOptionTextList(q, correctValues);
+                const isCorrect =
+                    selected.length === correctValues.length &&
+                    selected.every((value) => correctValues.includes(value));
+                if (selected.length === 0) {
+                    incorrectQuestionIds.push(qId);
+                    feedbackEl.outerHTML = buildFeedbackHTML(
+                        qId,
+                        "Nezodpovedané.",
+                        "incorrect",
+                        explanation,
+                        correctText,
+                    );
+                } else {
+                    answered++;
+                    if (isCorrect) {
+                        score++;
+                        feedbackEl.outerHTML = buildFeedbackHTML(
+                            qId,
+                            "Správne!",
+                            "correct",
+                            explanation,
+                            null,
+                        );
+                    } else {
+                        incorrectQuestionIds.push(qId);
+                        feedbackEl.outerHTML = buildFeedbackHTML(
+                            qId,
+                            "Nesprávne.",
+                            "incorrect",
+                            explanation,
+                            correctText,
+                        );
+                    }
+                }
             } else if (q.querySelector('input[type="text"]')) {
                 const input = document.getElementById(
                     `${qId}-input`,
@@ -1004,6 +1081,9 @@ function clearQuiz() {
         .querySelectorAll('input[type="radio"]')
         .forEach((r) => (r.checked = false));
     document
+        .querySelectorAll('input[type="checkbox"]')
+        .forEach((c) => (c.checked = false));
+    document
         .querySelectorAll('input[type="text"]')
         .forEach((i) => (i.value = ""));
     // Restore feedback divs (they may have been replaced by outerHTML)
@@ -1042,6 +1122,17 @@ function getOptionText(questionEl, val) {
     return val;
 }
 
+function parseMultiAnswerValues(answer) {
+    return answer
+        .split(",")
+        .map((part) => part.trim())
+        .filter(Boolean);
+}
+
+function getOptionTextList(questionEl, values) {
+    return values.map((val) => getOptionText(questionEl, val)).join(" / ");
+}
+
 // ── FLASHCARD MODE ────────────────────────────────────────────────────────
 function getActiveSectionIds() {
     return Array.from(
@@ -1061,15 +1152,19 @@ function buildFcQueue() {
             const qId = q.id;
             const correctVal = q.getAttribute("data-answer");
             const keywords = q.getAttribute("data-keywords");
-            const isText = !!q.querySelector('input[type="text"]');
+            const kind = q.querySelector('input[type="text"]')
+                ? "text"
+                : q.querySelector('input[type="checkbox"]')
+                  ? "checkbox"
+                  : "radio";
             const labelEl = q.querySelector(".question-label");
             const labelHTML = labelEl ? labelEl.innerHTML : "";
 
             let options = [];
-            if (!isText) {
+            if (kind !== "text") {
                 q.querySelectorAll(".option").forEach((opt) => {
                     const inp = opt.querySelector(
-                        'input[type="radio"]',
+                        'input[type="radio"], input[type="checkbox"]',
                     );
                     const span = opt.querySelector("span");
                     if (inp && span)
@@ -1083,7 +1178,7 @@ function buildFcQueue() {
                 qId,
                 correctVal,
                 keywords,
-                isText,
+                kind,
                 labelHTML,
                 options,
             });
@@ -1178,7 +1273,7 @@ function renderFcCard() {
 
     const letters = ["A", "B", "C", "D", "E"];
     let optionsHTML = "";
-    if (!q.isText) {
+    if (q.kind === "radio") {
         optionsHTML =
             `<div class="fc-options">` +
             opts
@@ -1191,6 +1286,23 @@ function renderFcCard() {
                 )
                 .join("") +
             `</div>`;
+    } else if (q.kind === "checkbox") {
+        optionsHTML = `
+            <div class="fc-options fc-options-multi">
+                ${opts
+                    .map(
+                        (o, i) => `
+                    <button class="fc-option fc-option-multi" data-fc-value="${o.value}" data-fc-correct="${q.correctVal}" data-fc-qid="${q.qId}" data-fc-kind="checkbox">
+                        <span class="fc-option-letter">${letters[i]}</span>
+                        <span>${o.html}</span>
+                    </button>`,
+                    )
+                    .join("")}
+            </div>
+            <button class="fc-submit-text" data-fc-submit-multi="true">Potvrdiť výber</button>
+        `;
+        document.getElementById("fc-hint").textContent =
+            "Vyber všetky správne možnosti a potvrď Enterom";
     } else {
         const hint = document
             .getElementById(q.qId)
@@ -1214,7 +1326,7 @@ function renderFcCard() {
     `;
 
     // focus text input
-    if (q.isText) {
+    if (q.kind === "text") {
         setTimeout(() => {
             const inp = document.getElementById("fc-text-input");
             if (inp) inp.focus();
@@ -1273,14 +1385,53 @@ function fcSelectOption(btn, selectedVal, correctVal, qId) {
     fcShowFeedback(isCorrect, isCorrect ? null : correctText, qId);
 }
 
+function fcToggleMultiOption(btn) {
+    if (fcAnswered) return;
+    btn.classList.toggle("selected");
+}
+
+function fcSubmitMulti(qId, correctVal) {
+    if (fcAnswered) return;
+    const buttons = Array.from(document.querySelectorAll(".fc-option"));
+    const selectedValues = buttons
+        .filter((btn) => btn.classList.contains("selected"))
+        .map((btn) => btn.dataset.fcValue);
+    if (selectedValues.length === 0) return;
+
+    const correctValues = parseMultiAnswerValues(correctVal);
+    const isCorrect =
+        selectedValues.length === correctValues.length &&
+        selectedValues.every((value) => correctValues.includes(value));
+
+    syncFlashcardCheckboxAnswer(qId, selectedValues);
+    buttons.forEach((btn) => {
+        btn.disabled = true;
+        const value = btn.dataset.fcValue;
+        const shouldBeSelected = correctValues.includes(value);
+        const isSelected = selectedValues.includes(value);
+        if (shouldBeSelected) btn.classList.add("correct");
+        if (isSelected && !shouldBeSelected) btn.classList.add("wrong");
+    });
+    if (!isCorrect) {
+        fcQueue.push({ ...fcQueue[fcIndex] });
+    }
+    const correctText = fcGetCorrectText(qId, correctVal);
+    fcShowFeedback(isCorrect, isCorrect ? null : correctText, qId);
+}
+
 function fcGetCorrectText(qId, correctVal) {
     const q = fcQueue[fcIndex];
     if (!q) return correctVal;
-    const opt = q.options.find((o) => o.value === correctVal);
-    if (opt) {
-        const tmp = document.createElement("div");
-        tmp.innerHTML = opt.html;
-        return tmp.textContent.trim().substring(0, 120);
+    const values = parseMultiAnswerValues(correctVal);
+    const matches = q.options.filter((o) => values.includes(o.value));
+    if (matches.length > 0) {
+        return matches
+            .map((opt) => {
+                const tmp = document.createElement("div");
+                tmp.innerHTML = opt.html;
+                return tmp.textContent.trim().substring(0, 120);
+            })
+            .join(" / ");
     }
     return correctVal;
 }
@@ -1387,6 +1538,7 @@ document.addEventListener("keydown", (e) => {
     const flashcardsOpen =
         flashcardOverlay && flashcardOverlay.classList.contains("active");
     if (flashcardsOpen) {
+        const currentFlashcard = fcQueue[fcIndex];
         if (e.key === "Escape") {
             closeFlashcards();
             return;
@@ -1394,6 +1546,17 @@ document.addEventListener("keydown", (e) => {
         if (isTyping && e.key === "Enter" && !fcAnswered) {
             e.preventDefault();
             submitCurrentFlashcardText();
+            return;
+        }
+        if (
+            !isTyping &&
+            e.key === "Enter" &&
+            !fcAnswered &&
+            currentFlashcard &&
+            currentFlashcard.kind === "checkbox"
+        ) {
+            e.preventDefault();
+            fcSubmitMulti(currentFlashcard.qId, currentFlashcard.correctVal);
             return;
         }
         if (e.key === "ArrowLeft") {
@@ -1545,12 +1708,14 @@ function applyTheme(theme) {
         if (icon) {
             icon.src = "sun-svgrepo-com.svg";
             icon.alt = "Svetlý režim";
+            icon.dataset.themeIcon = "sun";
         }
     } else {
         html.removeAttribute("data-theme");
         if (icon) {
             icon.src = "moon-stars-svgrepo-com.svg";
             icon.alt = "Tmavý režim";
+            icon.dataset.themeIcon = "moon";
         }
     }
 }
@@ -1675,7 +1840,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Auto-save on any input change
     document.addEventListener("change", (e) => {
-        if (e.target.matches('input[type="radio"], input[type="text"]')) {
+        if (e.target.matches('input[type="radio"], input[type="checkbox"], input[type="text"]')) {
             saveAnswers();
         }
     });

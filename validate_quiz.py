@@ -26,6 +26,8 @@ class QuizParser(HTMLParser):
                 "keywords": attrs.get("data-keywords", ""),
                 "radio_names": [],
                 "radio_values": [],
+                "checkbox_names": [],
+                "checkbox_values": [],
                 "text_inputs": 0,
                 "line": self.getpos()[0],
             }
@@ -45,6 +47,9 @@ class QuizParser(HTMLParser):
             if input_type == "radio":
                 self.current["radio_names"].append(attrs.get("name", ""))
                 self.current["radio_values"].append(attrs.get("value", ""))
+            elif input_type == "checkbox":
+                self.current["checkbox_names"].append(attrs.get("name", ""))
+                self.current["checkbox_values"].append(attrs.get("value", ""))
             elif input_type == "text":
                 self.current["text_inputs"] += 1
 
@@ -96,6 +101,18 @@ def validate_fragment(path, explanation_path=None):
                 errors.append(f"{prefix}: radio name should equal question id '{qid}'")
             if question["answer"] not in question["radio_values"]:
                 errors.append(f"{prefix}: data-answer '{question['answer']}' does not match any radio value")
+        elif question["checkbox_values"]:
+            names = set(question["checkbox_names"])
+            if names != {qid}:
+                errors.append(f"{prefix}: checkbox name should equal question id '{qid}'")
+            answer_parts = [part.strip() for part in question["answer"].split(",") if part.strip()]
+            if not answer_parts:
+                errors.append(f"{prefix}: checkbox question '{qid}' must list at least one correct answer")
+            unknown = sorted(set(answer_parts) - set(question["checkbox_values"]))
+            if unknown:
+                errors.append(
+                    f"{prefix}: data-answer values {unknown!r} do not match checkbox values"
+                )
         elif question["text_inputs"]:
             if question["answer"] == "text" and not question["keywords"]:
                 warnings.append(f"{prefix}: text question '{qid}' has data-answer='text' but no data-keywords")

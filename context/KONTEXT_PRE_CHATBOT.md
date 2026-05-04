@@ -10,7 +10,19 @@ Tento projekt je **jednostránkový kvíz** bez backendu: `vba_kviz_v3_1.html` +
 2. **Vysvetlenia** – súbor `quiz_sets/<id>.explanations.js`  
    Formát: pozri **`context/quiz_set.template.explanations.js`**.
 
-3. (Voliteľné) Pripomenúť používateľovi po úprave fragmentu spustiť z koreňa projektu:  
+3. **Vstup pre generátor** – súbor typu `context/*.yaml` alebo vlastný `.yaml`  
+   Ukážka: **`context/quiz_set.example.yaml`**.  
+   Generovanie: `python3 generate_quiz_set.py <spec.yaml>`  
+   Predvolene skript vytvorí `.frag.html`, `.explanations.js`, `.frag.embed.js`
+   a doplní nový entry do `confg.js`. Ak nechcete registráciu, použite
+   `--no-register-config`.
+
+4. **Import z Markdownu** – ak je zdroj v štruktúrovanom `.md` formáte  
+   Generovanie: `python3 import_quiz_markdown.py <quiz.md> --set-id <id> --label "<label>"`  
+   Skript vytvorí YAML spec do `context/imported/`, potom z neho vygeneruje
+   `.frag.html`, `.explanations.js`, `.frag.embed.js` a predvolene doplní aj `confg.js`.
+
+5. (Voliteľné) Pripomenúť používateľovi po úprave fragmentu spustiť z koreňa projektu:  
    `python3 embed_quiz_fragment.py --id <id>`  
    aby sa aktualizoval aj `quiz_sets/<id>.frag.embed.js` (potrebný pri otvorení HTML z disku bez servera).
 
@@ -22,6 +34,7 @@ Tento projekt je **jednostránkový kvíz** bez backendu: `vba_kviz_v3_1.html` +
 | Názov sekcie | `<div class="section-title">…</div>` – viditeľný text pre sidebar. |
 | Otázka | `<div class="question" id="qS_N" …>` – **unikátne** id; `S` = číslo sekcie, `N` = poradie v sekcii. |
 | MCQ | `data-answer="a"` (alebo b,c,…) = hodnota **`value`** správneho `<input type="radio">`. Atribút **`name`** na rádiách = **rovnaké ako id otázky**. |
+| Multi-answer MCQ | `data-answer="a,c,d"` = čiarkou oddelené hodnoty správnych `<input type="checkbox">`. Atribút **`name`** na checkboxoch = **rovnaké ako id otázky**. |
 | Možnosti MCQ | Text v `<span>` píšte bez prefixov `a)`, `b)`, `c)`… Písmeno odpovede patrí iba do `value` inputu a UI si značenie rieši samo. |
 | Otvorená odpoveď | `data-answer="text"` + **`data-keywords="var1,var2,…"`** (čiarkou; vyhodnotenie: normalizovaná odpoveď musí **obsahovať** aspoň jednu variantu). |
 | Textový vstup | `<input type="text" id="{questionId}-input" …>` – **povinne** suffix `-input` za id otázky. |
