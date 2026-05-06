@@ -862,9 +862,13 @@ function buildFeedbackHTML(
     cssClass,
     explanation,
     correctAnswerText,
+    extraText = null,
 ) {
     let html = `<div class="feedback ${cssClass} feedback-visible">`;
     html += `<span>${statusText}</span>`;
+    if (extraText) {
+        html += `<div class="feedback-partial">${escapeHtml(extraText)}</div>`;
+    }
     if (correctAnswerText) {
         html += `<div class="feedback-correct-answer">Správna odpoveď: <strong>${escapeHtml(correctAnswerText)}</strong></div>`;
     }
@@ -943,6 +947,11 @@ function evaluateQuiz() {
                 ).map((cb) => cb.value);
                 const correctValues = parseMultiAnswerValues(correctVal);
                 const correctText = getOptionTextList(q, correctValues);
+                const partialText = getPartialMultiAnswerText(
+                    selected,
+                    correctValues,
+                );
+                setQuestionMultiOptionStates(q, selected, correctValues);
                 const isCorrect =
                     selected.length === correctValues.length &&
                     selected.every((value) => correctValues.includes(value));
@@ -974,6 +983,7 @@ function evaluateQuiz() {
                             "incorrect",
                             explanation,
                             correctText,
+                            partialText,
                         );
                     }
                 }
@@ -1089,6 +1099,11 @@ function clearQuiz() {
     document
         .querySelectorAll('input[type="text"]')
         .forEach((i) => (i.value = ""));
+    document
+        .querySelectorAll(".option, .fc-option")
+        .forEach((el) =>
+            el.classList.remove("partial-correct", "correct", "wrong"),
+        );
     // Restore feedback divs (they may have been replaced by outerHTML)
     document.querySelectorAll(".question").forEach((q) => {
         const existing = document.getElementById(`${q.id}-fb`);
@@ -1134,6 +1149,37 @@ function parseMultiAnswerValues(answer) {
 
 function getOptionTextList(questionEl, values) {
     return values.map((val) => getOptionText(questionEl, val)).join(" / ");
+}
+
+function getPartialMultiAnswerText(selectedValues, correctValues) {
+    const matchedCount = selectedValues.filter((value) =>
+        correctValues.includes(value),
+    ).length;
+    if (matchedCount <= 0 || matchedCount >= correctValues.length) {
+        return null;
+    }
+    return `Označené správne odpovede: ${matchedCount}/${correctValues.length}`;
+}
+
+function setQuestionMultiOptionStates(questionEl, selectedValues, correctValues) {
+    if (!questionEl) return;
+    questionEl.querySelectorAll(".option").forEach((optionEl) => {
+        optionEl.classList.remove("partial-correct", "correct", "wrong");
+        const input = optionEl.querySelector(
+            'input[type="radio"], input[type="checkbox"]',
+        );
+        if (!input) return;
+        const value = input.value;
+        const isCorrect = correctValues.includes(value);
+        const isSelected = selectedValues.includes(value);
+        if (isCorrect && !isSelected) {
+            optionEl.classList.add("partial-correct");
+        } else if (isCorrect && isSelected) {
+            optionEl.classList.add("correct");
+        } else if (isSelected && !isCorrect) {
+            optionEl.classList.add("wrong");
+        }
+    });
 }
 
 function escapeHtml(text) {
@@ -1423,7 +1469,7 @@ function renderFcCard() {
     }
 }
 
-function fcShowFeedback(isCorrect, correctText, qId) {
+function fcShowFeedback(isCorrect, correctText, qId, extraText = null) {
     if (fcAnswered) return;
     fcAnswered = true;
     if (isCorrect) fcCorrect++;
@@ -1436,6 +1482,9 @@ function fcShowFeedback(isCorrect, correctText, qId) {
         !isCorrect && correctText
             ? `<div class="fc-correct-answer">Správna odpoveď: ${escapeHtml(correctText)}</div>`
             : "";
+    const extraBlock = extraText
+        ? `<div class="fc-feedback-partial">${escapeHtml(extraText)}</div>`
+        : "";
     const expBlock = exp
         ? `<div class="fc-explanation">${escapeHtml(exp)}</div>`
         : "";
@@ -1444,6 +1493,7 @@ function fcShowFeedback(isCorrect, correctText, qId) {
         "fc-feedback active " + (isCorrect ? "correct" : "wrong");
     fb.innerHTML =
         (isCorrect ? "Správne!" : "Nesprávne.") +
+        extraBlock +
         correctBlock +
         expBlock;
 
@@ -1491,6 +1541,7 @@ function fcSubmitMulti(qId, correctVal) {
     const isCorrect =
         selectedValues.length === correctValues.length &&
         selectedValues.every((value) => correctValues.includes(value));
+    const partialText = getPartialMultiAnswerText(selectedValues, correctValues);
 
     syncFlashcardCheckboxAnswer(qId, selectedValues);
     buttons.forEach((btn) => {
@@ -1499,13 +1550,19 @@ function fcSubmitMulti(qId, correctVal) {
         const shouldBeSelected = correctValues.includes(value);
         const isSelected = selectedValues.includes(value);
         if (shouldBeSelected) btn.classList.add("correct");
+        if (shouldBeSelected && !isSelected) btn.classList.add("partial-correct");
         if (isSelected && !shouldBeSelected) btn.classList.add("wrong");
     });
     if (!isCorrect) {
         fcQueue.push({ ...fcQueue[fcIndex] });
     }
     const correctText = fcGetCorrectText(qId, correctVal);
-    fcShowFeedback(isCorrect, isCorrect ? null : correctText, qId);
+    fcShowFeedback(
+        isCorrect,
+        isCorrect ? null : correctText,
+        qId,
+        partialText,
+    );
 }
 
 function fcGetCorrectText(qId, correctVal) {

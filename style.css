@@ -22,6 +22,7 @@
     --text-secondary: #6b6b6b;
     --success: #2e7d32;
     --error: #c62828;
+    --warning: #f59e0b;
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
     --overlay-bg: rgba(0, 0, 0, 0.35);
@@ -40,6 +41,7 @@
     --text-secondary: #a0a0a0;
     --success: #4caf50;
     --error: #ef5350;
+    --warning: #fbbf24;
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
     --overlay-bg: rgba(0, 0, 0, 0.75);
@@ -398,6 +400,30 @@ h1 {
     background: rgba(255, 255, 255, 0.06);
 }
 
+.option.partial-correct {
+    background: color-mix(in srgb, var(--warning) 18%, transparent);
+}
+
+[data-theme="dark"] .option.partial-correct {
+    background: color-mix(in srgb, var(--warning) 22%, transparent);
+}
+
+.option.correct {
+    background: color-mix(in srgb, var(--success) 12%, transparent);
+}
+
+[data-theme="dark"] .option.correct {
+    background: color-mix(in srgb, var(--success) 16%, transparent);
+}
+
+.option.wrong {
+    background: color-mix(in srgb, var(--error) 12%, transparent);
+}
+
+[data-theme="dark"] .option.wrong {
+    background: color-mix(in srgb, var(--error) 16%, transparent);
+}
+
 .option input[type="radio"],
 .option input[type="checkbox"] {
     accent-color: var(--accent-color);
@@ -460,6 +486,11 @@ h1 {
     font-size: 0.88rem;
     opacity: 0.85;
     font-style: italic;
+}
+
+.feedback-partial {
+    margin-top: 0.4rem;
+    font-weight: 600;
 }
 
 .feedback.correct {
@@ -839,6 +870,11 @@ h1 {
     background: color-mix(in srgb, var(--error) 10%, transparent);
     color: var(--error);
 }
+.fc-option.partial-correct {
+    border-color: var(--warning);
+    background: color-mix(in srgb, var(--warning) 16%, transparent);
+    color: var(--text-primary);
+}
 .fc-option:disabled {
     cursor: default;
 }
@@ -850,7 +886,8 @@ h1 {
     margin-top: 0.05rem;
 }
 .fc-option.correct .fc-option-letter,
-.fc-option.wrong .fc-option-letter {
+.fc-option.wrong .fc-option-letter,
+.fc-option.partial-correct .fc-option-letter {
     opacity: 1;
 }
 
@@ -931,6 +968,12 @@ h1 {
     border-top: 1px solid var(--border-color);
     font-style: italic;
     opacity: 0.85;
+    color: var(--text-primary);
+}
+
+.fc-feedback-partial {
+    margin-top: 0.4rem;
+    font-weight: 600;
     color: var(--text-primary);
 }
 
