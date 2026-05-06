@@ -866,10 +866,10 @@ function buildFeedbackHTML(
     let html = `<div class="feedback ${cssClass} feedback-visible">`;
     html += `<span>${statusText}</span>`;
     if (correctAnswerText) {
-        html += `<div class="feedback-correct-answer">Správna odpoveď: <strong>${correctAnswerText}</strong></div>`;
+        html += `<div class="feedback-correct-answer">Správna odpoveď: <strong>${escapeHtml(correctAnswerText)}</strong></div>`;
     }
     if (explanation) {
-        html += `<div class="feedback-explanation">${explanation}</div>`;
+        html += `<div class="feedback-explanation">${escapeHtml(explanation)}</div>`;
     }
     html += `</div>`;
     return html;
@@ -896,7 +896,10 @@ function evaluateQuiz() {
             const feedbackEl = document.getElementById(`${qId}-fb`);
             const correctVal = q.getAttribute("data-answer");
             const keywords = q.getAttribute("data-keywords");
-            const explanation = EXPLANATIONS[qId] || null;
+            const explanation = getExplanation(
+                qId,
+                getAutoExplanationFromQuestionEl(q),
+            );
             if (!feedbackEl) return;
 
             if (q.querySelector('input[type="radio"]')) {
@@ -906,13 +909,13 @@ function evaluateQuiz() {
                 const correctText = getOptionText(q, correctVal);
                 if (!selected) {
                     incorrectQuestionIds.push(qId);
-                    feedbackEl.outerHTML = buildFeedbackHTML(
-                        qId,
-                        "Nezodpovedané.",
-                        "incorrect",
-                        explanation,
-                        correctText,
-                    );
+                        feedbackEl.outerHTML = buildFeedbackHTML(
+                            qId,
+                            "Nezodpovedané.",
+                            "incorrect",
+                            explanation,
+                            correctText,
+                        );
                 } else if (selected.value === correctVal) {
                     score++;
                     answered++;
@@ -990,15 +993,15 @@ function evaluateQuiz() {
 
                 if (!userVal) {
                     incorrectQuestionIds.push(qId);
-                    feedbackEl.outerHTML = buildFeedbackHTML(
-                        qId,
-                        "Nezodpovedané.",
-                        "incorrect",
-                        explanation,
-                        acceptedAnswers.length
-                            ? acceptedAnswers[0]
-                            : null,
-                    );
+                        feedbackEl.outerHTML = buildFeedbackHTML(
+                            qId,
+                            "Nezodpovedané.",
+                            "incorrect",
+                            explanation,
+                            acceptedAnswers.length
+                                ? acceptedAnswers[0]
+                                : null,
+                        );
                 } else {
                     let isCorrect = false;
                     if (keywords) {
@@ -1133,6 +1136,85 @@ function getOptionTextList(questionEl, values) {
     return values.map((val) => getOptionText(questionEl, val)).join(" / ");
 }
 
+function escapeHtml(text) {
+    return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+}
+
+function getAutoExplanationFromQuestionEl(questionEl) {
+    if (!questionEl) return null;
+    const correctVal = questionEl.getAttribute("data-answer") || "";
+    const keywords = questionEl.getAttribute("data-keywords") || "";
+    if (questionEl.querySelector('input[type="radio"]')) {
+        const correctText = getOptionText(questionEl, correctVal);
+        return `Správná odpověď je ${correctText}.`;
+    }
+    if (questionEl.querySelector('input[type="checkbox"]')) {
+        const parts = parseMultiAnswerValues(correctVal);
+        const correctText = getOptionTextList(questionEl, parts);
+        return `Správné odpovědi jsou ${correctText}.`;
+    }
+    if (keywords) {
+        const accepted = keywords
+            .split(",")
+            .map((k) => k.trim())
+            .filter(Boolean);
+        if (accepted.length > 0) {
+            return `Akceptuje se odpověď: ${accepted.join(" / ")}.`;
+        }
+    }
+    if (correctVal && correctVal !== "text") {
+        return `Správná odpověď je ${correctVal}.`;
+    }
+    return null;
+}
+
+function getAutoExplanationFromFcQuestion(q) {
+    if (!q) return null;
+    const correctVal = q.correctVal || "";
+    if (q.kind === "radio") {
+        const match = q.options.find((o) => o.value === correctVal);
+        if (match) {
+            const tmp = document.createElement("div");
+            tmp.innerHTML = match.html;
+            return `Správná odpověď je ${tmp.textContent.trim()}.`;
+        }
+    } else if (q.kind === "checkbox") {
+        const values = parseMultiAnswerValues(correctVal);
+        const tmp = document.createElement("div");
+        const texts = q.options
+            .filter((o) => values.includes(o.value))
+            .map((o) => {
+                tmp.innerHTML = o.html;
+                return tmp.textContent.trim();
+            });
+        if (texts.length > 0) {
+            return `Správné odpovědi jsou ${texts.join(" / ")}.`;
+        }
+    }
+    if (q.keywords) {
+        const accepted = q.keywords
+            .split(",")
+            .map((k) => k.trim())
+            .filter(Boolean);
+        if (accepted.length > 0) {
+            return `Akceptuje se odpověď: ${accepted.join(" / ")}.`;
+        }
+    }
+    if (correctVal && correctVal !== "text") {
+        return `Správná odpověď je ${correctVal}.`;
+    }
+    return null;
+}
+
+function getExplanation(qId, fallback) {
+    return EXPLANATIONS[qId] || fallback || null;
+}
+
 // ── FLASHCARD MODE ────────────────────────────────────────────────────────
 function getActiveSectionIds() {
     return Array.from(
@@ -1159,6 +1241,8 @@ function buildFcQueue() {
                   : "radio";
             const labelEl = q.querySelector(".question-label");
             const labelHTML = labelEl ? labelEl.innerHTML : "";
+            const imageEl = q.querySelector("img");
+            const imageHTML = imageEl ? imageEl.outerHTML : "";
 
             let options = [];
             if (kind !== "text") {
@@ -1180,6 +1264,7 @@ function buildFcQueue() {
                 keywords,
                 kind,
                 labelHTML,
+                imageHTML,
                 options,
             });
         });
@@ -1318,9 +1403,13 @@ function renderFcCard() {
         </div>`;
     }
 
-    const explanation = EXPLANATIONS[q.qId] || null;
+    const explanation = getExplanation(
+        q.qId,
+        getAutoExplanationFromFcQuestion(q),
+    );
     body.innerHTML = `
         <div class="fc-question-text">${q.labelHTML}</div>
+        ${q.imageHTML ? `<div class="fc-question-image">${q.imageHTML}</div>` : ""}
         ${optionsHTML}
         <div class="fc-feedback" id="fc-feedback"></div>
     `;
@@ -1342,13 +1431,13 @@ function fcShowFeedback(isCorrect, correctText, qId) {
     updateFcProgress();
 
     const fb = document.getElementById("fc-feedback");
-    const exp = EXPLANATIONS[qId] || null;
+    const exp = getExplanation(qId, getAutoExplanationFromFcQuestion(fcQueue[fcIndex]));
     const correctBlock =
         !isCorrect && correctText
-            ? `<div class="fc-correct-answer">Správna odpoveď: ${correctText}</div>`
+            ? `<div class="fc-correct-answer">Správna odpoveď: ${escapeHtml(correctText)}</div>`
             : "";
     const expBlock = exp
-        ? `<div class="fc-explanation">${exp}</div>`
+        ? `<div class="fc-explanation">${escapeHtml(exp)}</div>`
         : "";
 
     fb.className =

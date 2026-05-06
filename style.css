@@ -359,6 +359,21 @@ h1 {
     color: var(--text-primary);
 }
 
+.question-image,
+.fc-question-image img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0.75rem 0 1rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    background: var(--secondary-bg);
+}
+
+.fc-question-image {
+    margin-bottom: 1rem;
+}
+
 .options {
     display: flex;
     flex-direction: column;
