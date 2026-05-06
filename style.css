@@ -401,11 +401,12 @@ h1 {
 }
 
 .option.partial-correct {
-    background: color-mix(in srgb, var(--warning) 18%, transparent);
+    animation: partial-correct-flash 1s ease-in-out 3;
+    background: color-mix(in srgb, var(--success) 16%, transparent);
 }
 
 [data-theme="dark"] .option.partial-correct {
-    background: color-mix(in srgb, var(--warning) 22%, transparent);
+    background: color-mix(in srgb, var(--success) 22%, transparent);
 }
 
 .option.correct {
@@ -871,8 +872,9 @@ h1 {
     color: var(--error);
 }
 .fc-option.partial-correct {
-    border-color: var(--warning);
-    background: color-mix(in srgb, var(--warning) 16%, transparent);
+    animation: partial-correct-flash 1s ease-in-out 3;
+    border-color: var(--success);
+    background: color-mix(in srgb, var(--success) 16%, transparent);
     color: var(--text-primary);
 }
 .fc-option:disabled {
@@ -889,6 +891,16 @@ h1 {
 .fc-option.wrong .fc-option-letter,
 .fc-option.partial-correct .fc-option-letter {
     opacity: 1;
+}
+
+@keyframes partial-correct-flash {
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 color-mix(in srgb, var(--success) 0%, transparent);
+    }
+    50% {
+        box-shadow: 0 0 0 4px color-mix(in srgb, var(--success) 24%, transparent);
+    }
 }
 
 /* Text input for open questions */
