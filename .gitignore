@@ -19,4 +19,6 @@ node_modules/
 # Quiz files
 *.pdf
 *.txt
-s
+
+# AI agent
+AGENTS.md

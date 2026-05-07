@@ -225,6 +225,15 @@ function resetFlashcardFooter() {
     if (hint) hint.textContent = "";
 }
 
+function setFlashcardsActive(active) {
+    const normalView = document.getElementById("normal-mode-view");
+    const flashcardView = document.getElementById("flashcard-view");
+    if (!normalView || !flashcardView) return;
+    normalView.classList.toggle("hidden", active);
+    flashcardView.classList.toggle("active", active);
+    flashcardView.setAttribute("aria-hidden", active ? "false" : "true");
+}
+
 // ─── Shuffle helpers ─────────────────────────────────────────────────────
 function shuffleArray(arr) {
     for (let i = arr.length - 1; i > 0; i--) {
@@ -456,18 +465,14 @@ function updateRightSidebarAvailability() {
     const rightSidebar = document.getElementById("right-sidebar");
     const mainContent = document.getElementById("main-content");
     if (!btn || !rightSidebar || !mainContent) return;
-    if (!sidebarVisible) {
-        btn.classList.add("hidden");
+    btn.classList.remove("hidden");
+    if (!rightSidebarVisible) {
         rightSidebar.classList.add("hidden");
         mainContent.classList.remove("with-right-sidebar");
-        rightSidebarVisible = false;
-    } else {
-        btn.classList.remove("hidden");
     }
 }
 
 function toggleRightSidebar() {
-    if (!sidebarVisible) return;
     const rightSidebar = document.getElementById("right-sidebar");
     const mainContent = document.getElementById("main-content");
     if (!rightSidebar || !mainContent) return;
@@ -587,9 +592,9 @@ function bindUiEvents() {
     }
 
     // Flashcard body – event delegation for options + submit + final actions
-    const flashcardOverlay = document.getElementById("flashcard-overlay");
-    if (flashcardOverlay) {
-        flashcardOverlay.addEventListener("click", (e) => {
+    const flashcardView = document.getElementById("flashcard-view");
+    if (flashcardView) {
+        flashcardView.addEventListener("click", (e) => {
             const opt = e.target.closest(".fc-option[data-fc-value]");
             if (opt) {
                 if (opt.dataset.fcKind === "checkbox") {
@@ -1337,20 +1342,16 @@ function openFlashcards() {
         return;
     }
     resetFlashcardFooter();
-    document
-        .getElementById("flashcard-overlay")
-        .classList.add("active");
-    document.body.style.overflow = "hidden";
+    setFlashcardsActive(true);
     // close sidebar on mobile
     if (window.innerWidth <= 768 && sidebarVisible) toggleSidebar();
+    window.scrollTo({ top: 0, behavior: "smooth" });
     renderFcCard();
 }
 
 function closeFlashcards() {
-    document
-        .getElementById("flashcard-overlay")
-        .classList.remove("active");
-    document.body.style.overflow = "";
+    setFlashcardsActive(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function submitCurrentFlashcardText() {
@@ -1680,7 +1681,7 @@ document.addEventListener("keydown", (e) => {
         closeShortcutSettings();
         return;
     }
-    const flashcardOverlay = document.getElementById("flashcard-overlay");
+    const flashcardOverlay = document.getElementById("flashcard-view");
     const flashcardsOpen =
         flashcardOverlay && flashcardOverlay.classList.contains("active");
     if (flashcardsOpen) {
