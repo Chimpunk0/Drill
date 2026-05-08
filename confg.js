@@ -14,50 +14,50 @@
 
 // Available quiz sets – add new entries here to expose them in the UI
 window.QUIZ_SETS = window.QUIZ_SETS || [
-    {
-        id: "bpc-vba-2026/default",
-        label: "BPC-VBA 2026",
-        fragEmbed: "quiz_sets/bpc-vba-2026/default.frag.embed.js",
-        explanations: "quiz_sets/bpc-vba-2026/default.explanations.js",
-    },
-    {
-        id: "bpc-sos-2026/polsemestralka",
-        label: "BPC-SOS 2026 – Polsemestralka",
-        fragEmbed: "quiz_sets/bpc-sos-2026/polsemestralka.frag.embed.js",
-        explanations:
-            "quiz_sets/bpc-sos-2026/bpc-sos-2026-polsemestralka.explanations.js",
-    },
-    {
-        id: "sos-skuska/sos-skuska",
-        label: "SOS-SKUSKA (Skúška)",
-        fragEmbed: "quiz_sets/sos-skuska/sos-skuska.frag.embed.js",
-        explanations: "quiz_sets/sos-skuska/sos-skuska.explanations.js",
-    },
-    {
-        id: "bpc-ic1-2026/skuska",
-        label: "BPC-IC1 2026 – Skúška",
-        fragEmbed: "quiz_sets/bpc-ic1-2026/skuska.frag.embed.js",
-        explanations: "quiz_sets/bpc-ic1-2026/skuska.explanations.js",
-    },
-    {
-        id: "bpc-vba/kodove-chytaky-quiz-large",
-        label: "BPC-VBA Kódové Chytáky Large",
-        fragEmbed: "quiz_sets/bpc-vba/kodove-chytaky-quiz-large.frag.embed.js",
-        explanations: "quiz_sets/bpc-vba/kodove-chytaky-quiz-large.explanations.js",
-    },
+  {
+    id: "bpc-vba-2026/default",
+    label: "BPC-VBA 2026",
+    fragEmbed: "quiz_sets/bpc-vba-2026/default.frag.embed.js",
+    explanations: "quiz_sets/bpc-vba-2026/default.explanations.js",
+  },
+  {
+    id: "bpc-sos-2026/polsemestralka",
+    label: "BPC-SOS 2026 – Polsemestralka",
+    fragEmbed: "quiz_sets/bpc-sos-2026/polsemestralka.frag.embed.js",
+    explanations:
+      "quiz_sets/bpc-sos-2026/bpc-sos-2026-polsemestralka.explanations.js",
+  },
+  {
+    id: "sos-skuska/sos-skuska",
+    label: "SOS-SKUSKA (Skúška)",
+    fragEmbed: "quiz_sets/sos-skuska/sos-skuska.frag.embed.js",
+    explanations: "quiz_sets/sos-skuska/sos-skuska.explanations.js",
+  },
+  {
+    id: "bpc-ic1-2026/skuska",
+    label: "BPC-IC1 2026 – Skúška",
+    fragEmbed: "quiz_sets/bpc-ic1-2026/skuska.frag.embed.js",
+    explanations: "quiz_sets/bpc-ic1-2026/skuska.explanations.js",
+  },
+  {
+    id: "bpc-vba/kodove-chytaky-quiz-large",
+    label: "BPC-VBA cviko-skuska large",
+    fragEmbed: "quiz_sets/bpc-vba/kodove-chytaky-quiz-large.frag.embed.js",
+    explanations: "quiz_sets/bpc-vba/kodove-chytaky-quiz-large.explanations.js",
+  },
 ];
 
 // Read active set from URL param ?set=<id>, fall back to first registered set
 (function () {
-    const params = new URLSearchParams(window.location.search);
-    const setParam = params.get("set");
-    if (setParam) window.QUIZ_SET_ID = setParam;
+  const params = new URLSearchParams(window.location.search);
+  const setParam = params.get("set");
+  if (setParam) window.QUIZ_SET_ID = setParam;
 })();
 
 window.QUIZ_SET_ID =
-    window.QUIZ_SET_ID ||
-    (window.QUIZ_SETS[0] && window.QUIZ_SETS[0].id) ||
-    "bpc-vba-2026/default";
+  window.QUIZ_SET_ID ||
+  (window.QUIZ_SETS[0] && window.QUIZ_SETS[0].id) ||
+  "bpc-vba-2026/default";
 window.QUIZ_SET_FRAGMENT_URL = window.QUIZ_SET_FRAGMENT_URL || null;
 window.QUIZ_STORAGE_KEY = window.QUIZ_STORAGE_KEY || null;
 window.QUIZ_TRY_FETCH_FIRST = window.QUIZ_TRY_FETCH_FIRST || false;
