@@ -14,6 +14,7 @@ const state = {
         wrong: 0,
         answered: false,
         sessionInitialLength: 0,
+        sectionIds: [],
     },
 };
 
@@ -70,6 +71,10 @@ Object.defineProperties(window, {
         get: () => state.flashcards.sessionInitialLength,
         set: (value) => (state.flashcards.sessionInitialLength = value),
     },
+    fcSectionIds: {
+        get: () => state.flashcards.sectionIds,
+        set: (value) => (state.flashcards.sectionIds = value),
+    },
 });
 
 // ─── localStorage (oddelené per set, ak nepoužijete QUIZ_STORAGE_KEY) ────
@@ -77,6 +82,7 @@ const STORAGE_KEY =
     window.QUIZ_STORAGE_KEY ||
     `vba_kviz_answers_${window.QUIZ_SET_ID || "default"}`;
 const WRONG_STORAGE_KEY = `${STORAGE_KEY}_wrong_answers`;
+const FLASHCARD_STORAGE_KEY = `${STORAGE_KEY}_flashcards`;
 
 function saveAnswers() {
     const answersState = {};
@@ -188,6 +194,201 @@ function clearStorage() {
     try {
         localStorage.removeItem(STORAGE_KEY);
     } catch (e) {}
+}
+
+function normalizeSectionIds(sectionIds) {
+    return Array.from(new Set(sectionIds || [])).sort();
+}
+
+function getFlashcardSectionKey(sectionIds = fcSectionIds) {
+    return normalizeSectionIds(sectionIds).join("|");
+}
+
+function loadAllFlashcardProgress() {
+    try {
+        const raw = localStorage.getItem(FLASHCARD_STORAGE_KEY);
+        const parsed = raw ? JSON.parse(raw) : {};
+        return parsed && typeof parsed === "object" ? parsed : {};
+    } catch (e) {
+        return {};
+    }
+}
+
+function saveAllFlashcardProgress(progressMap) {
+    try {
+        const keys = Object.keys(progressMap || {});
+        if (keys.length === 0) {
+            localStorage.removeItem(FLASHCARD_STORAGE_KEY);
+            return;
+        }
+        localStorage.setItem(
+            FLASHCARD_STORAGE_KEY,
+            JSON.stringify(progressMap),
+        );
+    } catch (e) {}
+}
+
+function loadFlashcardProgress(sectionIds = fcSectionIds) {
+    const allProgress = loadAllFlashcardProgress();
+    return allProgress[getFlashcardSectionKey(sectionIds)] || null;
+}
+
+function clearFlashcardProgress(sectionIds = fcSectionIds) {
+    const allProgress = loadAllFlashcardProgress();
+    const key = getFlashcardSectionKey(sectionIds);
+    if (!key) {
+        saveAllFlashcardProgress({});
+        return;
+    }
+    delete allProgress[key];
+    saveAllFlashcardProgress(allProgress);
+}
+
+function buildFlashcardSnapshot() {
+    const current = fcQueue[fcIndex];
+    if (!current) return null;
+    const snapshot = {
+        qId: current.qId,
+        kind: current.kind,
+        answered: fcAnswered,
+        nextEnabled: !document.getElementById("fc-next-btn")?.disabled,
+        hintText: document.getElementById("fc-hint")?.textContent || "",
+        feedbackClassName:
+            document.getElementById("fc-feedback")?.className || "fc-feedback",
+        feedbackHTML: document.getElementById("fc-feedback")?.innerHTML || "",
+    };
+    if (current.kind === "text") {
+        const input = document.getElementById("fc-text-input");
+        snapshot.inputValue = input ? input.value : "";
+        snapshot.inputDisabled = !!input?.disabled;
+        snapshot.inputIsCorrect = !!input?.classList.contains("correct");
+        snapshot.inputIsWrong = !!input?.classList.contains("wrong");
+        return snapshot;
+    }
+    snapshot.optionStates = Array.from(
+        document.querySelectorAll(".fc-option"),
+    ).map((btn) => ({
+        value: btn.dataset.fcValue,
+        disabled: btn.disabled,
+        selected: btn.classList.contains("selected"),
+        correct: btn.classList.contains("correct"),
+        wrong: btn.classList.contains("wrong"),
+        partialCorrect: btn.classList.contains("partial-correct"),
+    }));
+    return snapshot;
+}
+
+function saveFlashcardProgress() {
+    if (
+        !Array.isArray(fcSectionIds) ||
+        fcSectionIds.length === 0 ||
+        !Array.isArray(fcQueue) ||
+        fcQueue.length === 0 ||
+        fcIndex >= fcQueue.length
+    ) {
+        clearFlashcardProgress(fcSectionIds);
+        return;
+    }
+    const allProgress = loadAllFlashcardProgress();
+    const key = getFlashcardSectionKey(fcSectionIds);
+    const payload = {
+        sectionIds: normalizeSectionIds(fcSectionIds),
+        queue: fcQueue,
+        index: fcIndex,
+        correct: fcCorrect,
+        wrong: fcWrong,
+        answered: fcAnswered,
+        sessionInitialLength: fcSessionInitialLength,
+        isOpen:
+            !!document
+                .getElementById("flashcard-view")
+                ?.classList.contains("active"),
+        currentCard: buildFlashcardSnapshot(),
+        updatedAt: Date.now(),
+    };
+    allProgress[key] = payload;
+    saveAllFlashcardProgress(allProgress);
+}
+
+function isFlashcardSessionValid(session) {
+    if (!session || !Array.isArray(session.queue) || session.queue.length === 0) {
+        return false;
+    }
+    if (
+        !Array.isArray(session.sectionIds) ||
+        session.sectionIds.length === 0
+    ) {
+        return false;
+    }
+    if (
+        typeof session.index !== "number" ||
+        session.index < 0 ||
+        session.index > session.queue.length
+    ) {
+        return false;
+    }
+    return session.queue.every(
+        (card) =>
+            card &&
+            typeof card.qId === "string" &&
+            document.getElementById(card.qId),
+    );
+}
+
+function applyFlashcardSession(session) {
+    fcSectionIds = normalizeSectionIds(session.sectionIds);
+    fcQueue = session.queue;
+    fcIndex = session.index;
+    fcCorrect = session.correct || 0;
+    fcWrong = session.wrong || 0;
+    fcAnswered = !!session.answered;
+    fcSessionInitialLength =
+        session.sessionInitialLength || session.queue.length;
+}
+
+function restoreFlashcardSession(session) {
+    applyFlashcardSession(session);
+    resetFlashcardFooter();
+    setFlashcardsActive(true);
+    if (window.innerWidth <= 768 && sidebarVisible) toggleSidebar();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    renderFcCard(session.currentCard || null);
+}
+
+function restoreFlashcardSnapshot(snapshot) {
+    if (!snapshot || snapshot.qId !== fcQueue[fcIndex]?.qId) return;
+    const nextBtn = document.getElementById("fc-next-btn");
+    const hint = document.getElementById("fc-hint");
+    const feedback = document.getElementById("fc-feedback");
+    if (nextBtn) nextBtn.disabled = !snapshot.nextEnabled;
+    if (hint) hint.textContent = snapshot.hintText || "";
+    if (feedback) {
+        feedback.className = snapshot.feedbackClassName || "fc-feedback";
+        feedback.innerHTML = snapshot.feedbackHTML || "";
+    }
+    if (snapshot.kind === "text") {
+        const input = document.getElementById("fc-text-input");
+        if (!input) return;
+        input.value = snapshot.inputValue || "";
+        input.disabled = !!snapshot.inputDisabled;
+        input.classList.toggle("correct", !!snapshot.inputIsCorrect);
+        input.classList.toggle("wrong", !!snapshot.inputIsWrong);
+        return;
+    }
+    (snapshot.optionStates || []).forEach((optionState) => {
+        const btn = document.querySelector(
+            `.fc-option[data-fc-value="${optionState.value}"]`,
+        );
+        if (!btn) return;
+        btn.disabled = !!optionState.disabled;
+        btn.classList.toggle("selected", !!optionState.selected);
+        btn.classList.toggle("correct", !!optionState.correct);
+        btn.classList.toggle("wrong", !!optionState.wrong);
+        btn.classList.toggle(
+            "partial-correct",
+            !!optionState.partialCorrect,
+        );
+    });
 }
 
 function syncFlashcardRadioAnswer(qId, value) {
@@ -557,7 +758,7 @@ function bindUiEvents() {
     bind("select-all-sections-btn",  "click", () => selectAllSections(true));
     bind("select-no-sections-btn",   "click", () => selectAllSections(false));
     bind("apply-filter-btn",         "click", applySectionFilter);
-    bind("open-flashcards-btn",      "click", openFlashcards);
+    bind("open-flashcards-btn",      "click", () => openFlashcards());
     bind("sidebar-overlay",          "click", toggleSidebar);
 
     // Right sidebar
@@ -581,6 +782,7 @@ function bindUiEvents() {
     bind("fc-close-btn", "click", closeFlashcards);
     bind("fc-end-btn",   "click", closeFlashcards);
     bind("fc-next-btn",  "click", fcNext);
+    bind("fc-reset-btn", "click", resetFlashcardsProgress);
 
     // Quiz set selector – event delegation on container
     const quizSetList = document.getElementById("quiz-set-list");
@@ -617,7 +819,8 @@ function bindUiEvents() {
             }
             const action = e.target.closest("[data-fc-action]");
             if (action) {
-                if (action.dataset.fcAction === "restart") openFlashcards();
+                if (action.dataset.fcAction === "restart")
+                    resetFlashcardsProgress();
                 else if (action.dataset.fcAction === "close") closeFlashcards();
             }
         });
@@ -1310,15 +1513,17 @@ function getExplanation(qId, fallback) {
 
 // ── FLASHCARD MODE ────────────────────────────────────────────────────────
 function getActiveSectionIds() {
-    return Array.from(
+    return normalizeSectionIds(
+        Array.from(
         document.querySelectorAll(
             '#filter-list input[type="checkbox"]:checked',
         ),
-    ).map((cb) => cb.value);
+        ).map((cb) => cb.value),
+    );
 }
 
-function buildFcQueue() {
-    const activeSections = getActiveSectionIds();
+function buildFcQueue(sectionIds = getActiveSectionIds()) {
+    const activeSections = normalizeSectionIds(sectionIds);
     const allQuestions = [];
     activeSections.forEach((secId) => {
         const sec = document.getElementById(secId);
@@ -1373,27 +1578,125 @@ function buildFcQueue() {
     return allQuestions;
 }
 
-function openFlashcards() {
-    fcQueue = buildFcQueue();
+function startNewFlashcardsSession(sectionIds = getActiveSectionIds()) {
+    fcSectionIds = normalizeSectionIds(sectionIds);
+    fcQueue = buildFcQueue(fcSectionIds);
     fcIndex = 0;
     fcCorrect = 0;
     fcWrong = 0;
     fcSessionInitialLength = fcQueue.length;
+    fcAnswered = false;
+}
+
+function buildMergedFlashcardSession(savedSession, targetSectionIds) {
+    if (!isFlashcardSessionValid(savedSession)) return null;
+    const normalizedTarget = normalizeSectionIds(targetSectionIds);
+    const targetQueue = buildFcQueue(normalizedTarget);
+    const targetIds = new Set(targetQueue.map((card) => card.qId));
+    const savedIds = new Set(savedSession.queue.map((card) => card.qId));
+    const canReuseSavedQueue = savedSession.queue.every((card) =>
+        targetIds.has(card.qId),
+    );
+    if (!canReuseSavedQueue) return null;
+
+    const addedCards = targetQueue.filter((card) => !savedIds.has(card.qId));
+    return {
+        ...savedSession,
+        sectionIds: normalizedTarget,
+        queue: [...savedSession.queue, ...addedCards],
+        sessionInitialLength:
+            (savedSession.sessionInitialLength || savedSession.queue.length) +
+            addedCards.length,
+        updatedAt: Date.now(),
+    };
+}
+
+function resolveFlashcardSession(sectionIds, forceNew = false) {
+    const normalizedSectionIds = normalizeSectionIds(sectionIds);
+    if (forceNew) {
+        startNewFlashcardsSession(normalizedSectionIds);
+        return null;
+    }
+
+    const exactSession = loadFlashcardProgress(normalizedSectionIds);
+    if (exactSession) {
+        if (isFlashcardSessionValid(exactSession)) {
+            applyFlashcardSession(exactSession);
+            return exactSession;
+        }
+        clearFlashcardProgress(normalizedSectionIds);
+    }
+
+    const allProgress = loadAllFlashcardProgress();
+    const mergeCandidate = Object.values(allProgress)
+        .filter((session) => {
+            if (!isFlashcardSessionValid(session)) return false;
+            if (getFlashcardSectionKey(session.sectionIds) === getFlashcardSectionKey(normalizedSectionIds)) {
+                return false;
+            }
+            return normalizeSectionIds(session.sectionIds).every((id) =>
+                normalizedSectionIds.includes(id),
+            );
+        })
+        .sort((a, b) => {
+            const sectionDiff = b.sectionIds.length - a.sectionIds.length;
+            if (sectionDiff !== 0) return sectionDiff;
+            return (b.updatedAt || 0) - (a.updatedAt || 0);
+        })[0];
+
+    if (mergeCandidate) {
+        const mergedSession = buildMergedFlashcardSession(
+            mergeCandidate,
+            normalizedSectionIds,
+        );
+        if (mergedSession) {
+            applyFlashcardSession(mergedSession);
+            saveFlashcardProgress();
+            return mergedSession;
+        }
+    }
+
+    startNewFlashcardsSession(normalizedSectionIds);
+    return null;
+}
+
+function openFlashcards(forceNew = false) {
+    const selectedSectionIds = getActiveSectionIds();
+    const restorableSession = resolveFlashcardSession(
+        selectedSectionIds,
+        forceNew,
+    );
     if (fcQueue.length === 0) {
+        clearFlashcardProgress(fcSectionIds);
         alert("Nie sú vybraté žiadne sekcie!");
         return;
     }
     resetFlashcardFooter();
     setFlashcardsActive(true);
-    // close sidebar on mobile
     if (window.innerWidth <= 768 && sidebarVisible) toggleSidebar();
     window.scrollTo({ top: 0, behavior: "smooth" });
-    renderFcCard();
+    renderFcCard(restorableSession?.currentCard || null);
+}
+
+function resetFlashcardsProgress() {
+    clearFlashcardProgress(fcSectionIds);
+    openFlashcards(true);
 }
 
 function closeFlashcards() {
+    saveFlashcardProgress();
     setFlashcardsActive(false);
+    saveFlashcardProgress();
     window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function maybeResumeFlashcardsSession() {
+    const resumable = Object.values(loadAllFlashcardProgress())
+        .filter(
+            (session) => session.isOpen && isFlashcardSessionValid(session),
+        )
+        .sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0))[0];
+    if (resumable) restoreFlashcardSession(resumable);
 }
 
 function submitCurrentFlashcardText() {
@@ -1425,8 +1728,8 @@ function updateFcProgress() {
         `${Math.max(left, 0)} zostáva`;
 }
 
-function renderFcCard() {
-    fcAnswered = false;
+function renderFcCard(snapshot = null) {
+    fcAnswered = snapshot ? !!snapshot.answered : false;
     resetFlashcardFooter();
     updateFcProgress();
 
@@ -1503,8 +1806,14 @@ function renderFcCard() {
         <div class="fc-feedback" id="fc-feedback"></div>
     `;
 
+    if (snapshot) {
+        restoreFlashcardSnapshot(snapshot);
+    }
+
+    saveFlashcardProgress();
+
     // focus text input
-    if (q.kind === "text") {
+    if (q.kind === "text" && !fcAnswered) {
         setTimeout(() => {
             const inp = document.getElementById("fc-text-input");
             if (inp) inp.focus();
@@ -1546,6 +1855,7 @@ function fcShowFeedback(isCorrect, correctText, qId, extraText = null) {
 
     // keyboard shortcut for next
     document.getElementById("fc-next-btn").focus();
+    saveFlashcardProgress();
 }
 
 function fcSelectOption(btn, selectedVal, correctVal, qId) {
@@ -1570,6 +1880,7 @@ function fcSelectOption(btn, selectedVal, correctVal, qId) {
 function fcToggleMultiOption(btn) {
     if (fcAnswered) return;
     btn.classList.toggle("selected");
+    saveFlashcardProgress();
 }
 
 function fcSubmitMulti(qId, correctVal) {
@@ -1821,6 +2132,7 @@ function renderFcFinal() {
     document.getElementById("fc-progress-pct").textContent = "100%";
     document.getElementById("fc-left-count").textContent =
         "0 zostáva";
+    clearFlashcardProgress();
 }
 
 // ─── Dynamic quiz-set script loader ─────────────────────────────────────────
@@ -2039,8 +2351,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     });
     document.addEventListener("input", (e) => {
-        if (e.target.matches('input[type="text"]')) saveAnswers();
+        if (e.target.matches('input[type="text"]')) {
+            saveAnswers();
+            if (e.target.id === "fc-text-input") saveFlashcardProgress();
+        }
     });
+    window.addEventListener("beforeunload", saveFlashcardProgress);
 
     window.addEventListener("scroll", handleScroll);
 
@@ -2066,4 +2382,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
         updateRightSidebarAvailability();
     });
+
+    maybeResumeFlashcardsSession();
 });
