@@ -1061,6 +1061,26 @@
                             </div>
                             <div class="feedback" id="q1_24-fb"></div>
                         </div>
+
+<div class="question" id="q1_25" data-answer="text"
+                            data-keywords="rozsah,termín dodání">
+                            <div class="question-label">
+                                25. Doplňte chybějící popisky v modelu tradičních a agilních technik. Do odpovědi napište obě chybějící položky v pořadí 1, 2 a oddělte je čárkou.<br /><br /><code>1 = ___<br />2 = ___</code>
+                            </div>
+                            <div class="text-input-wrap">
+                                <input
+                                    type="text"
+                                    id="q1_25-input"
+                                    placeholder="např. první, druhá"
+                                    autocomplete="off"
+                                    spellcheck="false"
+                                />
+                            </div>
+                            <div class="text-answer-hint">
+                                Hledejte dvě chybějící veličiny vedle <code>rozpočet</code> a <code>kvalita</code>.
+                            </div>
+                            <div class="feedback" id="q1_25-fb"></div>
+                        </div>
 </div>
 
                     <div class="section" id="sec_7" data-section="7">
@@ -1409,6 +1429,14 @@
                             <div class="question-label">
                                 17. Doplňte následující kód tak, aby provedl hashování zprávy.<br /><br />```c<br />char *ms_salt = &quot;salt&quot;;<br />char *ms_value = &quot;password&quot;;<br />unsigned char md_value[EVP_MAX_MD_SIZE];<br />unsigned int md_len;<br /><br />EVP_MD *md = EVP_MD_fetch( NULL, &quot;sha256&quot;, NULL);<br />EVP_MD_CTX *ctx = EVP_MD_CTX_new();<br />EVP_____________(ctx, md); // Initialize the context<br />EVP_DigestUpdate(ctx, ms_salt, strlen(ms_salt));<br />EVP_DigestUpdate(ctx, ms_value, strlen(ms_value));<br />EVP_DigestFinal(ctx, md_value, &amp;md_len);<br />EVP_MD_CTX_free(ctx);<br />EVP_MD_free(md);<br />```
                             </div>
+                            <div class="question-image">
+                                <img
+                                    class="question-image"
+                                    src="img/8.34.PNG"
+                                    alt="Ukázka kódu pro výpočet hash hodnoty v OpenSSL"
+                                    loading="lazy"
+                                />
+                            </div>
                             <div class="text-input-wrap">
                                 <input
                                     type="text"
@@ -1492,6 +1520,40 @@
                                 >
                             </div>
                             <div class="feedback" id="q7_19-fb"></div>
+                        </div>
+
+<div class="question" id="q7_20" data-answer="text"
+                            data-keywords="EVP_MD_fetch,EVP_MD_CTX *,EVP_DigestUpdate,EVP_DigestUpdate,EVP_MD_free">
+                            <div class="question-label">
+                                20. Doplňte chybějící části kódu tak, aby bezpečně vypočítal hash zadaného hesla. Do odpovědi napište všech pět chybějících částí zleva doprava a oddělte je čárkou.<br /><br /><code>int hashPassword(void) {<br />&nbsp;&nbsp;char *ms_salt = "salt";<br />&nbsp;&nbsp;char *ms_value = "password";<br />&nbsp;&nbsp;unsigned char md_value[EVP_MAX_MD_SIZE];<br />&nbsp;&nbsp;unsigned int md_len;<br /><br />&nbsp;&nbsp;EVP_MD *md = ___(NULL, "sha256", NULL);<br />&nbsp;&nbsp;if (NULL == md) { ERR_print_errors_fp(stderr); return 0; }<br /><br />&nbsp;&nbsp;___ ctx = EVP_MD_CTX_new();<br />&nbsp;&nbsp;if (NULL == ctx) { ERR_print_errors_fp(stderr); EVP_MD_free(md); return 0; }<br /><br />&nbsp;&nbsp;if (!EVP_DigestInit(ctx, md)<br />&nbsp;&nbsp;&nbsp;&nbsp;|| !___(ctx, ms_salt, strlen(ms_salt))<br />&nbsp;&nbsp;&nbsp;&nbsp;|| !___(ctx, ms_value, strlen(ms_value))<br />&nbsp;&nbsp;&nbsp;&nbsp;|| !EVP_DigestFinal(ctx, md_value, &amp;md_len)) {<br />&nbsp;&nbsp;&nbsp;&nbsp;ERR_print_errors_fp(stderr);<br />&nbsp;&nbsp;&nbsp;&nbsp;EVP_MD_CTX_free(ctx);<br />&nbsp;&nbsp;&nbsp;&nbsp;___(md);<br />&nbsp;&nbsp;&nbsp;&nbsp;return 0;<br />&nbsp;&nbsp;}<br />}</code>
+                            </div>
+                            <div class="text-input-wrap">
+                                <input
+                                    type="text"
+                                    id="q7_20-input"
+                                    placeholder="část1, část2, část3, část4, část5"
+                                    autocomplete="off"
+                                    spellcheck="false"
+                                />
+                            </div>
+                            <div class="feedback" id="q7_20-fb"></div>
+                        </div>
+
+<div class="question" id="q7_21" data-answer="text"
+                            data-keywords="EVP_PKEY *pkey,&amp;pkey,ERR_get_error">
+                            <div class="question-label">
+                                21. Doplňte chybějící části kódu tak, aby bezpečně načetl soukromý klíč ze souboru a jeho adresu vrátil jako návratovou hodnotu. Do odpovědi napište všechny tři chybějící části zleva doprava a oddělte je čárkou.<br /><br /><code>EVP_PKEY* read_pkey(char *path) {<br />&nbsp;&nbsp;FILE *fd;<br />&nbsp;&nbsp;___ = EVP_PKEY_new();<br />&nbsp;&nbsp;char err[1024];<br /><br />&nbsp;&nbsp;fd = fopen(path, "r");<br />&nbsp;&nbsp;if (NULL == fd) { perror(__FILE__); exit(-errno); }<br /><br />&nbsp;&nbsp;if (NULL == PEM_read_PrivateKey(fd, ___, NULL, NULL)) {<br />&nbsp;&nbsp;&nbsp;&nbsp;ERR_error_string_n(___(), err, sizeof(err));<br />&nbsp;&nbsp;&nbsp;&nbsp;fputs(err, stderr);<br />&nbsp;&nbsp;&nbsp;&nbsp;EVP_PKEY_free(pkey);<br />&nbsp;&nbsp;&nbsp;&nbsp;pkey = NULL;<br />&nbsp;&nbsp;}<br /><br />&nbsp;&nbsp;fclose(fd);<br />&nbsp;&nbsp;return pkey;<br />}</code>
+                            </div>
+                            <div class="text-input-wrap">
+                                <input
+                                    type="text"
+                                    id="q7_21-input"
+                                    placeholder="část1, část2, část3"
+                                    autocomplete="off"
+                                    spellcheck="false"
+                                />
+                            </div>
+                            <div class="feedback" id="q7_21-fb"></div>
                         </div>
 </div>
 
@@ -2164,6 +2226,14 @@
                                 8. Zapište příkaz, který vytvoří novou větev s
                                 názvem HOTFIX od revize <code>dc36a17</code>.
                             </div>
+                            <div class="question-image">
+                                <img
+                                    class="question-image"
+                                    src="img/1.16.png"
+                                    alt="Schéma větví Git s větvemi main, devel a topic"
+                                    loading="lazy"
+                                />
+                            </div>
                             <div class="text-input-wrap">
                                 <input
                                     type="text"
@@ -2214,6 +2284,14 @@
                                 10. Zapište příkazy, které zahrnou změny ve
                                 větvi DEVEL do větve MAIN (pracovní prostor je
                                 na větvi TOPIC, pokračovat má větev MAIN).
+                            </div>
+                            <div class="question-image">
+                                <img
+                                    class="question-image"
+                                    src="img/1.14.png"
+                                    alt="Schéma větví Git pro sloučení změn do větve main"
+                                    loading="lazy"
+                                />
                             </div>
                             <div class="text-input-wrap">
                                 <input
@@ -3598,6 +3676,23 @@
                             </div>
                             <div class="feedback" id="q3_26-fb"></div>
                         </div>
+
+<div class="question" id="q3_27" data-answer="text"
+                            data-keywords="pNode,pNode,NULL,NULL,pNode->right">
+                            <div class="question-label">
+                                27. Doplňte chybějící části kódu tak, aby bezpečně vytvořil nový prvek <code>Node</code> a správně inicializoval jeho položky. Do odpovědi napište všech pět chybějících částí zleva doprava a oddělte je čárkou.<br /><br /><code>Node* newNode(char *value) {<br />&nbsp;&nbsp;Node *pNode;<br />&nbsp;&nbsp;if (NULL == value) { return NULL; }<br />&nbsp;&nbsp;___ = (Node*) malloc(sizeof(Node));<br />&nbsp;&nbsp;if (NULL == ___) { return NULL; }<br />&nbsp;&nbsp;pNode-&gt;value = (char*) calloc(strlen(value) + 1, sizeof(char));<br />&nbsp;&nbsp;if (___ == pNode-&gt;value) { free(pNode); return NULL; }<br />&nbsp;&nbsp;strcpy(pNode-&gt;value, value);<br />&nbsp;&nbsp;pNode-&gt;left = ___;<br />&nbsp;&nbsp;___ = NULL;<br />&nbsp;&nbsp;return pNode;<br />}</code>
+                            </div>
+                            <div class="text-input-wrap">
+                                <input
+                                    type="text"
+                                    id="q3_27-input"
+                                    placeholder="část1, část2, část3, část4, část5"
+                                    autocomplete="off"
+                                    spellcheck="false"
+                                />
+                            </div>
+                            <div class="feedback" id="q3_27-fb"></div>
+                        </div>
 </div>
 
                     <div class="section" id="sec_4" data-section="4">
@@ -3687,6 +3782,14 @@
                             <div class="question-label">
                                 7. Symbol <code>Ki</code> v diagramu MD5 označuje:
                             </div>
+                            <div class="question-image">
+                                <img
+                                    class="question-image"
+                                    src="img/4.7.png"
+                                    alt="Diagram MD5 s označením Ki"
+                                    loading="lazy"
+                                />
+                            </div>
                             <div class="options">
                                 <label class="option"><input type="radio" name="q04_7" value="a" /><span>Vstupní data</span></label>
                                 <label class="option"><input type="radio" name="q04_7" value="b" /><span>Hodnoty posunutí</span></label>
@@ -3698,7 +3801,7 @@
 
 <div class="question" id="q04_8" data-answer="c">
                             <div class="question-label">
-                                8. Při spuštění programu mu standardní knihovna předává ukazatele na:
+                                8. Při spuštění programu v jazyce C jsou standardní knihovnou připraveny ukazatele na kolik standardních otevřených proudů?
                             </div>
                             <div class="options">
                                 <label class="option"
@@ -3860,6 +3963,23 @@
                                 >
                             </div>
                             <div class="feedback" id="q04_12-fb"></div>
+                        </div>
+
+<div class="question" id="q04_13" data-answer="text"
+                            data-keywords="fopen,r,NULL,fgets,sizeof(buffer)">
+                            <div class="question-label">
+                                13. Doplňte chybějící části kódu tak, aby bezpečně četl data ze souboru a vypisoval je na terminál. Do odpovědi napište všech pět chybějících částí zleva doprava a oddělte je čárkou.<br /><br /><code>int main() {<br />&nbsp;&nbsp;char buffer[1024];<br />&nbsp;&nbsp;FILE *fd = ___("soubor.txt", ___);<br />&nbsp;&nbsp;if (___ == fd) {<br />&nbsp;&nbsp;&nbsp;&nbsp;printf("Chyba: Soubor nelze otevřít.\n");<br />&nbsp;&nbsp;&nbsp;&nbsp;return EXIT_FAILURE;<br />&nbsp;&nbsp;}<br />&nbsp;&nbsp;while (___(buffer, ___, fd)) {<br />&nbsp;&nbsp;&nbsp;&nbsp;puts(buffer);<br />&nbsp;&nbsp;}<br />&nbsp;&nbsp;fclose(fd);<br />&nbsp;&nbsp;return 0;<br />}</code>
+                            </div>
+                            <div class="text-input-wrap">
+                                <input
+                                    type="text"
+                                    id="q04_13-input"
+                                    placeholder="část1, část2, část3, část4, část5"
+                                    autocomplete="off"
+                                    spellcheck="false"
+                                />
+                            </div>
+                            <div class="feedback" id="q04_13-fb"></div>
                         </div>
 </div>
 
