@@ -167,123 +167,132 @@
                 </button>
 
                 <div class="container">
-                    <div id="quiz-sections-mount"></div>
+                    <div id="normal-mode-view">
+                        <div id="quiz-sections-mount"></div>
 
-                    <!-- Akcie a výsledok -->
-                    <div class="actions">
-                        <button class="btn btn-secondary" id="clear-btn">
-                            Vymazať odpovede
-                        </button>
-                        <button class="btn btn-primary" id="eval-btn">
-                            Vyhodnotiť kvíz
-                        </button>
-                    </div>
-                    <div class="actions actions-secondary">
-                        <button
-                            id="shuffle-btn"
-                            class="btn action-btn action-btn-shuffle"
-                        >
-                            Zamiešať otázky &amp; odpovede
-                        </button>
-                        <button
-                            class="btn action-btn action-btn-practice"
-                            id="practice-btn"
-                        >
-                            Precvičiť chyby
-                        </button>
-                        <button
-                            class="btn action-btn action-btn-review"
-                            id="review-wrong-btn"
-                        >
-                            Zobraziť chyby
-                        </button>
-                        <button
-                            class="btn action-btn action-btn-clear-wrong"
-                            id="clear-wrong-btn"
-                        >
-                            Vymazať históriu chýb
-                        </button>
-                    </div>
-                    <div class="storage-info-wrap">
-                        <small id="storage-info">
-                            Odpovede sa automaticky ukladajú do prehliadača
-                        </small>
+                        <!-- Akcie a výsledok -->
+                        <div class="actions">
+                            <button class="btn btn-secondary" id="clear-btn">
+                                Vymazať odpovede
+                            </button>
+                            <button class="btn btn-primary" id="eval-btn">
+                                Vyhodnotiť kvíz
+                            </button>
+                        </div>
+                        <div class="actions actions-secondary">
+                            <button
+                                id="shuffle-btn"
+                                class="btn action-btn action-btn-shuffle"
+                            >
+                                Zamiešať otázky &amp; odpovede
+                            </button>
+                            <button
+                                class="btn action-btn action-btn-practice"
+                                id="practice-btn"
+                            >
+                                Precvičiť chyby
+                            </button>
+                            <button
+                                class="btn action-btn action-btn-review"
+                                id="review-wrong-btn"
+                            >
+                                Zobraziť chyby
+                            </button>
+                            <button
+                                class="btn action-btn action-btn-clear-wrong"
+                                id="clear-wrong-btn"
+                            >
+                                Vymazať históriu chýb
+                            </button>
+                        </div>
+                        <div class="storage-info-wrap">
+                            <small id="storage-info">
+                                Odpovede sa automaticky ukladajú do prehliadača
+                            </small>
+                        </div>
+
+                        <div class="result-container" id="result-container">
+                            <div id="result-text"></div>
+                            <div class="progress-bar">
+                                <div
+                                    class="progress-fill"
+                                    id="progress-fill"
+                                ></div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="result-container" id="result-container">
-                        <div id="result-text"></div>
-                        <div class="progress-bar">
-                            <div
-                                class="progress-fill"
-                                id="progress-fill"
-                            ></div>
+                    <div id="flashcard-view" aria-hidden="true">
+                        <div class="fc-container">
+                            <div class="fc-header">
+                                <span class="fc-title" id="fc-title"
+                                    >Flashcard režim</span
+                                >
+                                <button
+                                    class="fc-close"
+                                    id="fc-close-btn"
+                                    title="Zavrieť"
+                                >
+                                    ×
+                                </button>
+                            </div>
+                            <div class="fc-progress-wrap">
+                                <div class="fc-progress-info">
+                                    <span id="fc-progress-text">Otázka 1 z N</span>
+                                    <span id="fc-progress-pct">0%</span>
+                                </div>
+                                <div class="fc-progress-bar">
+                                    <div
+                                        class="fc-progress-fill"
+                                        id="fc-progress-fill"
+                                    ></div>
+                                </div>
+                                <div class="fc-score-row">
+                                    <span class="fc-score-correct" id="fc-correct-count"
+                                        >0 správnych</span
+                                    >
+                                    <span class="fc-score-wrong" id="fc-wrong-count"
+                                        >0 nesprávnych</span
+                                    >
+                                    <span class="fc-score-left" id="fc-left-count"
+                                        >0 zostáva</span
+                                    >
+                                </div>
+                            </div>
+                            <div class="fc-body" id="fc-body">
+                                <!-- Dynamic content -->
+                            </div>
+                            <div class="fc-footer" id="fc-footer">
+                                <div class="fc-footer-meta">
+                                    <button
+                                        class="fc-btn fc-btn-reset"
+                                        id="fc-reset-btn"
+                                        type="button"
+                                    >
+                                        Reset progresu
+                                    </button>
+                                    <span class="fc-hint" id="fc-hint"></span>
+                                </div>
+                                <div class="fc-footer-actions">
+                                    <button
+                                        class="fc-btn fc-btn-end"
+                                        id="fc-end-btn"
+                                    >
+                                        Skončiť
+                                    </button>
+                                    <button
+                                        class="fc-btn fc-btn-next"
+                                        id="fc-next-btn"
+                                        disabled
+                                    >
+                                        Ďalšia →
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </main>
-        </div>
-
-
-        <!-- ── Flashcard Overlay ──────────────────────────────────────────── -->
-        <div id="flashcard-overlay">
-            <div class="fc-container">
-                <div class="fc-header">
-                    <span class="fc-title" id="fc-title"
-                        >Flashcard režim</span
-                    >
-                    <button
-                        class="fc-close"
-                        id="fc-close-btn"
-                        title="Zavrieť"
-                    >
-                        ×
-                    </button>
-                </div>
-                <div class="fc-progress-wrap">
-                    <div class="fc-progress-info">
-                        <span id="fc-progress-text">Otázka 1 z N</span>
-                        <span id="fc-progress-pct">0%</span>
-                    </div>
-                    <div class="fc-progress-bar">
-                        <div
-                            class="fc-progress-fill"
-                            id="fc-progress-fill"
-                        ></div>
-                    </div>
-                    <div class="fc-score-row">
-                        <span class="fc-score-correct" id="fc-correct-count"
-                            >0 správnych</span
-                        >
-                        <span class="fc-score-wrong" id="fc-wrong-count"
-                            >0 nesprávnych</span
-                        >
-                        <span class="fc-score-left" id="fc-left-count"
-                            >0 zostáva</span
-                        >
-                    </div>
-                </div>
-                <div class="fc-body" id="fc-body">
-                    <!-- Dynamic content -->
-                </div>
-                <div class="fc-footer" id="fc-footer">
-                    <span class="fc-hint" id="fc-hint"></span>
-                    <div class="fc-footer-actions">
-                        <button
-                            class="fc-btn fc-btn-end"
-                            id="fc-end-btn"
-                        >
-                            Skončiť
-                        </button>
-                        <button
-                            class="fc-btn fc-btn-next"
-                            id="fc-next-btn"
-                            disabled
-                        >
-                            Ďalšia →
-                        </button>
-                    </div>
-                </div>
-            </div>
         </div>
         <script src="confg.js"></script>
         <script src="app.js"></script>

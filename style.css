@@ -663,6 +663,21 @@ h1 {
         top: 0.5rem;
         left: 0.5rem;
     }
+
+    .fc-container {
+        min-height: calc(100vh - 5rem);
+        border-radius: 14px;
+    }
+
+    .fc-footer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .fc-footer-meta,
+    .fc-footer-actions {
+        justify-content: space-between;
+    }
 }
 
 /* ── Flashcard Mode ─────────────────────────────────────────────── */
@@ -692,6 +707,18 @@ h1 {
     font-size: 0.82rem;
 }
 
+#normal-mode-view.hidden {
+    display: none;
+}
+
+#flashcard-view {
+    display: none;
+}
+
+#flashcard-view.active {
+    display: block;
+}
+
 .progress-fill,
 .fc-progress-fill {
     width: 0%;
@@ -702,33 +729,22 @@ h1 {
     gap: 0.5rem;
 }
 
-/* Overlay */
-#flashcard-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: var(--overlay-bg);
-    z-index: 2000;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-}
-#flashcard-overlay.active {
-    display: flex;
-}
-
-/* Card container */
 .fc-container {
     background: var(--secondary-bg);
     border: 1px solid var(--border-color);
     border-radius: 16px;
     width: 100%;
-    max-width: 720px;
-    max-height: 90vh;
+    max-width: 920px;
+    min-height: calc(100vh - 7rem);
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    box-shadow: 0 20px 60px var(--overlay-bg);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.22);
+}
+
+[data-theme="dark"] .fc-container {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
 }
 
 /* Header */
@@ -992,6 +1008,12 @@ h1 {
     gap: 0.75rem;
     flex-shrink: 0;
 }
+.fc-footer-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+}
 .fc-btn {
     padding: 0.6rem 1.4rem;
     border: none;
@@ -1019,10 +1041,23 @@ h1 {
 .fc-btn-end:hover {
     background: var(--text-primary);
 }
+.fc-btn-reset {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    padding-inline: 1rem;
+    flex-shrink: 0;
+}
+.fc-btn-reset:hover {
+    color: var(--text-primary);
+    border-color: var(--text-secondary);
+    background: color-mix(in srgb, var(--secondary-bg) 80%, transparent);
+}
 .fc-hint {
     font-size: 0.82rem;
     color: var(--text-secondary);
     font-style: italic;
+    min-width: 0;
 }
 
 /* Final screen */
