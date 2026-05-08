@@ -339,6 +339,22 @@ def build_fragment(spec: dict[str, Any]) -> tuple[str, dict[str, str]]:
                 )
 
             label_html = normalized_html_text(question, "label", "label_html")
+            image_html = None
+            if "image_html" in question:
+                if not isinstance(question["image_html"], str):
+                    raise SpecError(f"Question {qid}: 'image_html' must be a string.")
+                image_html = question["image_html"]
+            elif "image" in question:
+                image = question["image"]
+                if not isinstance(image, str) or not image.strip():
+                    raise SpecError(f"Question {qid}: 'image' must be a non-empty string.")
+                image_alt = question.get("image_alt", "")
+                if not isinstance(image_alt, str):
+                    raise SpecError(f"Question {qid}: 'image_alt' must be a string.")
+                image_html = (
+                    f'<img class="question-image" src="{escape(image, quote=True)}" '
+                    f'alt="{escape(image_alt, quote=True)}" loading="lazy" />'
+                )
             explanation = question.get("explanation", "")
             if explanation is None:
                 explanation = ""
@@ -382,6 +398,15 @@ def build_fragment(spec: dict[str, Any]) -> tuple[str, dict[str, str]]:
                             '                            <div class="question-label">',
                             indent_block(label_html, 32),
                             "                            </div>",
+                            *(
+                                [
+                                    '                            <div class="question-image">',
+                                    indent_block(image_html, 32),
+                                    "                            </div>",
+                                ]
+                                if image_html
+                                else []
+                            ),
                             '                            <div class="options">',
                             *option_lines,
                             "                            </div>",
@@ -421,10 +446,22 @@ def build_fragment(spec: dict[str, Any]) -> tuple[str, dict[str, str]]:
                 '                            <div class="question-label">',
                 indent_block(label_html, 32),
                 "                            </div>",
+            ]
+            if image_html:
+                question_lines.extend(
+                    [
+                        '                            <div class="question-image">',
+                        indent_block(image_html, 32),
+                        "                            </div>",
+                    ]
+                )
+            question_lines.extend(
+                [
                 '                            <div class="text-input-wrap">',
                 f'                                <input type="text" id="{escape(qid, quote=True)}-input" placeholder="{escape(placeholder, quote=True)}" autocomplete="off" spellcheck="false" />',
                 "                            </div>",
-            ]
+                ]
+            )
             if hint_html:
                 question_lines.extend(
                     [

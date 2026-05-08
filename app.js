@@ -2258,10 +2258,34 @@ function getHtmlFragmentUrl() {
     return `quiz_sets/${id}.frag.html`;
 }
 
+function getCurrentQuizSetAssetBase() {
+    const id = window.QUIZ_SET_ID || "default";
+    const slashIndex = id.lastIndexOf("/");
+    if (slashIndex === -1) return "quiz_sets/";
+    return `quiz_sets/${id.slice(0, slashIndex + 1)}`;
+}
+
+function normalizeQuizMediaUrls(root) {
+    if (!root) return;
+    const base = getCurrentQuizSetAssetBase();
+    root.querySelectorAll("img[src]").forEach((img) => {
+        const src = img.getAttribute("src");
+        if (
+            !src ||
+            /^(?:[a-z]+:|\/|#)/i.test(src) ||
+            src.startsWith(base)
+        ) {
+            return;
+        }
+        img.setAttribute("src", base + src);
+    });
+}
+
 function applyQuizFragmentHtml(html) {
     const mount = document.getElementById("quiz-sections-mount");
     if (!mount) return;
     mount.innerHTML = html;
+    normalizeQuizMediaUrls(mount);
     const h1 = mount.querySelector("h1");
     if (h1 && h1.textContent.trim()) document.title = h1.textContent.trim();
 }
