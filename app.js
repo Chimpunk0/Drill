@@ -1019,17 +1019,16 @@ function evaluateQuiz() {
                         );
                 } else {
                     let isCorrect = false;
+                    let partialText = null;
                     if (keywords) {
-                        const keywordList = keywords
-                            .split(",")
-                            .map((k) => k.trim().toLowerCase());
-                        const normalizedUser = userVal
-                            .replace(/\s+/g, " ")
-                            .trim();
-                        isCorrect = keywordList.some((kw) =>
-                            normalizedUser.includes(
-                                kw.replace(/\s+/g, " ").trim(),
-                            ),
+                        const evaluation = evaluateTextKeywordAnswer(
+                            userVal,
+                            keywords,
+                        );
+                        isCorrect = evaluation.isCorrect;
+                        partialText = getPartialTextKeywordAnswerText(
+                            evaluation.matchedCount,
+                            evaluation.totalCount,
                         );
                     } else if (correctVal !== "text") {
                         isCorrect =
@@ -1055,6 +1054,7 @@ function evaluateQuiz() {
                             acceptedAnswers.length
                                 ? acceptedAnswers.join(" / ")
                                 : null,
+                            partialText,
                         );
                     }
                 }
@@ -1164,6 +1164,48 @@ function getPartialMultiAnswerText(selectedValues, correctValues) {
         return null;
     }
     return `Označené správne odpovede: ${matchedCount}/${correctValues.length}`;
+}
+
+function parseTextKeywords(keywords) {
+    return (keywords || "")
+        .split(",")
+        .map((keyword) => keyword.trim().toLowerCase())
+        .filter(Boolean);
+}
+
+function normalizeTextAnswer(value) {
+    return String(value || "")
+        .normalize("NFKD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .replace(/[^\p{L}\p{N}]+/gu, " ")
+        .trim();
+}
+
+function evaluateTextKeywordAnswer(userVal, keywords) {
+    const keywordList = parseTextKeywords(keywords);
+    const normalizedUser = normalizeTextAnswer(userVal);
+    const matchedKeywords = keywordList.filter((keyword) =>
+        normalizedUser.includes(normalizeTextAnswer(keyword)),
+    );
+    return {
+        isCorrect:
+            keywordList.length > 0 &&
+            matchedKeywords.length === keywordList.length,
+        matchedCount: matchedKeywords.length,
+        totalCount: keywordList.length,
+    };
+}
+
+function getPartialTextKeywordAnswerText(matchedCount, totalCount) {
+    if (
+        totalCount <= 1 ||
+        matchedCount <= 0 ||
+        matchedCount >= totalCount
+    ) {
+        return null;
+    }
+    return `Zadané správne časti odpovede: ${matchedCount}/${totalCount}`;
 }
 
 function setQuestionMultiOptionStates(questionEl, selectedValues, correctValues) {
@@ -1594,13 +1636,13 @@ function fcSubmitText(qId, keywords, correctVal) {
     }
 
     let isCorrect = false;
+    let partialText = null;
     if (keywords) {
-        const kwList = keywords
-            .split(",")
-            .map((k) => k.trim().toLowerCase());
-        const normalizedUser = userVal.replace(/\s+/g, " ").trim();
-        isCorrect = kwList.some((kw) =>
-            normalizedUser.includes(kw.replace(/\s+/g, " ").trim()),
+        const evaluation = evaluateTextKeywordAnswer(userVal, keywords);
+        isCorrect = evaluation.isCorrect;
+        partialText = getPartialTextKeywordAnswerText(
+            evaluation.matchedCount,
+            evaluation.totalCount,
         );
     } else if (correctVal !== "text") {
         isCorrect = userVal === correctVal.toLowerCase();
@@ -1616,11 +1658,16 @@ function fcSubmitText(qId, keywords, correctVal) {
         : correctVal !== "text"
           ? [correctVal]
           : [];
-    const correctText = accepted.length ? accepted[0] : null;
+    const correctText = accepted.length ? accepted.join(" / ") : null;
     if (!isCorrect) {
         fcQueue.push({ ...fcQueue[fcIndex] });
     }
-    fcShowFeedback(isCorrect, isCorrect ? null : correctText, qId);
+    fcShowFeedback(
+        isCorrect,
+        isCorrect ? null : correctText,
+        qId,
+        partialText,
+    );
 }
 
 function fcNext() {
