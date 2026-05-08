@@ -39,6 +39,12 @@ window.QUIZ_SETS = window.QUIZ_SETS || [
         fragEmbed: "quiz_sets/bpc-ic1-2026/skuska.frag.embed.js",
         explanations: "quiz_sets/bpc-ic1-2026/skuska.explanations.js",
     },
+    {
+        id: "bpc-vba/kodove-chytaky-quiz-large",
+        label: "BPC-VBA Kódové Chytáky Large",
+        fragEmbed: "quiz_sets/bpc-vba/kodove-chytaky-quiz-large.frag.embed.js",
+        explanations: "quiz_sets/bpc-vba/kodove-chytaky-quiz-large.explanations.js",
+    },
 ];
 
 // Read active set from URL param ?set=<id>, fall back to first registered set

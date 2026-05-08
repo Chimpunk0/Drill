@@ -1,0 +1,1053 @@
+set_id: "bpc-vba/kodove-chytaky-quiz-large"
+label: "BPC-VBA Kódové Chytáky Large"
+title: "Kvíz: funkcie, typy, štruktúry a API chytáky"
+sections:
+  - title: "1. OpenSSL: typy a párovania"
+    questions:
+      - type: "mcq"
+        label: "1. Ktorý dátový typ reprezentuje certifikát?"
+        answer: "a"
+        options:
+          a: "X509"
+          b: "EVP_PKEY"
+          c: "X509_REQ"
+          d: "EVP_CIPHER"
+        explanation: "Certifikát je reprezentovaný typom X509."
+
+      - type: "mcq"
+        label: "2. Ktorý dátový typ reprezentuje súkromný alebo verejný kľúč?"
+        answer: "b"
+        options:
+          a: "X509"
+          b: "EVP_PKEY"
+          c: "X509_REQ"
+          d: "OSSL_PROVIDER"
+        explanation: "Kľúč sa v týchto cvičeniach drží v EVP_PKEY."
+
+      - type: "mcq"
+        label: "3. Ktorý dátový typ reprezentuje žiadosť o podpis certifikátu?"
+        answer: "c"
+        options:
+          a: "X509"
+          b: "EVP_MD"
+          c: "X509_REQ"
+          d: "ASN1_PCTX"
+        explanation: "CSR je reprezentované typom X509_REQ."
+
+      - type: "mcq"
+        label: "4. Ktorá funkcia alokuje certifikát?"
+        answer: "a"
+        options:
+          a: "X509_new"
+          b: "X509_free"
+          c: "PEM_read_X509"
+          d: "X509_REQ_new"
+        explanation: "X509_new alokuje objekt certifikátu."
+
+      - type: "mcq"
+        label: "5. Ktorá funkcia uvoľní certifikát?"
+        answer: "d"
+        options:
+          a: "PEM_write_X509"
+          b: "X509_print_ex_fp"
+          c: "EVP_PKEY_free"
+          d: "X509_free"
+        explanation: "Certifikát sa uvoľňuje cez X509_free."
+
+      - type: "mcq"
+        label: "6. Ktorá funkcia alokuje kľúč typu EVP_PKEY?"
+        answer: "b"
+        options:
+          a: "PEM_read_PrivateKey"
+          b: "EVP_PKEY_new"
+          c: "EVP_PKEY_print_public_fp"
+          d: "X509_new"
+        explanation: "EVP_PKEY_new vytvára nový EVP_PKEY objekt."
+
+      - type: "mcq"
+        label: "7. Ktorá funkcia alokuje CSR?"
+        answer: "c"
+        options:
+          a: "X509_new"
+          b: "PEM_read_X509_REQ"
+          c: "X509_REQ_new"
+          d: "ERR_get_error"
+        explanation: "X509_REQ_new alokuje objekt CSR."
+
+      - type: "mcq_multi"
+        label: "8. Ktoré párovania typ -> free funkcia sú správne?"
+        answer:
+          - "a"
+          - "c"
+          - "d"
+        options:
+          a: "X509 -> X509_free"
+          b: "EVP_PKEY -> X509_free"
+          c: "EVP_PKEY -> EVP_PKEY_free"
+          d: "X509_REQ -> X509_REQ_free"
+        explanation: "Každý z týchto typov má vlastnú free funkciu."
+
+      - type: "text"
+        label: "9. Napíš názov funkcie, ktorá načíta certifikát z PEM."
+        keywords:
+          - "pem_read_x509"
+        placeholder: "Napíš názov funkcie"
+        hint: "Začína na PEM_read_."
+
+      - type: "text"
+        label: "10. Napíš názov funkcie, ktorá načíta súkromný kľúč z PEM."
+        keywords:
+          - "pem_read_privatekey"
+          - "pem_read_private_key"
+        placeholder: "Napíš názov funkcie"
+        hint: "Obsahuje slovo PrivateKey."
+
+      - type: "text"
+        label: "11. Napíš názov funkcie, ktorá načíta CSR z PEM."
+        keywords:
+          - "pem_read_x509_req"
+        placeholder: "Napíš názov funkcie"
+        hint: "Končí na _REQ."
+
+  - title: "2. OpenSSL: výpis a súbory"
+    questions:
+      - type: "mcq"
+        label: "1. Ktorá funkcia vypíše celý certifikát v textovej podobe?"
+        answer: "a"
+        options:
+          a: "X509_print_ex_fp"
+          b: "EVP_PKEY_print_public_fp"
+          c: "X509_REQ_print_fp"
+          d: "ERR_print_errors_fp"
+        explanation: "Textový výpis certifikátu robí X509_print_ex_fp."
+
+      - type: "mcq"
+        label: "2. Ktorá funkcia vypíše súkromný kľúč?"
+        answer: "c"
+        options:
+          a: "PEM_write_PrivateKey"
+          b: "X509_print_ex_fp"
+          c: "EVP_PKEY_print_private_fp"
+          d: "PEM_read_PrivateKey"
+        explanation: "Súkromný kľúč sa vypisuje cez EVP_PKEY_print_private_fp."
+
+      - type: "mcq"
+        label: "3. Ktorá funkcia vypíše verejný kľúč?"
+        answer: "d"
+        options:
+          a: "X509_REQ_print_fp"
+          b: "EVP_PKEY_print_private_fp"
+          c: "PEM_write_X509"
+          d: "EVP_PKEY_print_public_fp"
+        explanation: "Verejný kľúč sa vypisuje cez EVP_PKEY_print_public_fp."
+
+      - type: "mcq"
+        label: "4. Ktorá funkcia vypíše žiadosť o podpis certifikátu?"
+        answer: "b"
+        options:
+          a: "X509_print_ex_fp"
+          b: "X509_REQ_print_fp"
+          c: "EVP_MD_fetch"
+          d: "OpenSSL_version"
+        explanation: "CSR sa vypisuje cez X509_REQ_print_fp."
+
+      - type: "mcq"
+        label: "5. Aká C štandardná funkcia sa v týchto vzoroch používa na otvorenie súboru pred PEM_read_*?"
+        answer: "a"
+        options:
+          a: "fopen"
+          b: "open"
+          c: "mktemp"
+          d: "read"
+        explanation: "Materiál používa fopen a FILE *."
+
+      - type: "mcq_multi"
+        label: "6. Ktoré tvrdenia o typickom vzore načítania sú správne?"
+        answer:
+          - "a"
+          - "b"
+          - "d"
+        options:
+          a: "Najprv sa otvorí súbor cez fopen."
+          b: "Potom sa typicky alokuje objekt cez *_new()."
+          c: "Pri chybe sa volá vždy abort()."
+          d: "Pri chybe PEM_read_* sa získava error kód cez ERR_get_error."
+        explanation: "Takto vyzerá základný vzor v cvičeniach."
+
+      - type: "text"
+        label: "7. Napíš názov funkcie na textový výpis certifikátu."
+        keywords:
+          - "x509_print_ex_fp"
+        placeholder: "Napíš názov funkcie"
+
+      - type: "text"
+        label: "8. Napíš názov funkcie na textový výpis verejného kľúča."
+        keywords:
+          - "evp_pkey_print_public_fp"
+        placeholder: "Napíš názov funkcie"
+
+  - title: "3. OpenSSL: error queue"
+    questions:
+      - type: "mcq"
+        label: "1. Kde OpenSSL drží svoje chybové kódy?"
+        answer: "b"
+        options:
+          a: "Len v errno."
+          b: "Vo vlastnej fronte chýb."
+          c: "Len v návratovej hodnote FILE *."
+          d: "Len v globálnom OpenSSL_version_num."
+        explanation: "OpenSSL používa vlastnú frontu chýb."
+
+      - type: "mcq"
+        label: "2. Čo robí ERR_get_error?"
+        answer: "c"
+        options:
+          a: "Vráti najnovší provider."
+          b: "Načíta error strings."
+          c: "Prečíta chybu a odstráni ju z fronty."
+          d: "Vytlačí chybu na stdout bez zmeny fronty."
+        explanation: "ERR_get_error číta a zároveň odoberá chybu z fronty."
+
+      - type: "mcq"
+        label: "3. Čo robí ERR_peek_error?"
+        answer: "a"
+        options:
+          a: "Prečíta chybu bez odstránenia z fronty."
+          b: "Prečíta najnovšiu chybu a zmaže všetky ostatné."
+          c: "Inicializuje OpenSSL."
+          d: "Načíta providera legacy."
+        explanation: "peek číta, ale neodoberá."
+
+      - type: "mcq"
+        label: "4. Čo robí ERR_peek_last_error?"
+        answer: "d"
+        options:
+          a: "Vymaže frontu chýb."
+          b: "Vráti najstaršiu chybu a odstráni ju."
+          c: "Prevedie chybu na string."
+          d: "Vráti naposledy pridanú chybu bez odstránenia."
+        explanation: "peek_last sa pozerá na najnovšiu chybu vo fronte."
+
+      - type: "mcq"
+        label: "5. Ktorá funkcia zapíše text chyby do buffera?"
+        answer: "b"
+        options:
+          a: "ERR_load_crypto_strings"
+          b: "ERR_error_string_n"
+          c: "ERR_free_strings"
+          d: "ERR_peek_error"
+        explanation: "ERR_error_string_n prevádza error code na text."
+
+      - type: "mcq"
+        label: "6. Ktorá funkcia vypíše všetky chyby do FILE * a vyprázdni frontu?"
+        answer: "c"
+        options:
+          a: "X509_print_ex_fp"
+          b: "OpenSSL_version"
+          c: "ERR_print_errors_fp"
+          d: "ERR_peek_last_error"
+        explanation: "ERR_print_errors_fp vypíše chyby a frontu vyprázdni."
+
+      - type: "mcq_multi"
+        label: "7. Ktoré tvrdenia o error API sú správne?"
+        answer:
+          - "a"
+          - "c"
+          - "d"
+        options:
+          a: "ERR_load_crypto_strings načíta texty chýb."
+          b: "ERR_free_strings načíta provider default."
+          c: "ERR_get_error chybu odstráni z fronty."
+          d: "ERR_peek_error chybu vo fronte ponechá."
+        explanation: "Správne sú a, c, d."
+
+      - type: "text"
+        label: "8. Napíš názov funkcie, ktorá získa chybový kód a odstráni ho z fronty."
+        keywords:
+          - "err_get_error"
+        placeholder: "Napíš názov funkcie"
+
+  - title: "4. OpenSSL 3.x a provideri"
+    questions:
+      - type: "mcq"
+        label: "1. Ktorá funkcia vracia číselnú verziu OpenSSL?"
+        answer: "a"
+        options:
+          a: "OpenSSL_version_num"
+          b: "OpenSSL_version"
+          c: "OPENSSL_init_crypto"
+          d: "OSSL_PROVIDER_available"
+        explanation: "Číselnú verziu vracia OpenSSL_version_num."
+
+      - type: "mcq"
+        label: "2. Ktorá funkcia vracia textovú verziu OpenSSL?"
+        answer: "b"
+        options:
+          a: "OpenSSL_version_num"
+          b: "OpenSSL_version"
+          c: "ERR_error_string_n"
+          d: "OSSL_PROVIDER_load"
+        explanation: "Textovú verziu vracia OpenSSL_version."
+
+      - type: "mcq"
+        label: "3. Ktorá funkcia inicializuje OpenSSL crypto časť?"
+        answer: "c"
+        options:
+          a: "OPENSSL_cleanup"
+          b: "ERR_load_crypto_strings"
+          c: "OPENSSL_init_crypto"
+          d: "OSSL_PROVIDER_unload"
+        explanation: "OPENSSL_init_crypto je štartovacia inicializačná funkcia."
+
+      - type: "mcq"
+        label: "4. Ktorá funkcia uprace OpenSSL?"
+        answer: "d"
+        options:
+          a: "OpenSSL_version"
+          b: "ERR_free_strings"
+          c: "OSSL_PROVIDER_available"
+          d: "OPENSSL_cleanup"
+        explanation: "OPENSSL_cleanup ukončuje prácu s knižnicou."
+
+      - type: "mcq"
+        label: "5. Ktorá funkcia testuje dostupnosť providera?"
+        answer: "a"
+        options:
+          a: "OSSL_PROVIDER_available"
+          b: "OSSL_PROVIDER_unload"
+          c: "EVP_MD_fetch"
+          d: "PEM_read_X509"
+        explanation: "OSSL_PROVIDER_available vráti, či je provider dostupný."
+
+      - type: "mcq"
+        label: "6. Ktorá funkcia provider načíta?"
+        answer: "b"
+        options:
+          a: "OSSL_PROVIDER_available"
+          b: "OSSL_PROVIDER_load"
+          c: "OSSL_PROVIDER_free"
+          d: "OSSL_PROVIDER_init"
+        explanation: "Načítanie providera robí OSSL_PROVIDER_load."
+
+      - type: "mcq"
+        label: "7. Ktorá funkcia provider uvoľní?"
+        answer: "d"
+        options:
+          a: "OPENSSL_cleanup"
+          b: "EVP_CIPHER_free"
+          c: "ERR_free_strings"
+          d: "OSSL_PROVIDER_unload"
+        explanation: "Uvoľnenie providera robí OSSL_PROVIDER_unload."
+
+      - type: "mcq_multi"
+        label: "8. Ktoré názvy providerov sa v materiáli objavujú?"
+        answer:
+          - "a"
+          - "b"
+          - "d"
+        options:
+          a: "default"
+          b: "legacy"
+          c: "modern"
+          d: "fips"
+        explanation: "Materiál spomína default, legacy a fips."
+
+      - type: "text"
+        label: "9. Napíš názov funkcie, ktorá načíta providera."
+        keywords:
+          - "ossl_provider_load"
+        placeholder: "Napíš názov funkcie"
+
+  - title: "5. EVP: šifrovanie a hashovanie"
+    questions:
+      - type: "mcq"
+        label: "1. Aký dátový typ reprezentuje šifrovací algoritmus v OpenSSL EVP vrstve?"
+        answer: "c"
+        options:
+          a: "EVP_MD"
+          b: "EVP_PKEY"
+          c: "EVP_CIPHER"
+          d: "X509"
+        explanation: "Šifrovací algoritmus je EVP_CIPHER."
+
+      - type: "mcq"
+        label: "2. Aký dátový typ reprezentuje hashovací algoritmus?"
+        answer: "a"
+        options:
+          a: "EVP_MD"
+          b: "EVP_CIPHER"
+          c: "X509_REQ"
+          d: "ACE_HEADER"
+        explanation: "Hashovací algoritmus je EVP_MD."
+
+      - type: "mcq"
+        label: "3. Ktorá funkcia získa šifrovací algoritmus podľa mena?"
+        answer: "b"
+        options:
+          a: "EVP_MD_fetch"
+          b: "EVP_CIPHER_fetch"
+          c: "EVP_CIPHER_CTX_new"
+          d: "OSSL_PROVIDER_available"
+        explanation: "Šifrovací algoritmus sa fetchuje cez EVP_CIPHER_fetch."
+
+      - type: "mcq"
+        label: "4. Ktorá funkcia získa hashovací algoritmus podľa mena?"
+        answer: "d"
+        options:
+          a: "EVP_PKEY_new"
+          b: "EVP_DigestFinal"
+          c: "EVP_CIPHER_fetch"
+          d: "EVP_MD_fetch"
+        explanation: "Hashovací algoritmus sa fetchuje cez EVP_MD_fetch."
+
+      - type: "mcq"
+        label: "5. Ktorá funkcia vytvorí kontext pre dešifrovanie?"
+        answer: "a"
+        options:
+          a: "EVP_CIPHER_CTX_new"
+          b: "EVP_MD_CTX_new"
+          c: "EVP_PKEY_new"
+          d: "OPENSSL_init_crypto"
+        explanation: "Kontext pre cipher operácie je EVP_CIPHER_CTX."
+
+      - type: "mcq"
+        label: "6. Ktorá funkcia vytvorí kontext pre hashovanie?"
+        answer: "b"
+        options:
+          a: "EVP_CIPHER_CTX_new"
+          b: "EVP_MD_CTX_new"
+          c: "EVP_CIPHER_fetch"
+          d: "EVP_DecryptUpdate"
+        explanation: "Kontext pre digest operácie je EVP_MD_CTX."
+
+      - type: "mcq_multi"
+        label: "7. Ktoré funkcie patria do typického dešifrovacieho sledu?"
+        answer:
+          - "a"
+          - "c"
+          - "d"
+        options:
+          a: "EVP_DecryptInit"
+          b: "EVP_DigestFinal"
+          c: "EVP_DecryptUpdate"
+          d: "EVP_DecryptFinal"
+        explanation: "Dešifrovanie ide cez Init, Update, Final."
+
+      - type: "mcq_multi"
+        label: "8. Ktoré funkcie patria do typického hashovacieho sledu?"
+        answer:
+          - "a"
+          - "b"
+          - "d"
+        options:
+          a: "EVP_DigestInit"
+          b: "EVP_DigestUpdate"
+          c: "EVP_EncryptFinal"
+          d: "EVP_DigestFinal"
+        explanation: "Hashovanie ide cez DigestInit, DigestUpdate, DigestFinal."
+
+      - type: "text"
+        label: "9. Napíš názov funkcie, ktorá vytvorí kontext pre hashovanie."
+        keywords:
+          - "evp_md_ctx_new"
+        placeholder: "Napíš názov funkcie"
+
+      - type: "text"
+        label: "10. Napíš názov funkcie, ktorá vytvorí kontext pre cipher operácie."
+        keywords:
+          - "evp_cipher_ctx_new"
+        placeholder: "Napíš názov funkcie"
+
+  - title: "6. Callbacky a drobné OpenSSL chytáky"
+    questions:
+      - type: "mcq"
+        label: "1. Aký tvar má callback pre heslo používaný pri PEM operáciách?"
+        answer: "b"
+        options:
+          a: "void cb(FILE *fp)"
+          b: "int cbPemPassword(char *buf, int size, int rwflag, void *u)"
+          c: "int cbPassword(FILE *fp, int fd)"
+          d: "void *cbPassword(void)"
+        explanation: "V materiáli je uvedený presný tvar cbPemPassword."
+
+      - type: "mcq"
+        label: "2. Aký parameter môže pri mnohých OpenSSL funkciách znamenať 'použi default kontext'?"
+        answer: "a"
+        options:
+          a: "ctx = NULL"
+          b: "ctx = -1"
+          c: "ctx = OPENSSL_DEFAULT"
+          d: "ctx = 0xFF"
+        explanation: "OSSL_LIB_CTX *ctx môže byť NULL."
+
+      - type: "mcq"
+        label: "3. Ktorý typ sa objavuje ako posledný parameter pri EVP_PKEY_print_* funkciách?"
+        answer: "d"
+        options:
+          a: "EVP_MD_CTX"
+          b: "ACL_INFORMATION_CLASS"
+          c: "FILE"
+          d: "ASN1_PCTX"
+        explanation: "Print funkcie pre kľúče používajú ASN1_PCTX *pctx."
+
+      - type: "mcq_multi"
+        label: "4. Ktoré tvrdenia o OpenSSL typoch sú správne?"
+        answer:
+          - "a"
+          - "c"
+        options:
+          a: "Certifikát nie je EVP_PKEY."
+          b: "CSR je reprezentované X509."
+          c: "CSR je X509_REQ."
+          d: "Verejný kľúč sa vypisuje cez X509_print_ex_fp."
+        explanation: "Certifikát je X509, CSR je X509_REQ a verejný kľúč sa vypisuje inou funkciou."
+
+      - type: "text"
+        label: "5. Napíš názov funkcie, ktorá vypíše všetky chyby do FILE *."
+        keywords:
+          - "err_print_errors_fp"
+        placeholder: "Napíš názov funkcie"
+
+  - title: "7. Windows SID"
+    questions:
+      - type: "mcq"
+        label: "1. Čo znamená SID vo Windows bezpečnosti?"
+        answer: "c"
+        options:
+          a: "Secure Interface Descriptor"
+          b: "System Identity Domain"
+          c: "Security Identifier"
+          d: "Security Internal Directory"
+        explanation: "SID znamená Security Identifier."
+
+      - type: "mcq"
+        label: "2. Ktorá funkcia konvertuje textový SID na binárny SID?"
+        answer: "a"
+        options:
+          a: "ConvertStringSidToSid"
+          b: "ConvertSidToStringSid"
+          c: "LookupAccountSid"
+          d: "GetAclInformation"
+        explanation: "Text -> binárny SID robí ConvertStringSidToSid."
+
+      - type: "mcq"
+        label: "3. Ktorá funkcia konvertuje binárny SID na textový reťazec?"
+        answer: "d"
+        options:
+          a: "LookupAccountName"
+          b: "GetNamedSecurityInfo"
+          c: "SidToAccountDomain"
+          d: "ConvertSidToStringSid"
+        explanation: "Binárny SID -> string robí ConvertSidToStringSid."
+
+      - type: "mcq"
+        label: "4. Ktorá funkcia prekladá SID na prihlasovacie meno?"
+        answer: "b"
+        options:
+          a: "LookupAccountName"
+          b: "LookupAccountSid"
+          c: "ConvertSidToStringSid"
+          d: "LocalFree"
+        explanation: "SID -> account name robí LookupAccountSid."
+
+      - type: "mcq"
+        label: "5. Ktorá funkcia prekladá meno účtu na SID?"
+        answer: "c"
+        options:
+          a: "LookupAccountSid"
+          b: "ConvertStringSidToSid"
+          c: "LookupAccountName"
+          d: "GetAce"
+        explanation: "Account name -> SID robí LookupAccountName."
+
+      - type: "mcq_multi"
+        label: "6. Ktoré tvrdenia o SID sú správne?"
+        answer:
+          - "a"
+          - "c"
+          - "d"
+        options:
+          a: "SID je stabilnejší identifikátor než meno účtu."
+          b: "SID sa má po použití uvoľňovať cez fclose."
+          c: "Preklad SID -> meno môže zlyhať."
+          d: "Pri práci so SID sa objavuje GetLastError."
+        explanation: "Tieto tvrdenia zodpovedajú materiálu."
+
+      - type: "text"
+        label: "7. Napíš názov funkcie, ktorá prekladá SID na meno účtu."
+        keywords:
+          - "lookupaccountsid"
+          - "lookup_account_sid"
+        placeholder: "Napíš názov funkcie"
+
+  - title: "8. Windows ACL a ACE"
+    questions:
+      - type: "mcq"
+        label: "1. Čo znamená ACL?"
+        answer: "a"
+        options:
+          a: "Access Control List"
+          b: "Account Control Layer"
+          c: "Allowed Credential List"
+          d: "Access Cipher Layer"
+        explanation: "ACL znamená Access Control List."
+
+      - type: "mcq"
+        label: "2. Čo znamená ACE?"
+        answer: "b"
+        options:
+          a: "Access Cipher Entry"
+          b: "Access Control Entry"
+          c: "Account Control Element"
+          d: "Allowed Certificate Entry"
+        explanation: "ACE je jednotlivý záznam v ACL."
+
+      - type: "mcq"
+        label: "3. Ktorá časť rozhoduje, kto má aký prístup k objektu?"
+        answer: "c"
+        options:
+          a: "SACL"
+          b: "RID"
+          c: "DACL"
+          d: "SID_NAME_USE"
+        explanation: "DACL určuje prístupové práva."
+
+      - type: "mcq"
+        label: "4. Ktorá časť súvisí s auditovaním?"
+        answer: "a"
+        options:
+          a: "SACL"
+          b: "DACL"
+          c: "RID"
+          d: "RAND_MAX"
+        explanation: "SACL určuje auditované akcie."
+
+      - type: "mcq"
+        label: "5. Ktorá funkcia získa info o počte ACE záznamov v ACL?"
+        answer: "d"
+        options:
+          a: "GetAce"
+          b: "LookupAccountName"
+          c: "GetNamedSecurityInfo"
+          d: "GetAclInformation"
+        explanation: "GetAclInformation sa používa napríklad na získanie AceCount."
+
+      - type: "mcq"
+        label: "6. Ktorá funkcia získa konkrétny ACE záznam?"
+        answer: "a"
+        options:
+          a: "GetAce"
+          b: "GetAclInformation"
+          c: "ConvertSidToStringSid"
+          d: "fread"
+        explanation: "Jeden záznam sa získava cez GetAce."
+
+      - type: "mcq"
+        label: "7. Ktorá štruktúra tvorí hlavičku ACE záznamu?"
+        answer: "c"
+        options:
+          a: "ACL_SIZE_INFORMATION"
+          b: "SECURITY_DESCRIPTOR"
+          c: "ACE_HEADER"
+          d: "PSECURITY_DESCRIPTOR"
+        explanation: "ACE_HEADER obsahuje AceType, AceFlags, AceSize."
+
+      - type: "mcq_multi"
+        label: "8. Ktoré tvrdenia o ACL API sú správne?"
+        answer:
+          - "a"
+          - "b"
+          - "d"
+        options:
+          a: "GetNamedSecurityInfo môže vrátiť owner, group aj DACL."
+          b: "ppSecurityDescriptor sa uvoľňuje cez LocalFree."
+          c: "ppsidOwner sa má vždy uvoľniť samostatne cez free."
+          d: "GetAce vracia ukazovateľ do ACL, nie novú alokáciu."
+        explanation: "Správne sú a, b, d."
+
+      - type: "text"
+        label: "9. Napíš názov funkcie, ktorá získa security descriptor objektu podľa mena."
+        keywords:
+          - "getnamedsecurityinfo"
+        placeholder: "Napíš názov funkcie"
+
+  - title: "9. Súbory a adresáre v C"
+    questions:
+      - type: "mcq"
+        label: "1. Ktorá funkcia otvorí súbor a vracia FILE *?"
+        answer: "b"
+        options:
+          a: "open"
+          b: "fopen"
+          c: "fread"
+          d: "remove"
+        explanation: "Štandardný streamový vstup/výstup používa fopen."
+
+      - type: "mcq"
+        label: "2. Čo znamená mód rb pri fopen?"
+        answer: "c"
+        options:
+          a: "Čítanie textu a binárny zápis."
+          b: "Append binárnych dát."
+          c: "Čítanie binárnych dát."
+          d: "Binárne mazanie súboru."
+        explanation: "rb znamená read binary."
+
+      - type: "mcq"
+        label: "3. Ktorá funkcia uzavrie FILE *?"
+        answer: "a"
+        options:
+          a: "fclose"
+          b: "remove"
+          c: "closedir"
+          d: "free"
+        explanation: "fclose uzatvára súborový stream."
+
+      - type: "mcq"
+        label: "4. Ktorá dvojica funkcií sa používa na čítanie a zápis blokov binárnych dát?"
+        answer: "d"
+        options:
+          a: "fgets / fputs"
+          b: "scanf / printf"
+          c: "opendir / readdir"
+          d: "fread / fwrite"
+        explanation: "Na binárne bloky sa používajú fread a fwrite."
+
+      - type: "mcq"
+        label: "5. Ktoré funkcie rozlišujú EOF a chybu po fread?"
+        answer: "b"
+        options:
+          a: "errno a perror"
+          b: "feof a ferror"
+          c: "remove a fclose"
+          d: "rand a srand"
+        explanation: "Tieto dve funkcie určujú, prečo prišlo menej dát."
+
+      - type: "mcq"
+        label: "6. Ktorá funkcia zmaže súbor podľa cesty?"
+        answer: "c"
+        options:
+          a: "unlinkfile"
+          b: "fclose"
+          c: "remove"
+          d: "closedir"
+        explanation: "Materiál používa remove(const char *path)."
+
+      - type: "mcq"
+        label: "7. Ktorá funkcia otvorí adresár?"
+        answer: "d"
+        options:
+          a: "readdir"
+          b: "diropen"
+          c: "closedir"
+          d: "opendir"
+        explanation: "Adresár otvára opendir."
+
+      - type: "mcq"
+        label: "8. Ktorá funkcia číta ďalšiu položku adresára?"
+        answer: "a"
+        options:
+          a: "readdir"
+          b: "opendir"
+          c: "mktemp"
+          d: "ferror"
+        explanation: "readdir vracia struct dirent *."
+
+      - type: "mcq"
+        label: "9. Ktorá položka struct dirent je najdôležitejšia pre názov položky?"
+        answer: "b"
+        options:
+          a: "d_type"
+          b: "d_name"
+          c: "d_reclen"
+          d: "d_off"
+        explanation: "d_name obsahuje meno položky."
+
+      - type: "mcq"
+        label: "10. Aké riziko sa spája s mktemp?"
+        answer: "d"
+        options:
+          a: "Memory leak v ERR queue."
+          b: "Nedá sa použiť na Windows."
+          c: "Nejde s ním pracovať s FILE *."
+          d: "TOCTOU medzi generovaním názvu a otvorením."
+        explanation: "To je hlavný bezpečnostný problém tohto vzoru."
+
+      - type: "text"
+        label: "11. Napíš názov funkcie, ktorá číta ďalšiu položku adresára."
+        keywords:
+          - "readdir"
+        placeholder: "Napíš názov funkcie"
+
+  - title: "10. Node, List, CUnit a Gcov"
+    questions:
+      - type: "mcq"
+        label: "1. Ktoré položky obsahuje Node v cvičení s obojsmerne viazaným zoznamom?"
+        answer: "a"
+        options:
+          a: "left, right, value"
+          b: "head, tail, size"
+          c: "key, value, hash"
+          d: "prev, next, color"
+        explanation: "Node má left, right a value."
+
+      - type: "mcq"
+        label: "2. Ktorá funkcia vytvorí nový Node?"
+        answer: "b"
+        options:
+          a: "delNode"
+          b: "newNode"
+          c: "updNode"
+          d: "erase"
+        explanation: "newNode alokuje nový prvok."
+
+      - type: "mcq"
+        label: "3. Ktorá funkcia zmení obsah prvku Node?"
+        answer: "d"
+        options:
+          a: "append"
+          b: "prepend"
+          c: "delList"
+          d: "updNode"
+        explanation: "updNode mení value v Node."
+
+      - type: "mcq"
+        label: "4. Čo obsahuje List?"
+        answer: "c"
+        options:
+          a: "len veľkosť zoznamu"
+          b: "pole Node objektov"
+          c: "ukazovateľ item na niektorý prvok zoznamu"
+          d: "hash tabuľku prvkov"
+        explanation: "List drží ukazovateľ item."
+
+      - type: "mcq"
+        label: "5. Ktoré funkcie vkladajú prvok na koniec a začiatok?"
+        answer: "a"
+        options:
+          a: "append a prepend"
+          b: "begin a end"
+          c: "forward a backward"
+          d: "erase a delList"
+        explanation: "append vkladá na koniec a prepend na začiatok."
+
+      - type: "mcq"
+        label: "6. Aká funkcia inicializuje register CUnit testov?"
+        answer: "b"
+        options:
+          a: "CU_add_suite"
+          b: "CU_initialize_registry"
+          c: "CU_basic_run_tests"
+          d: "CU_cleanup_registry"
+        explanation: "Na začiatku sa volá CU_initialize_registry."
+
+      - type: "mcq"
+        label: "7. Ktorá funkcia spustí testy v basic režime?"
+        answer: "c"
+        options:
+          a: "CU_get_error"
+          b: "CU_add_test"
+          c: "CU_basic_run_tests"
+          d: "CU_ASSERT_TRUE"
+        explanation: "Basic runner sa spúšťa cez CU_basic_run_tests."
+
+      - type: "mcq_multi"
+        label: "8. Ktoré tvrdenia o Gcov sú správne?"
+        answer:
+          - "a"
+          - "b"
+          - "d"
+        options:
+          a: ".gcno vzniká pri preklade"
+          b: ".gcda vzniká po spustení programu"
+          c: "gcov report nikdy neobsahuje počty vykonaní riadkov"
+          d: "#####: znamená, že riadok je spustiteľný, ale neprebehol"
+        explanation: "To sú základné fakty o Gcov reporte."
+
+      - type: "text"
+        label: "9. Napíš názov funkcie, ktorá vytvorí nový test suite v CUnit."
+        keywords:
+          - "cu_add_suite"
+        placeholder: "Napíš názov funkcie"
+
+  - title: "11. Random, vlákna a FIPS"
+    questions:
+      - type: "mcq"
+        label: "1. Čo vracia rand?"
+        answer: "a"
+        options:
+          a: "Pseudonáhodné číslo v rozsahu <0; RAND_MAX>"
+          b: "Vždy kryptograficky bezpečné číslo"
+          c: "Nový pthread_t"
+          d: "Počet jednotiek v monobit teste"
+        explanation: "rand vracia hodnotu v rozsahu od 0 po RAND_MAX."
+
+      - type: "mcq"
+        label: "2. Čo platí pre srand(seed)?"
+        answer: "c"
+        options:
+          a: "Vracia nové náhodné číslo"
+          b: "Vždy zaručí bezpečný seed"
+          c: "Pre rovnaký seed dá rovnakú posloupnosť"
+          d: "Slúži na ukončenie vlákna"
+        explanation: "Seed určuje deterministickú posloupnosť rand."
+
+      - type: "mcq"
+        label: "3. Ktorá POSIX funkcia vytvorí vlákno?"
+        answer: "b"
+        options:
+          a: "pthread_join"
+          b: "pthread_create"
+          c: "CloseHandle"
+          d: "fork"
+        explanation: "Vlákno sa vytvára cez pthread_create."
+
+      - type: "mcq"
+        label: "4. Ktorá POSIX funkcia čaká na ukončenie vlákna?"
+        answer: "d"
+        options:
+          a: "pthread_wait"
+          b: "pthread_exit"
+          c: "WaitForSingleObject"
+          d: "pthread_join"
+        explanation: "Čakanie na vlákno robí pthread_join."
+
+      - type: "mcq"
+        label: "5. Ktoré FIPS testy sa v materiáli používajú?"
+        answer: "a"
+        options:
+          a: "monobit, pocker, runs"
+          b: "AES, RSA, SHA"
+          c: "BFS, DFS, Dijkstra"
+          d: "SAST, DAST, fuzzing"
+        explanation: "Použité sú tri testy bitovej posloupnosti."
+
+      - type: "mcq"
+        label: "6. Čo vracajú update funkcie po spracovaní aspoň 20000 bitov?"
+        answer: "b"
+        options:
+          a: "NULL"
+          b: "1"
+          c: "-1"
+          d: "RAND_MAX"
+        explanation: "Po dosiahnutí limitu vracajú 1 a ďalšie bity už nespracúvajú."
+
+      - type: "mcq_multi"
+        label: "7. Ktoré tvrdenia o FIPS testoch sú správne?"
+        answer:
+          - "a"
+          - "c"
+          - "d"
+        options:
+          a: "Testuje sa bitová posloupnosť, nie len celé čísla."
+          b: "Modulo zmenšovanie rozsahu vždy zlepší náhodnosť."
+          c: "runs test sleduje dĺžky behov núl a jednotiek."
+          d: "monobitFinal vracia 1 pri splnení testu."
+        explanation: "Správne sú a, c, d."
+
+      - type: "text"
+        label: "8. Napíš názov POSIX funkcie, ktorá vytvorí vlákno."
+        keywords:
+          - "pthread_create"
+        placeholder: "Napíš názov funkcie"
+
+  - title: "12. MD5 chytáky"
+    questions:
+      - type: "mcq"
+        label: "1. Akú veľkosť má MD5 blok?"
+        answer: "c"
+        options:
+          a: "128 bitov"
+          b: "256 bitov"
+          c: "512 bitov"
+          d: "1024 bitov"
+        explanation: "MD5 pracuje s blokmi 512 bitov."
+
+      - type: "mcq"
+        label: "2. Koľko 32-bitových slov je v jednom MD5 bloku?"
+        answer: "b"
+        options:
+          a: "8"
+          b: "16"
+          c: "32"
+          d: "64"
+        explanation: "512 / 32 = 16 slov."
+
+      - type: "mcq"
+        label: "3. Aké sú stavové premenné MD5?"
+        answer: "d"
+        options:
+          a: "W, X, Y, Z"
+          b: "P, Q, R, S"
+          c: "H0, H1, H2, H3"
+          d: "A, B, C, D"
+        explanation: "Materiál explicitne uvádza A, B, C, D."
+
+      - type: "mcq"
+        label: "4. Koľko iterácií vykonáva myMD5Transform?"
+        answer: "a"
+        options:
+          a: "64"
+          b: "16"
+          c: "32"
+          d: "128"
+        explanation: "Sú to 4 kolá po 16 iteráciách."
+
+      - type: "mcq"
+        label: "5. Ako sa dá získať číslo kola z iter?"
+        answer: "c"
+        options:
+          a: "iter & 0x0F"
+          b: "iter << 4"
+          c: "(iter >> 4) & 0x03"
+          d: "(iter ^ 4) & 0xFF"
+        explanation: "Materiál uvádza práve tento výraz."
+
+      - type: "mcq"
+        label: "6. Ktorý výraz pre F patrí do 1. kola?"
+        answer: "b"
+        options:
+          a: "B ^ C ^ D"
+          b: "(B & C) | (~B & D)"
+          c: "C ^ (B | ~D)"
+          d: "(B & D) | (C & ~D)"
+        explanation: "To je definícia F v prvom kole."
+
+      - type: "mcq"
+        label: "7. Ktorý výraz pre F patrí do 3. kola?"
+        answer: "a"
+        options:
+          a: "B ^ C ^ D"
+          b: "(B & C) | (~B & D)"
+          c: "(B & D) | (C & ~D)"
+          d: "B | C | D"
+        explanation: "Tretie kolo používa XOR troch registrov."
+
+      - type: "mcq"
+        label: "8. Čo má robiť pomocná funkcia Rotate?"
+        answer: "d"
+        options:
+          a: "Načítať blok zo súboru"
+          b: "Pripočítať dĺžku správy"
+          c: "Vymazať digest"
+          d: "Rotovať 32-bitovú hodnotu doľava o zadaný počet bitov"
+        explanation: "Rotate je bitová rotácia doľava."
+
+      - type: "mcq_multi"
+        label: "9. Ktoré tvrdenia o myMD5Final sú správne?"
+        answer:
+          - "a"
+          - "c"
+          - "d"
+        options:
+          a: "Po doplnení paddingu má zavolať myMD5Transform."
+          b: "Má zavolať pthread_join."
+          c: "Má uložiť výsledné state hodnoty do digest."
+          d: "Na koniec posledného bloku sa dopĺňa dĺžka správy."
+        explanation: "To je podstata finalizačného kroku."
+
+      - type: "text"
+        label: "10. Napíš názov pomocnej funkcie pre rotáciu v MD5."
+        keywords:
+          - "rotate"
+        placeholder: "Napíš názov funkcie"

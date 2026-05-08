@@ -1,0 +1,2123 @@
+                    <h1>Kvíz: funkcie, typy, štruktúry a API chytáky</h1>
+
+                    <div class="section" id="sec_1" data-section="1">
+                        <div class="section-title">
+                            1. OpenSSL: typy a párovania
+                        </div>
+
+                        <div class="question" id="q1_1" data-answer="a">
+                            <div class="question-label">
+                                1. Ktorý dátový typ reprezentuje certifikát?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q1_1" value="a" /><span>X509</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q1_1" value="b" /><span>EVP_PKEY</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q1_1" value="c" /><span>X509_REQ</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q1_1" value="d" /><span>EVP_CIPHER</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q1_1-fb"></div>
+                        </div>
+
+                        <div class="question" id="q1_2" data-answer="b">
+                            <div class="question-label">
+                                2. Ktorý dátový typ reprezentuje súkromný alebo verejný kľúč?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q1_2" value="a" /><span>X509</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q1_2" value="b" /><span>EVP_PKEY</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q1_2" value="c" /><span>X509_REQ</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q1_2" value="d" /><span>OSSL_PROVIDER</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q1_2-fb"></div>
+                        </div>
+
+                        <div class="question" id="q1_3" data-answer="c">
+                            <div class="question-label">
+                                3. Ktorý dátový typ reprezentuje žiadosť o podpis certifikátu?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q1_3" value="a" /><span>X509</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q1_3" value="b" /><span>EVP_MD</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q1_3" value="c" /><span>X509_REQ</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q1_3" value="d" /><span>ASN1_PCTX</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q1_3-fb"></div>
+                        </div>
+
+                        <div class="question" id="q1_4" data-answer="a">
+                            <div class="question-label">
+                                4. Ktorá funkcia alokuje certifikát?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q1_4" value="a" /><span>X509_new</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q1_4" value="b" /><span>X509_free</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q1_4" value="c" /><span>PEM_read_X509</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q1_4" value="d" /><span>X509_REQ_new</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q1_4-fb"></div>
+                        </div>
+
+                        <div class="question" id="q1_5" data-answer="d">
+                            <div class="question-label">
+                                5. Ktorá funkcia uvoľní certifikát?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q1_5" value="a" /><span>PEM_write_X509</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q1_5" value="b" /><span>X509_print_ex_fp</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q1_5" value="c" /><span>EVP_PKEY_free</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q1_5" value="d" /><span>X509_free</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q1_5-fb"></div>
+                        </div>
+
+                        <div class="question" id="q1_6" data-answer="b">
+                            <div class="question-label">
+                                6. Ktorá funkcia alokuje kľúč typu EVP_PKEY?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q1_6" value="a" /><span>PEM_read_PrivateKey</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q1_6" value="b" /><span>EVP_PKEY_new</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q1_6" value="c" /><span>EVP_PKEY_print_public_fp</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q1_6" value="d" /><span>X509_new</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q1_6-fb"></div>
+                        </div>
+
+                        <div class="question" id="q1_7" data-answer="c">
+                            <div class="question-label">
+                                7. Ktorá funkcia alokuje CSR?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q1_7" value="a" /><span>X509_new</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q1_7" value="b" /><span>PEM_read_X509_REQ</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q1_7" value="c" /><span>X509_REQ_new</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q1_7" value="d" /><span>ERR_get_error</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q1_7-fb"></div>
+                        </div>
+
+                        <div class="question" id="q1_8" data-answer="a,c,d">
+                            <div class="question-label">
+                                8. Ktoré párovania typ -&gt; free funkcia sú správne?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="checkbox" name="q1_8" value="a" /><span>X509 -&gt; X509_free</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q1_8" value="b" /><span>EVP_PKEY -&gt; X509_free</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q1_8" value="c" /><span>EVP_PKEY -&gt; EVP_PKEY_free</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q1_8" value="d" /><span>X509_REQ -&gt; X509_REQ_free</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q1_8-fb"></div>
+                        </div>
+
+                        <div class="question" id="q1_9" data-answer="text" data-keywords="pem_read_x509">
+                            <div class="question-label">
+                                9. Napíš názov funkcie, ktorá načíta certifikát z PEM.
+                            </div>
+                            <div class="text-input-wrap">
+                                <input type="text" id="q1_9-input" placeholder="Napíš názov funkcie" autocomplete="off" spellcheck="false" />
+                            </div>
+                            <div class="text-answer-hint">
+                                Začína na PEM_read_.
+                            </div>
+                            <div class="feedback" id="q1_9-fb"></div>
+                        </div>
+
+                        <div class="question" id="q1_10" data-answer="text" data-keywords="pem_read_privatekey,pem_read_private_key">
+                            <div class="question-label">
+                                10. Napíš názov funkcie, ktorá načíta súkromný kľúč z PEM.
+                            </div>
+                            <div class="text-input-wrap">
+                                <input type="text" id="q1_10-input" placeholder="Napíš názov funkcie" autocomplete="off" spellcheck="false" />
+                            </div>
+                            <div class="text-answer-hint">
+                                Obsahuje slovo PrivateKey.
+                            </div>
+                            <div class="feedback" id="q1_10-fb"></div>
+                        </div>
+
+                        <div class="question" id="q1_11" data-answer="text" data-keywords="pem_read_x509_req">
+                            <div class="question-label">
+                                11. Napíš názov funkcie, ktorá načíta CSR z PEM.
+                            </div>
+                            <div class="text-input-wrap">
+                                <input type="text" id="q1_11-input" placeholder="Napíš názov funkcie" autocomplete="off" spellcheck="false" />
+                            </div>
+                            <div class="text-answer-hint">
+                                Končí na _REQ.
+                            </div>
+                            <div class="feedback" id="q1_11-fb"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="section" id="sec_2" data-section="2">
+                        <div class="section-title">
+                            2. OpenSSL: výpis a súbory
+                        </div>
+
+                        <div class="question" id="q2_1" data-answer="a">
+                            <div class="question-label">
+                                1. Ktorá funkcia vypíše celý certifikát v textovej podobe?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q2_1" value="a" /><span>X509_print_ex_fp</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q2_1" value="b" /><span>EVP_PKEY_print_public_fp</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q2_1" value="c" /><span>X509_REQ_print_fp</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q2_1" value="d" /><span>ERR_print_errors_fp</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q2_1-fb"></div>
+                        </div>
+
+                        <div class="question" id="q2_2" data-answer="c">
+                            <div class="question-label">
+                                2. Ktorá funkcia vypíše súkromný kľúč?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q2_2" value="a" /><span>PEM_write_PrivateKey</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q2_2" value="b" /><span>X509_print_ex_fp</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q2_2" value="c" /><span>EVP_PKEY_print_private_fp</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q2_2" value="d" /><span>PEM_read_PrivateKey</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q2_2-fb"></div>
+                        </div>
+
+                        <div class="question" id="q2_3" data-answer="d">
+                            <div class="question-label">
+                                3. Ktorá funkcia vypíše verejný kľúč?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q2_3" value="a" /><span>X509_REQ_print_fp</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q2_3" value="b" /><span>EVP_PKEY_print_private_fp</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q2_3" value="c" /><span>PEM_write_X509</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q2_3" value="d" /><span>EVP_PKEY_print_public_fp</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q2_3-fb"></div>
+                        </div>
+
+                        <div class="question" id="q2_4" data-answer="b">
+                            <div class="question-label">
+                                4. Ktorá funkcia vypíše žiadosť o podpis certifikátu?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q2_4" value="a" /><span>X509_print_ex_fp</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q2_4" value="b" /><span>X509_REQ_print_fp</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q2_4" value="c" /><span>EVP_MD_fetch</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q2_4" value="d" /><span>OpenSSL_version</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q2_4-fb"></div>
+                        </div>
+
+                        <div class="question" id="q2_5" data-answer="a">
+                            <div class="question-label">
+                                5. Aká C štandardná funkcia sa v týchto vzoroch používa na otvorenie súboru pred PEM_read_*?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q2_5" value="a" /><span>fopen</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q2_5" value="b" /><span>open</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q2_5" value="c" /><span>mktemp</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q2_5" value="d" /><span>read</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q2_5-fb"></div>
+                        </div>
+
+                        <div class="question" id="q2_6" data-answer="a,b,d">
+                            <div class="question-label">
+                                6. Ktoré tvrdenia o typickom vzore načítania sú správne?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="checkbox" name="q2_6" value="a" /><span>Najprv sa otvorí súbor cez fopen.</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q2_6" value="b" /><span>Potom sa typicky alokuje objekt cez *_new().</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q2_6" value="c" /><span>Pri chybe sa volá vždy abort().</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q2_6" value="d" /><span>Pri chybe PEM_read_* sa získava error kód cez ERR_get_error.</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q2_6-fb"></div>
+                        </div>
+
+                        <div class="question" id="q2_7" data-answer="text" data-keywords="x509_print_ex_fp">
+                            <div class="question-label">
+                                7. Napíš názov funkcie na textový výpis certifikátu.
+                            </div>
+                            <div class="text-input-wrap">
+                                <input type="text" id="q2_7-input" placeholder="Napíš názov funkcie" autocomplete="off" spellcheck="false" />
+                            </div>
+                            <div class="feedback" id="q2_7-fb"></div>
+                        </div>
+
+                        <div class="question" id="q2_8" data-answer="text" data-keywords="evp_pkey_print_public_fp">
+                            <div class="question-label">
+                                8. Napíš názov funkcie na textový výpis verejného kľúča.
+                            </div>
+                            <div class="text-input-wrap">
+                                <input type="text" id="q2_8-input" placeholder="Napíš názov funkcie" autocomplete="off" spellcheck="false" />
+                            </div>
+                            <div class="feedback" id="q2_8-fb"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="section" id="sec_3" data-section="3">
+                        <div class="section-title">
+                            3. OpenSSL: error queue
+                        </div>
+
+                        <div class="question" id="q3_1" data-answer="b">
+                            <div class="question-label">
+                                1. Kde OpenSSL drží svoje chybové kódy?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q3_1" value="a" /><span>Len v errno.</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q3_1" value="b" /><span>Vo vlastnej fronte chýb.</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q3_1" value="c" /><span>Len v návratovej hodnote FILE *.</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q3_1" value="d" /><span>Len v globálnom OpenSSL_version_num.</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q3_1-fb"></div>
+                        </div>
+
+                        <div class="question" id="q3_2" data-answer="c">
+                            <div class="question-label">
+                                2. Čo robí ERR_get_error?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q3_2" value="a" /><span>Vráti najnovší provider.</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q3_2" value="b" /><span>Načíta error strings.</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q3_2" value="c" /><span>Prečíta chybu a odstráni ju z fronty.</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q3_2" value="d" /><span>Vytlačí chybu na stdout bez zmeny fronty.</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q3_2-fb"></div>
+                        </div>
+
+                        <div class="question" id="q3_3" data-answer="a">
+                            <div class="question-label">
+                                3. Čo robí ERR_peek_error?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q3_3" value="a" /><span>Prečíta chybu bez odstránenia z fronty.</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q3_3" value="b" /><span>Prečíta najnovšiu chybu a zmaže všetky ostatné.</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q3_3" value="c" /><span>Inicializuje OpenSSL.</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q3_3" value="d" /><span>Načíta providera legacy.</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q3_3-fb"></div>
+                        </div>
+
+                        <div class="question" id="q3_4" data-answer="d">
+                            <div class="question-label">
+                                4. Čo robí ERR_peek_last_error?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q3_4" value="a" /><span>Vymaže frontu chýb.</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q3_4" value="b" /><span>Vráti najstaršiu chybu a odstráni ju.</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q3_4" value="c" /><span>Prevedie chybu na string.</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q3_4" value="d" /><span>Vráti naposledy pridanú chybu bez odstránenia.</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q3_4-fb"></div>
+                        </div>
+
+                        <div class="question" id="q3_5" data-answer="b">
+                            <div class="question-label">
+                                5. Ktorá funkcia zapíše text chyby do buffera?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q3_5" value="a" /><span>ERR_load_crypto_strings</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q3_5" value="b" /><span>ERR_error_string_n</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q3_5" value="c" /><span>ERR_free_strings</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q3_5" value="d" /><span>ERR_peek_error</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q3_5-fb"></div>
+                        </div>
+
+                        <div class="question" id="q3_6" data-answer="c">
+                            <div class="question-label">
+                                6. Ktorá funkcia vypíše všetky chyby do FILE * a vyprázdni frontu?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q3_6" value="a" /><span>X509_print_ex_fp</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q3_6" value="b" /><span>OpenSSL_version</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q3_6" value="c" /><span>ERR_print_errors_fp</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q3_6" value="d" /><span>ERR_peek_last_error</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q3_6-fb"></div>
+                        </div>
+
+                        <div class="question" id="q3_7" data-answer="a,c,d">
+                            <div class="question-label">
+                                7. Ktoré tvrdenia o error API sú správne?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="checkbox" name="q3_7" value="a" /><span>ERR_load_crypto_strings načíta texty chýb.</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q3_7" value="b" /><span>ERR_free_strings načíta provider default.</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q3_7" value="c" /><span>ERR_get_error chybu odstráni z fronty.</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q3_7" value="d" /><span>ERR_peek_error chybu vo fronte ponechá.</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q3_7-fb"></div>
+                        </div>
+
+                        <div class="question" id="q3_8" data-answer="text" data-keywords="err_get_error">
+                            <div class="question-label">
+                                8. Napíš názov funkcie, ktorá získa chybový kód a odstráni ho z fronty.
+                            </div>
+                            <div class="text-input-wrap">
+                                <input type="text" id="q3_8-input" placeholder="Napíš názov funkcie" autocomplete="off" spellcheck="false" />
+                            </div>
+                            <div class="feedback" id="q3_8-fb"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="section" id="sec_4" data-section="4">
+                        <div class="section-title">
+                            4. OpenSSL 3.x a provideri
+                        </div>
+
+                        <div class="question" id="q4_1" data-answer="a">
+                            <div class="question-label">
+                                1. Ktorá funkcia vracia číselnú verziu OpenSSL?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q4_1" value="a" /><span>OpenSSL_version_num</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q4_1" value="b" /><span>OpenSSL_version</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q4_1" value="c" /><span>OPENSSL_init_crypto</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q4_1" value="d" /><span>OSSL_PROVIDER_available</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q4_1-fb"></div>
+                        </div>
+
+                        <div class="question" id="q4_2" data-answer="b">
+                            <div class="question-label">
+                                2. Ktorá funkcia vracia textovú verziu OpenSSL?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q4_2" value="a" /><span>OpenSSL_version_num</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q4_2" value="b" /><span>OpenSSL_version</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q4_2" value="c" /><span>ERR_error_string_n</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q4_2" value="d" /><span>OSSL_PROVIDER_load</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q4_2-fb"></div>
+                        </div>
+
+                        <div class="question" id="q4_3" data-answer="c">
+                            <div class="question-label">
+                                3. Ktorá funkcia inicializuje OpenSSL crypto časť?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q4_3" value="a" /><span>OPENSSL_cleanup</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q4_3" value="b" /><span>ERR_load_crypto_strings</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q4_3" value="c" /><span>OPENSSL_init_crypto</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q4_3" value="d" /><span>OSSL_PROVIDER_unload</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q4_3-fb"></div>
+                        </div>
+
+                        <div class="question" id="q4_4" data-answer="d">
+                            <div class="question-label">
+                                4. Ktorá funkcia uprace OpenSSL?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q4_4" value="a" /><span>OpenSSL_version</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q4_4" value="b" /><span>ERR_free_strings</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q4_4" value="c" /><span>OSSL_PROVIDER_available</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q4_4" value="d" /><span>OPENSSL_cleanup</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q4_4-fb"></div>
+                        </div>
+
+                        <div class="question" id="q4_5" data-answer="a">
+                            <div class="question-label">
+                                5. Ktorá funkcia testuje dostupnosť providera?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q4_5" value="a" /><span>OSSL_PROVIDER_available</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q4_5" value="b" /><span>OSSL_PROVIDER_unload</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q4_5" value="c" /><span>EVP_MD_fetch</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q4_5" value="d" /><span>PEM_read_X509</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q4_5-fb"></div>
+                        </div>
+
+                        <div class="question" id="q4_6" data-answer="b">
+                            <div class="question-label">
+                                6. Ktorá funkcia provider načíta?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q4_6" value="a" /><span>OSSL_PROVIDER_available</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q4_6" value="b" /><span>OSSL_PROVIDER_load</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q4_6" value="c" /><span>OSSL_PROVIDER_free</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q4_6" value="d" /><span>OSSL_PROVIDER_init</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q4_6-fb"></div>
+                        </div>
+
+                        <div class="question" id="q4_7" data-answer="d">
+                            <div class="question-label">
+                                7. Ktorá funkcia provider uvoľní?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q4_7" value="a" /><span>OPENSSL_cleanup</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q4_7" value="b" /><span>EVP_CIPHER_free</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q4_7" value="c" /><span>ERR_free_strings</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q4_7" value="d" /><span>OSSL_PROVIDER_unload</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q4_7-fb"></div>
+                        </div>
+
+                        <div class="question" id="q4_8" data-answer="a,b,d">
+                            <div class="question-label">
+                                8. Ktoré názvy providerov sa v materiáli objavujú?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="checkbox" name="q4_8" value="a" /><span>default</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q4_8" value="b" /><span>legacy</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q4_8" value="c" /><span>modern</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q4_8" value="d" /><span>fips</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q4_8-fb"></div>
+                        </div>
+
+                        <div class="question" id="q4_9" data-answer="text" data-keywords="ossl_provider_load">
+                            <div class="question-label">
+                                9. Napíš názov funkcie, ktorá načíta providera.
+                            </div>
+                            <div class="text-input-wrap">
+                                <input type="text" id="q4_9-input" placeholder="Napíš názov funkcie" autocomplete="off" spellcheck="false" />
+                            </div>
+                            <div class="feedback" id="q4_9-fb"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="section" id="sec_5" data-section="5">
+                        <div class="section-title">
+                            5. EVP: šifrovanie a hashovanie
+                        </div>
+
+                        <div class="question" id="q5_1" data-answer="c">
+                            <div class="question-label">
+                                1. Aký dátový typ reprezentuje šifrovací algoritmus v OpenSSL EVP vrstve?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q5_1" value="a" /><span>EVP_MD</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q5_1" value="b" /><span>EVP_PKEY</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q5_1" value="c" /><span>EVP_CIPHER</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q5_1" value="d" /><span>X509</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q5_1-fb"></div>
+                        </div>
+
+                        <div class="question" id="q5_2" data-answer="a">
+                            <div class="question-label">
+                                2. Aký dátový typ reprezentuje hashovací algoritmus?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q5_2" value="a" /><span>EVP_MD</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q5_2" value="b" /><span>EVP_CIPHER</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q5_2" value="c" /><span>X509_REQ</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q5_2" value="d" /><span>ACE_HEADER</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q5_2-fb"></div>
+                        </div>
+
+                        <div class="question" id="q5_3" data-answer="b">
+                            <div class="question-label">
+                                3. Ktorá funkcia získa šifrovací algoritmus podľa mena?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q5_3" value="a" /><span>EVP_MD_fetch</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q5_3" value="b" /><span>EVP_CIPHER_fetch</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q5_3" value="c" /><span>EVP_CIPHER_CTX_new</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q5_3" value="d" /><span>OSSL_PROVIDER_available</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q5_3-fb"></div>
+                        </div>
+
+                        <div class="question" id="q5_4" data-answer="d">
+                            <div class="question-label">
+                                4. Ktorá funkcia získa hashovací algoritmus podľa mena?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q5_4" value="a" /><span>EVP_PKEY_new</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q5_4" value="b" /><span>EVP_DigestFinal</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q5_4" value="c" /><span>EVP_CIPHER_fetch</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q5_4" value="d" /><span>EVP_MD_fetch</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q5_4-fb"></div>
+                        </div>
+
+                        <div class="question" id="q5_5" data-answer="a">
+                            <div class="question-label">
+                                5. Ktorá funkcia vytvorí kontext pre dešifrovanie?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q5_5" value="a" /><span>EVP_CIPHER_CTX_new</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q5_5" value="b" /><span>EVP_MD_CTX_new</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q5_5" value="c" /><span>EVP_PKEY_new</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q5_5" value="d" /><span>OPENSSL_init_crypto</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q5_5-fb"></div>
+                        </div>
+
+                        <div class="question" id="q5_6" data-answer="b">
+                            <div class="question-label">
+                                6. Ktorá funkcia vytvorí kontext pre hashovanie?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q5_6" value="a" /><span>EVP_CIPHER_CTX_new</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q5_6" value="b" /><span>EVP_MD_CTX_new</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q5_6" value="c" /><span>EVP_CIPHER_fetch</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q5_6" value="d" /><span>EVP_DecryptUpdate</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q5_6-fb"></div>
+                        </div>
+
+                        <div class="question" id="q5_7" data-answer="a,c,d">
+                            <div class="question-label">
+                                7. Ktoré funkcie patria do typického dešifrovacieho sledu?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="checkbox" name="q5_7" value="a" /><span>EVP_DecryptInit</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q5_7" value="b" /><span>EVP_DigestFinal</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q5_7" value="c" /><span>EVP_DecryptUpdate</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q5_7" value="d" /><span>EVP_DecryptFinal</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q5_7-fb"></div>
+                        </div>
+
+                        <div class="question" id="q5_8" data-answer="a,b,d">
+                            <div class="question-label">
+                                8. Ktoré funkcie patria do typického hashovacieho sledu?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="checkbox" name="q5_8" value="a" /><span>EVP_DigestInit</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q5_8" value="b" /><span>EVP_DigestUpdate</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q5_8" value="c" /><span>EVP_EncryptFinal</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q5_8" value="d" /><span>EVP_DigestFinal</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q5_8-fb"></div>
+                        </div>
+
+                        <div class="question" id="q5_9" data-answer="text" data-keywords="evp_md_ctx_new">
+                            <div class="question-label">
+                                9. Napíš názov funkcie, ktorá vytvorí kontext pre hashovanie.
+                            </div>
+                            <div class="text-input-wrap">
+                                <input type="text" id="q5_9-input" placeholder="Napíš názov funkcie" autocomplete="off" spellcheck="false" />
+                            </div>
+                            <div class="feedback" id="q5_9-fb"></div>
+                        </div>
+
+                        <div class="question" id="q5_10" data-answer="text" data-keywords="evp_cipher_ctx_new">
+                            <div class="question-label">
+                                10. Napíš názov funkcie, ktorá vytvorí kontext pre cipher operácie.
+                            </div>
+                            <div class="text-input-wrap">
+                                <input type="text" id="q5_10-input" placeholder="Napíš názov funkcie" autocomplete="off" spellcheck="false" />
+                            </div>
+                            <div class="feedback" id="q5_10-fb"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="section" id="sec_6" data-section="6">
+                        <div class="section-title">
+                            6. Callbacky a drobné OpenSSL chytáky
+                        </div>
+
+                        <div class="question" id="q6_1" data-answer="b">
+                            <div class="question-label">
+                                1. Aký tvar má callback pre heslo používaný pri PEM operáciách?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q6_1" value="a" /><span>void cb(FILE *fp)</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q6_1" value="b" /><span>int cbPemPassword(char *buf, int size, int rwflag, void *u)</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q6_1" value="c" /><span>int cbPassword(FILE *fp, int fd)</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q6_1" value="d" /><span>void *cbPassword(void)</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q6_1-fb"></div>
+                        </div>
+
+                        <div class="question" id="q6_2" data-answer="a">
+                            <div class="question-label">
+                                2. Aký parameter môže pri mnohých OpenSSL funkciách znamenať &#x27;použi default kontext&#x27;?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q6_2" value="a" /><span>ctx = NULL</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q6_2" value="b" /><span>ctx = -1</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q6_2" value="c" /><span>ctx = OPENSSL_DEFAULT</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q6_2" value="d" /><span>ctx = 0xFF</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q6_2-fb"></div>
+                        </div>
+
+                        <div class="question" id="q6_3" data-answer="d">
+                            <div class="question-label">
+                                3. Ktorý typ sa objavuje ako posledný parameter pri EVP_PKEY_print_* funkciách?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q6_3" value="a" /><span>EVP_MD_CTX</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q6_3" value="b" /><span>ACL_INFORMATION_CLASS</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q6_3" value="c" /><span>FILE</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q6_3" value="d" /><span>ASN1_PCTX</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q6_3-fb"></div>
+                        </div>
+
+                        <div class="question" id="q6_4" data-answer="a,c">
+                            <div class="question-label">
+                                4. Ktoré tvrdenia o OpenSSL typoch sú správne?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="checkbox" name="q6_4" value="a" /><span>Certifikát nie je EVP_PKEY.</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q6_4" value="b" /><span>CSR je reprezentované X509.</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q6_4" value="c" /><span>CSR je X509_REQ.</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q6_4" value="d" /><span>Verejný kľúč sa vypisuje cez X509_print_ex_fp.</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q6_4-fb"></div>
+                        </div>
+
+                        <div class="question" id="q6_5" data-answer="text" data-keywords="err_print_errors_fp">
+                            <div class="question-label">
+                                5. Napíš názov funkcie, ktorá vypíše všetky chyby do FILE *.
+                            </div>
+                            <div class="text-input-wrap">
+                                <input type="text" id="q6_5-input" placeholder="Napíš názov funkcie" autocomplete="off" spellcheck="false" />
+                            </div>
+                            <div class="feedback" id="q6_5-fb"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="section" id="sec_7" data-section="7">
+                        <div class="section-title">
+                            7. Windows SID
+                        </div>
+
+                        <div class="question" id="q7_1" data-answer="c">
+                            <div class="question-label">
+                                1. Čo znamená SID vo Windows bezpečnosti?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q7_1" value="a" /><span>Secure Interface Descriptor</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q7_1" value="b" /><span>System Identity Domain</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q7_1" value="c" /><span>Security Identifier</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q7_1" value="d" /><span>Security Internal Directory</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q7_1-fb"></div>
+                        </div>
+
+                        <div class="question" id="q7_2" data-answer="a">
+                            <div class="question-label">
+                                2. Ktorá funkcia konvertuje textový SID na binárny SID?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q7_2" value="a" /><span>ConvertStringSidToSid</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q7_2" value="b" /><span>ConvertSidToStringSid</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q7_2" value="c" /><span>LookupAccountSid</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q7_2" value="d" /><span>GetAclInformation</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q7_2-fb"></div>
+                        </div>
+
+                        <div class="question" id="q7_3" data-answer="d">
+                            <div class="question-label">
+                                3. Ktorá funkcia konvertuje binárny SID na textový reťazec?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q7_3" value="a" /><span>LookupAccountName</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q7_3" value="b" /><span>GetNamedSecurityInfo</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q7_3" value="c" /><span>SidToAccountDomain</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q7_3" value="d" /><span>ConvertSidToStringSid</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q7_3-fb"></div>
+                        </div>
+
+                        <div class="question" id="q7_4" data-answer="b">
+                            <div class="question-label">
+                                4. Ktorá funkcia prekladá SID na prihlasovacie meno?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q7_4" value="a" /><span>LookupAccountName</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q7_4" value="b" /><span>LookupAccountSid</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q7_4" value="c" /><span>ConvertSidToStringSid</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q7_4" value="d" /><span>LocalFree</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q7_4-fb"></div>
+                        </div>
+
+                        <div class="question" id="q7_5" data-answer="c">
+                            <div class="question-label">
+                                5. Ktorá funkcia prekladá meno účtu na SID?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q7_5" value="a" /><span>LookupAccountSid</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q7_5" value="b" /><span>ConvertStringSidToSid</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q7_5" value="c" /><span>LookupAccountName</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q7_5" value="d" /><span>GetAce</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q7_5-fb"></div>
+                        </div>
+
+                        <div class="question" id="q7_6" data-answer="a,c,d">
+                            <div class="question-label">
+                                6. Ktoré tvrdenia o SID sú správne?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="checkbox" name="q7_6" value="a" /><span>SID je stabilnejší identifikátor než meno účtu.</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q7_6" value="b" /><span>SID sa má po použití uvoľňovať cez fclose.</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q7_6" value="c" /><span>Preklad SID -&gt; meno môže zlyhať.</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q7_6" value="d" /><span>Pri práci so SID sa objavuje GetLastError.</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q7_6-fb"></div>
+                        </div>
+
+                        <div class="question" id="q7_7" data-answer="text" data-keywords="lookupaccountsid,lookup_account_sid">
+                            <div class="question-label">
+                                7. Napíš názov funkcie, ktorá prekladá SID na meno účtu.
+                            </div>
+                            <div class="text-input-wrap">
+                                <input type="text" id="q7_7-input" placeholder="Napíš názov funkcie" autocomplete="off" spellcheck="false" />
+                            </div>
+                            <div class="feedback" id="q7_7-fb"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="section" id="sec_8" data-section="8">
+                        <div class="section-title">
+                            8. Windows ACL a ACE
+                        </div>
+
+                        <div class="question" id="q8_1" data-answer="a">
+                            <div class="question-label">
+                                1. Čo znamená ACL?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q8_1" value="a" /><span>Access Control List</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q8_1" value="b" /><span>Account Control Layer</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q8_1" value="c" /><span>Allowed Credential List</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q8_1" value="d" /><span>Access Cipher Layer</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q8_1-fb"></div>
+                        </div>
+
+                        <div class="question" id="q8_2" data-answer="b">
+                            <div class="question-label">
+                                2. Čo znamená ACE?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q8_2" value="a" /><span>Access Cipher Entry</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q8_2" value="b" /><span>Access Control Entry</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q8_2" value="c" /><span>Account Control Element</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q8_2" value="d" /><span>Allowed Certificate Entry</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q8_2-fb"></div>
+                        </div>
+
+                        <div class="question" id="q8_3" data-answer="c">
+                            <div class="question-label">
+                                3. Ktorá časť rozhoduje, kto má aký prístup k objektu?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q8_3" value="a" /><span>SACL</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q8_3" value="b" /><span>RID</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q8_3" value="c" /><span>DACL</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q8_3" value="d" /><span>SID_NAME_USE</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q8_3-fb"></div>
+                        </div>
+
+                        <div class="question" id="q8_4" data-answer="a">
+                            <div class="question-label">
+                                4. Ktorá časť súvisí s auditovaním?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q8_4" value="a" /><span>SACL</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q8_4" value="b" /><span>DACL</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q8_4" value="c" /><span>RID</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q8_4" value="d" /><span>RAND_MAX</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q8_4-fb"></div>
+                        </div>
+
+                        <div class="question" id="q8_5" data-answer="d">
+                            <div class="question-label">
+                                5. Ktorá funkcia získa info o počte ACE záznamov v ACL?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q8_5" value="a" /><span>GetAce</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q8_5" value="b" /><span>LookupAccountName</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q8_5" value="c" /><span>GetNamedSecurityInfo</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q8_5" value="d" /><span>GetAclInformation</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q8_5-fb"></div>
+                        </div>
+
+                        <div class="question" id="q8_6" data-answer="a">
+                            <div class="question-label">
+                                6. Ktorá funkcia získa konkrétny ACE záznam?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q8_6" value="a" /><span>GetAce</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q8_6" value="b" /><span>GetAclInformation</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q8_6" value="c" /><span>ConvertSidToStringSid</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q8_6" value="d" /><span>fread</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q8_6-fb"></div>
+                        </div>
+
+                        <div class="question" id="q8_7" data-answer="c">
+                            <div class="question-label">
+                                7. Ktorá štruktúra tvorí hlavičku ACE záznamu?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q8_7" value="a" /><span>ACL_SIZE_INFORMATION</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q8_7" value="b" /><span>SECURITY_DESCRIPTOR</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q8_7" value="c" /><span>ACE_HEADER</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q8_7" value="d" /><span>PSECURITY_DESCRIPTOR</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q8_7-fb"></div>
+                        </div>
+
+                        <div class="question" id="q8_8" data-answer="a,b,d">
+                            <div class="question-label">
+                                8. Ktoré tvrdenia o ACL API sú správne?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="checkbox" name="q8_8" value="a" /><span>GetNamedSecurityInfo môže vrátiť owner, group aj DACL.</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q8_8" value="b" /><span>ppSecurityDescriptor sa uvoľňuje cez LocalFree.</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q8_8" value="c" /><span>ppsidOwner sa má vždy uvoľniť samostatne cez free.</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q8_8" value="d" /><span>GetAce vracia ukazovateľ do ACL, nie novú alokáciu.</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q8_8-fb"></div>
+                        </div>
+
+                        <div class="question" id="q8_9" data-answer="text" data-keywords="getnamedsecurityinfo">
+                            <div class="question-label">
+                                9. Napíš názov funkcie, ktorá získa security descriptor objektu podľa mena.
+                            </div>
+                            <div class="text-input-wrap">
+                                <input type="text" id="q8_9-input" placeholder="Napíš názov funkcie" autocomplete="off" spellcheck="false" />
+                            </div>
+                            <div class="feedback" id="q8_9-fb"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="section" id="sec_9" data-section="9">
+                        <div class="section-title">
+                            9. Súbory a adresáre v C
+                        </div>
+
+                        <div class="question" id="q9_1" data-answer="b">
+                            <div class="question-label">
+                                1. Ktorá funkcia otvorí súbor a vracia FILE *?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q9_1" value="a" /><span>open</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9_1" value="b" /><span>fopen</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9_1" value="c" /><span>fread</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9_1" value="d" /><span>remove</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q9_1-fb"></div>
+                        </div>
+
+                        <div class="question" id="q9_2" data-answer="c">
+                            <div class="question-label">
+                                2. Čo znamená mód rb pri fopen?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q9_2" value="a" /><span>Čítanie textu a binárny zápis.</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9_2" value="b" /><span>Append binárnych dát.</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9_2" value="c" /><span>Čítanie binárnych dát.</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9_2" value="d" /><span>Binárne mazanie súboru.</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q9_2-fb"></div>
+                        </div>
+
+                        <div class="question" id="q9_3" data-answer="a">
+                            <div class="question-label">
+                                3. Ktorá funkcia uzavrie FILE *?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q9_3" value="a" /><span>fclose</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9_3" value="b" /><span>remove</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9_3" value="c" /><span>closedir</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9_3" value="d" /><span>free</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q9_3-fb"></div>
+                        </div>
+
+                        <div class="question" id="q9_4" data-answer="d">
+                            <div class="question-label">
+                                4. Ktorá dvojica funkcií sa používa na čítanie a zápis blokov binárnych dát?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q9_4" value="a" /><span>fgets / fputs</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9_4" value="b" /><span>scanf / printf</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9_4" value="c" /><span>opendir / readdir</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9_4" value="d" /><span>fread / fwrite</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q9_4-fb"></div>
+                        </div>
+
+                        <div class="question" id="q9_5" data-answer="b">
+                            <div class="question-label">
+                                5. Ktoré funkcie rozlišujú EOF a chybu po fread?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q9_5" value="a" /><span>errno a perror</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9_5" value="b" /><span>feof a ferror</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9_5" value="c" /><span>remove a fclose</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9_5" value="d" /><span>rand a srand</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q9_5-fb"></div>
+                        </div>
+
+                        <div class="question" id="q9_6" data-answer="c">
+                            <div class="question-label">
+                                6. Ktorá funkcia zmaže súbor podľa cesty?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q9_6" value="a" /><span>unlinkfile</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9_6" value="b" /><span>fclose</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9_6" value="c" /><span>remove</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9_6" value="d" /><span>closedir</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q9_6-fb"></div>
+                        </div>
+
+                        <div class="question" id="q9_7" data-answer="d">
+                            <div class="question-label">
+                                7. Ktorá funkcia otvorí adresár?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q9_7" value="a" /><span>readdir</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9_7" value="b" /><span>diropen</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9_7" value="c" /><span>closedir</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9_7" value="d" /><span>opendir</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q9_7-fb"></div>
+                        </div>
+
+                        <div class="question" id="q9_8" data-answer="a">
+                            <div class="question-label">
+                                8. Ktorá funkcia číta ďalšiu položku adresára?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q9_8" value="a" /><span>readdir</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9_8" value="b" /><span>opendir</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9_8" value="c" /><span>mktemp</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9_8" value="d" /><span>ferror</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q9_8-fb"></div>
+                        </div>
+
+                        <div class="question" id="q9_9" data-answer="b">
+                            <div class="question-label">
+                                9. Ktorá položka struct dirent je najdôležitejšia pre názov položky?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q9_9" value="a" /><span>d_type</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9_9" value="b" /><span>d_name</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9_9" value="c" /><span>d_reclen</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9_9" value="d" /><span>d_off</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q9_9-fb"></div>
+                        </div>
+
+                        <div class="question" id="q9_10" data-answer="d">
+                            <div class="question-label">
+                                10. Aké riziko sa spája s mktemp?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q9_10" value="a" /><span>Memory leak v ERR queue.</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9_10" value="b" /><span>Nedá sa použiť na Windows.</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9_10" value="c" /><span>Nejde s ním pracovať s FILE *.</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9_10" value="d" /><span>TOCTOU medzi generovaním názvu a otvorením.</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q9_10-fb"></div>
+                        </div>
+
+                        <div class="question" id="q9_11" data-answer="text" data-keywords="readdir">
+                            <div class="question-label">
+                                11. Napíš názov funkcie, ktorá číta ďalšiu položku adresára.
+                            </div>
+                            <div class="text-input-wrap">
+                                <input type="text" id="q9_11-input" placeholder="Napíš názov funkcie" autocomplete="off" spellcheck="false" />
+                            </div>
+                            <div class="feedback" id="q9_11-fb"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="section" id="sec_10" data-section="10">
+                        <div class="section-title">
+                            10. Node, List, CUnit a Gcov
+                        </div>
+
+                        <div class="question" id="q10_1" data-answer="a">
+                            <div class="question-label">
+                                1. Ktoré položky obsahuje Node v cvičení s obojsmerne viazaným zoznamom?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q10_1" value="a" /><span>left, right, value</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q10_1" value="b" /><span>head, tail, size</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q10_1" value="c" /><span>key, value, hash</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q10_1" value="d" /><span>prev, next, color</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q10_1-fb"></div>
+                        </div>
+
+                        <div class="question" id="q10_2" data-answer="b">
+                            <div class="question-label">
+                                2. Ktorá funkcia vytvorí nový Node?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q10_2" value="a" /><span>delNode</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q10_2" value="b" /><span>newNode</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q10_2" value="c" /><span>updNode</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q10_2" value="d" /><span>erase</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q10_2-fb"></div>
+                        </div>
+
+                        <div class="question" id="q10_3" data-answer="d">
+                            <div class="question-label">
+                                3. Ktorá funkcia zmení obsah prvku Node?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q10_3" value="a" /><span>append</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q10_3" value="b" /><span>prepend</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q10_3" value="c" /><span>delList</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q10_3" value="d" /><span>updNode</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q10_3-fb"></div>
+                        </div>
+
+                        <div class="question" id="q10_4" data-answer="c">
+                            <div class="question-label">
+                                4. Čo obsahuje List?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q10_4" value="a" /><span>len veľkosť zoznamu</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q10_4" value="b" /><span>pole Node objektov</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q10_4" value="c" /><span>ukazovateľ item na niektorý prvok zoznamu</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q10_4" value="d" /><span>hash tabuľku prvkov</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q10_4-fb"></div>
+                        </div>
+
+                        <div class="question" id="q10_5" data-answer="a">
+                            <div class="question-label">
+                                5. Ktoré funkcie vkladajú prvok na koniec a začiatok?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q10_5" value="a" /><span>append a prepend</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q10_5" value="b" /><span>begin a end</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q10_5" value="c" /><span>forward a backward</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q10_5" value="d" /><span>erase a delList</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q10_5-fb"></div>
+                        </div>
+
+                        <div class="question" id="q10_6" data-answer="b">
+                            <div class="question-label">
+                                6. Aká funkcia inicializuje register CUnit testov?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q10_6" value="a" /><span>CU_add_suite</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q10_6" value="b" /><span>CU_initialize_registry</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q10_6" value="c" /><span>CU_basic_run_tests</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q10_6" value="d" /><span>CU_cleanup_registry</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q10_6-fb"></div>
+                        </div>
+
+                        <div class="question" id="q10_7" data-answer="c">
+                            <div class="question-label">
+                                7. Ktorá funkcia spustí testy v basic režime?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q10_7" value="a" /><span>CU_get_error</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q10_7" value="b" /><span>CU_add_test</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q10_7" value="c" /><span>CU_basic_run_tests</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q10_7" value="d" /><span>CU_ASSERT_TRUE</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q10_7-fb"></div>
+                        </div>
+
+                        <div class="question" id="q10_8" data-answer="a,b,d">
+                            <div class="question-label">
+                                8. Ktoré tvrdenia o Gcov sú správne?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="checkbox" name="q10_8" value="a" /><span>.gcno vzniká pri preklade</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q10_8" value="b" /><span>.gcda vzniká po spustení programu</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q10_8" value="c" /><span>gcov report nikdy neobsahuje počty vykonaní riadkov</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q10_8" value="d" /><span>#####: znamená, že riadok je spustiteľný, ale neprebehol</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q10_8-fb"></div>
+                        </div>
+
+                        <div class="question" id="q10_9" data-answer="text" data-keywords="cu_add_suite">
+                            <div class="question-label">
+                                9. Napíš názov funkcie, ktorá vytvorí nový test suite v CUnit.
+                            </div>
+                            <div class="text-input-wrap">
+                                <input type="text" id="q10_9-input" placeholder="Napíš názov funkcie" autocomplete="off" spellcheck="false" />
+                            </div>
+                            <div class="feedback" id="q10_9-fb"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="section" id="sec_11" data-section="11">
+                        <div class="section-title">
+                            11. Random, vlákna a FIPS
+                        </div>
+
+                        <div class="question" id="q11_1" data-answer="a">
+                            <div class="question-label">
+                                1. Čo vracia rand?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q11_1" value="a" /><span>Pseudonáhodné číslo v rozsahu &lt;0; RAND_MAX&gt;</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q11_1" value="b" /><span>Vždy kryptograficky bezpečné číslo</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q11_1" value="c" /><span>Nový pthread_t</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q11_1" value="d" /><span>Počet jednotiek v monobit teste</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q11_1-fb"></div>
+                        </div>
+
+                        <div class="question" id="q11_2" data-answer="c">
+                            <div class="question-label">
+                                2. Čo platí pre srand(seed)?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q11_2" value="a" /><span>Vracia nové náhodné číslo</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q11_2" value="b" /><span>Vždy zaručí bezpečný seed</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q11_2" value="c" /><span>Pre rovnaký seed dá rovnakú posloupnosť</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q11_2" value="d" /><span>Slúži na ukončenie vlákna</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q11_2-fb"></div>
+                        </div>
+
+                        <div class="question" id="q11_3" data-answer="b">
+                            <div class="question-label">
+                                3. Ktorá POSIX funkcia vytvorí vlákno?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q11_3" value="a" /><span>pthread_join</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q11_3" value="b" /><span>pthread_create</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q11_3" value="c" /><span>CloseHandle</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q11_3" value="d" /><span>fork</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q11_3-fb"></div>
+                        </div>
+
+                        <div class="question" id="q11_4" data-answer="d">
+                            <div class="question-label">
+                                4. Ktorá POSIX funkcia čaká na ukončenie vlákna?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q11_4" value="a" /><span>pthread_wait</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q11_4" value="b" /><span>pthread_exit</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q11_4" value="c" /><span>WaitForSingleObject</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q11_4" value="d" /><span>pthread_join</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q11_4-fb"></div>
+                        </div>
+
+                        <div class="question" id="q11_5" data-answer="a">
+                            <div class="question-label">
+                                5. Ktoré FIPS testy sa v materiáli používajú?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q11_5" value="a" /><span>monobit, pocker, runs</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q11_5" value="b" /><span>AES, RSA, SHA</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q11_5" value="c" /><span>BFS, DFS, Dijkstra</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q11_5" value="d" /><span>SAST, DAST, fuzzing</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q11_5-fb"></div>
+                        </div>
+
+                        <div class="question" id="q11_6" data-answer="b">
+                            <div class="question-label">
+                                6. Čo vracajú update funkcie po spracovaní aspoň 20000 bitov?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q11_6" value="a" /><span>NULL</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q11_6" value="b" /><span>1</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q11_6" value="c" /><span>-1</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q11_6" value="d" /><span>RAND_MAX</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q11_6-fb"></div>
+                        </div>
+
+                        <div class="question" id="q11_7" data-answer="a,c,d">
+                            <div class="question-label">
+                                7. Ktoré tvrdenia o FIPS testoch sú správne?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="checkbox" name="q11_7" value="a" /><span>Testuje sa bitová posloupnosť, nie len celé čísla.</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q11_7" value="b" /><span>Modulo zmenšovanie rozsahu vždy zlepší náhodnosť.</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q11_7" value="c" /><span>runs test sleduje dĺžky behov núl a jednotiek.</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q11_7" value="d" /><span>monobitFinal vracia 1 pri splnení testu.</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q11_7-fb"></div>
+                        </div>
+
+                        <div class="question" id="q11_8" data-answer="text" data-keywords="pthread_create">
+                            <div class="question-label">
+                                8. Napíš názov POSIX funkcie, ktorá vytvorí vlákno.
+                            </div>
+                            <div class="text-input-wrap">
+                                <input type="text" id="q11_8-input" placeholder="Napíš názov funkcie" autocomplete="off" spellcheck="false" />
+                            </div>
+                            <div class="feedback" id="q11_8-fb"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="section" id="sec_12" data-section="12">
+                        <div class="section-title">
+                            12. MD5 chytáky
+                        </div>
+
+                        <div class="question" id="q12_1" data-answer="c">
+                            <div class="question-label">
+                                1. Akú veľkosť má MD5 blok?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q12_1" value="a" /><span>128 bitov</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q12_1" value="b" /><span>256 bitov</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q12_1" value="c" /><span>512 bitov</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q12_1" value="d" /><span>1024 bitov</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q12_1-fb"></div>
+                        </div>
+
+                        <div class="question" id="q12_2" data-answer="b">
+                            <div class="question-label">
+                                2. Koľko 32-bitových slov je v jednom MD5 bloku?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q12_2" value="a" /><span>8</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q12_2" value="b" /><span>16</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q12_2" value="c" /><span>32</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q12_2" value="d" /><span>64</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q12_2-fb"></div>
+                        </div>
+
+                        <div class="question" id="q12_3" data-answer="d">
+                            <div class="question-label">
+                                3. Aké sú stavové premenné MD5?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q12_3" value="a" /><span>W, X, Y, Z</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q12_3" value="b" /><span>P, Q, R, S</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q12_3" value="c" /><span>H0, H1, H2, H3</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q12_3" value="d" /><span>A, B, C, D</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q12_3-fb"></div>
+                        </div>
+
+                        <div class="question" id="q12_4" data-answer="a">
+                            <div class="question-label">
+                                4. Koľko iterácií vykonáva myMD5Transform?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q12_4" value="a" /><span>64</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q12_4" value="b" /><span>16</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q12_4" value="c" /><span>32</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q12_4" value="d" /><span>128</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q12_4-fb"></div>
+                        </div>
+
+                        <div class="question" id="q12_5" data-answer="c">
+                            <div class="question-label">
+                                5. Ako sa dá získať číslo kola z iter?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q12_5" value="a" /><span>iter &amp; 0x0F</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q12_5" value="b" /><span>iter &lt;&lt; 4</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q12_5" value="c" /><span>(iter &gt;&gt; 4) &amp; 0x03</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q12_5" value="d" /><span>(iter ^ 4) &amp; 0xFF</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q12_5-fb"></div>
+                        </div>
+
+                        <div class="question" id="q12_6" data-answer="b">
+                            <div class="question-label">
+                                6. Ktorý výraz pre F patrí do 1. kola?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q12_6" value="a" /><span>B ^ C ^ D</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q12_6" value="b" /><span>(B &amp; C) | (~B &amp; D)</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q12_6" value="c" /><span>C ^ (B | ~D)</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q12_6" value="d" /><span>(B &amp; D) | (C &amp; ~D)</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q12_6-fb"></div>
+                        </div>
+
+                        <div class="question" id="q12_7" data-answer="a">
+                            <div class="question-label">
+                                7. Ktorý výraz pre F patrí do 3. kola?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q12_7" value="a" /><span>B ^ C ^ D</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q12_7" value="b" /><span>(B &amp; C) | (~B &amp; D)</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q12_7" value="c" /><span>(B &amp; D) | (C &amp; ~D)</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q12_7" value="d" /><span>B | C | D</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q12_7-fb"></div>
+                        </div>
+
+                        <div class="question" id="q12_8" data-answer="d">
+                            <div class="question-label">
+                                8. Čo má robiť pomocná funkcia Rotate?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q12_8" value="a" /><span>Načítať blok zo súboru</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q12_8" value="b" /><span>Pripočítať dĺžku správy</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q12_8" value="c" /><span>Vymazať digest</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q12_8" value="d" /><span>Rotovať 32-bitovú hodnotu doľava o zadaný počet bitov</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q12_8-fb"></div>
+                        </div>
+
+                        <div class="question" id="q12_9" data-answer="a,c,d">
+                            <div class="question-label">
+                                9. Ktoré tvrdenia o myMD5Final sú správne?
+                            </div>
+                            <div class="options">
+                            <label class="option">
+                                <input type="checkbox" name="q12_9" value="a" /><span>Po doplnení paddingu má zavolať myMD5Transform.</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q12_9" value="b" /><span>Má zavolať pthread_join.</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q12_9" value="c" /><span>Má uložiť výsledné state hodnoty do digest.</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="q12_9" value="d" /><span>Na koniec posledného bloku sa dopĺňa dĺžka správy.</span>
+                            </label>
+                            </div>
+                            <div class="feedback" id="q12_9-fb"></div>
+                        </div>
+
+                        <div class="question" id="q12_10" data-answer="text" data-keywords="rotate">
+                            <div class="question-label">
+                                10. Napíš názov pomocnej funkcie pre rotáciu v MD5.
+                            </div>
+                            <div class="text-input-wrap">
+                                <input type="text" id="q12_10-input" placeholder="Napíš názov funkcie" autocomplete="off" spellcheck="false" />
+                            </div>
+                            <div class="feedback" id="q12_10-fb"></div>
+                        </div>
+
+                    </div>
