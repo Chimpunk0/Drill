@@ -1,0 +1,39 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="1920"
+  height="1080"
+  viewBox="0 0 1920 1080"
+  role="img"
+  aria-labelledby="title desc"
+>
+  <title id="title">Blueprint Background</title>
+  <desc id="desc">Muted blueprint-style background with repeated dashed alignment marks and a dark vignette.</desc>
+
+  <defs>
+    <pattern
+      id="blueprint-pattern"
+      width="168"
+      height="160"
+      patternUnits="userSpaceOnUse"
+      viewBox="0 0 210 200"
+      preserveAspectRatio="none"
+    >
+      <g fill="none" stroke="#afadad" stroke-linecap="round">
+        <path d="M 10 100 H 70" stroke-width="4" stroke-dasharray="20 20" opacity="0.2"/>
+        <path d="M 140 100 H 200" stroke-width="4" stroke-dasharray="20 20" opacity="0.2"/>
+        <path d="M 105 5 V 65" stroke-width="4" stroke-dasharray="20 20" opacity="0.2"/>
+        <path d="M 105 135 V 195" stroke-width="4" stroke-dasharray="20 20" opacity="0.2"/>
+        <path d="M 90 100 H 120 M 105 85 V 115" stroke-width="8" opacity="0.2"/>
+      </g>
+    </pattern>
+
+    <radialGradient id="vignette" cx="50%" cy="50%" r="72%">
+      <stop offset="52%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.42"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="100%" height="100%" fill="#777b8f"/>
+  <rect width="100%" height="100%" fill="url(#blueprint-pattern)"/>
+  <rect width="100%" height="100%" fill="url(#vignette)"/>
+</svg>
