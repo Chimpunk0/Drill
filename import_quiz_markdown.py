@@ -243,7 +243,7 @@ def main() -> None:
     )
     parser.add_argument(
         "--label",
-        help="Human-readable label for confg.js and sidebar. Defaults to the Markdown title.",
+        help="Human-readable label for src/config/quizSets.js and sidebar. Defaults to the Markdown title.",
     )
     parser.add_argument(
         "--section-size",
@@ -257,12 +257,12 @@ def main() -> None:
     )
     parser.add_argument(
         "--output-root",
-        help="Repo root containing quiz_sets/ and confg.js. Defaults to this repo.",
+        help="Repo root containing quiz_sets/ and src/config/quizSets.js. Defaults to this repo.",
     )
     parser.add_argument(
         "--no-register-config",
         action="store_true",
-        help="Do not register the generated set in confg.js.",
+        help="Do not register the generated set in src/config/quizSets.js.",
     )
     args = parser.parse_args()
 
@@ -300,7 +300,7 @@ def main() -> None:
     print(f"OK: generated {embed_path}")
 
     if not args.no_register_config:
-        config_path = repo_root / "confg.js"
+        config_path = repo_root / "src" / "config" / "quizSets.js"
         added = register_in_config(config_path, set_id, label)
         if added:
             print(f"OK: registered {set_id} in {config_path}")

@@ -14,13 +14,13 @@ Tento projekt je **jednostránkový kvíz** bez backendu: `vba_kviz_v3_1.html` +
    Ukážka: **`context/quiz_set.example.yaml`**.  
    Generovanie: `python3 generate_quiz_set.py <spec.yaml>`  
    Predvolene skript vytvorí `.frag.html`, `.explanations.js`, `.frag.embed.js`
-   a doplní nový entry do `confg.js`. Ak nechcete registráciu, použite
+   a doplní nový entry do `src/config/quizSets.js`. Ak nechcete registráciu, použite
    `--no-register-config`.
 
 4. **Import z Markdownu** – ak je zdroj v štruktúrovanom `.md` formáte  
    Generovanie: `python3 import_quiz_markdown.py <quiz.md> --set-id <id> --label "<label>"`  
    Skript vytvorí YAML spec do `context/imported/`, potom z neho vygeneruje
-   `.frag.html`, `.explanations.js`, `.frag.embed.js` a predvolene doplní aj `confg.js`.
+   `.frag.html`, `.explanations.js`, `.frag.embed.js` a predvolene doplní aj `src/config/quizSets.js`.
 
 5. (Voliteľné) Pripomenúť používateľovi po úprave fragmentu spustiť z koreňa projektu:  
    `python3 embed_quiz_fragment.py --id <id>`  
@@ -51,7 +51,7 @@ Tento projekt je **jednostránkový kvíz** bez backendu: `vba_kviz_v3_1.html` +
 
 ## Integrácia do projektu (pre človeka)
 
-- `confg.js`: zaregistrujte set vo `window.QUIZ_SETS`, aby sa zobrazil v sidebari.
+- `src/config/quizSets.js`: zaregistrujte set vo `window.QUIZ_SETS`, aby sa zobrazil v sidebari.
 - `index.html`: skripty  
   `quiz_sets/<id>.frag.embed.js` a `quiz_sets/<id>.explanations.js` musia zodpovedať zvolenému setu.
 - Po zmene `.frag.html` znova: **`python3 embed_quiz_fragment.py --id <id>`**.

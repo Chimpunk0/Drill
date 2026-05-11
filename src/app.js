@@ -2171,7 +2171,7 @@ async function loadQuizSetScripts() {
     if (!set) {
         showAppError(
             "Neznámy kvízový set.",
-            `Set "${id}" nie je zaregistrovaný v confg.js.`,
+            `Set "${id}" nie je zaregistrovaný v src/config/quizSets.js.`,
         );
         return false;
     }

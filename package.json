@@ -1,0 +1,15 @@
+{
+  "name": "quiz-test",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && python3 tools/copy_static_assets.py",
+    "preview": "vite preview",
+    "validate": "python3 validate_quiz.py --all"
+  },
+  "devDependencies": {
+    "vite": "^5.4.0"
+  }
+}

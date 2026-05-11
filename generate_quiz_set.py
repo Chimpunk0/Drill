@@ -600,7 +600,7 @@ def main() -> None:
     parser.add_argument(
         "--no-register-config",
         action="store_true",
-        help="Do not add the generated quiz set to confg.js.",
+        help="Do not add the generated quiz set to src/config/quizSets.js.",
     )
     args = parser.parse_args()
 
@@ -627,10 +627,10 @@ def main() -> None:
     label = spec.get("label")
     if isinstance(label, str) and label.strip():
         if args.no_register_config:
-            print("\nSuggested confg.js entry:")
+            print("\nSuggested src/config/quizSets.js entry:")
             print(build_config_snippet(set_id, label))
         else:
-            config_path = output_root / "confg.js"
+            config_path = output_root / "src" / "config" / "quizSets.js"
             added = register_in_config(config_path, set_id, label)
             if added:
                 print(f"OK: registered {set_id} in {config_path}")
