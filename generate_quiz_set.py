@@ -64,9 +64,7 @@ class SimpleYamlParser:
         value, index = self._parse_block(0, self.lines[0].indent)
         if index != len(self.lines):
             line = self.lines[index]
-            raise SpecError(
-                f"Line {line.number}: unexpected content '{line.content}'."
-            )
+            raise SpecError(f"Line {line.number}: unexpected content '{line.content}'.")
         return value
 
     def _parse_block(self, index: int, indent: int) -> tuple[Any, int]:
@@ -125,7 +123,7 @@ class SimpleYamlParser:
                 if index < len(self.lines) and self.lines[index].indent > indent:
                     value, index = self._parse_block(index, self.lines[index].indent)
                 else:
-                    value = ""
+                    value = {}
                 result.append(value)
                 continue
 
@@ -136,7 +134,9 @@ class SimpleYamlParser:
                 value: dict[str, Any] = {}
                 if has_nested:
                     if index < len(self.lines) and self.lines[index].indent > indent:
-                        nested, index = self._parse_block(index, self.lines[index].indent)
+                        nested, index = self._parse_block(
+                            index, self.lines[index].indent
+                        )
                     else:
                         nested = ""
                     value[key] = nested
@@ -259,14 +259,18 @@ def normalize_mcq_options(raw_options: Any) -> list[tuple[str, str]]:
     raise SpecError("'options' must be a mapping or list.")
 
 
-def normalize_multi_answers(raw_answer: Any, qid: str, valid_values: list[str]) -> list[str]:
+def normalize_multi_answers(
+    raw_answer: Any, qid: str, valid_values: list[str]
+) -> list[str]:
     if isinstance(raw_answer, str):
         answers = [part.strip() for part in raw_answer.split(",") if part.strip()]
     elif isinstance(raw_answer, list):
         answers = []
         for item in raw_answer:
             if not isinstance(item, str) or not item.strip():
-                raise SpecError(f"Question {qid}: every multi-answer value must be a string.")
+                raise SpecError(
+                    f"Question {qid}: every multi-answer value must be a string."
+                )
             answers.append(item.strip())
     else:
         raise SpecError(
@@ -274,7 +278,9 @@ def normalize_multi_answers(raw_answer: Any, qid: str, valid_values: list[str]) 
         )
 
     if not answers:
-        raise SpecError(f"Question {qid}: multi-answer question needs at least one correct option.")
+        raise SpecError(
+            f"Question {qid}: multi-answer question needs at least one correct option."
+        )
 
     unknown = sorted(set(answers) - set(valid_values))
     if unknown:
@@ -294,27 +300,27 @@ def build_fragment(spec: dict[str, Any]) -> tuple[str, dict[str, str]]:
         raise SpecError("At least one section is required.")
 
     explanations: dict[str, str] = {}
-    html_parts = [f'                    <h1>{escape(title)}</h1>', ""]
+    html_parts = [f"                    <h1>{escape(title)}</h1>", ""]
 
     for section_index, raw_section in enumerate(sections, start=1):
         section = ensure_dict(raw_section, f"sections[{section_index - 1}]")
         section_id = section.get("id") or f"sec_{section_index}"
         if not isinstance(section_id, str) or not section_id.strip():
             raise SpecError(f"Section {section_index}: invalid 'id'.")
-        section_title_html = normalized_html_text(
-            section, "title", "title_html"
-        )
+        section_title_html = normalized_html_text(section, "title", "title_html")
         questions = ensure_list(
             section.get("questions"), f"sections[{section_index - 1}].questions"
         )
         if not questions:
-            raise SpecError(f"Section {section_index}: at least one question is required.")
+            raise SpecError(
+                f"Section {section_index}: at least one question is required."
+            )
 
         html_parts.append(
             "\n".join(
                 [
                     f'                    <div class="section" id="{escape(section_id, quote=True)}" data-section="{section_index}">',
-                    "                        <div class=\"section-title\">",
+                    '                        <div class="section-title">',
                     indent_block(section_title_html, 28),
                     "                        </div>",
                     "",
@@ -347,7 +353,9 @@ def build_fragment(spec: dict[str, Any]) -> tuple[str, dict[str, str]]:
             elif "image" in question:
                 image = question["image"]
                 if not isinstance(image, str) or not image.strip():
-                    raise SpecError(f"Question {qid}: 'image' must be a non-empty string.")
+                    raise SpecError(
+                        f"Question {qid}: 'image' must be a non-empty string."
+                    )
                 image_alt = question.get("image_alt", "")
                 if not isinstance(image_alt, str):
                     raise SpecError(f"Question {qid}: 'image_alt' must be a string.")
@@ -422,10 +430,14 @@ def build_fragment(spec: dict[str, Any]) -> tuple[str, dict[str, str]]:
             keyword_values: list[str] = []
             for keyword in keywords:
                 if not isinstance(keyword, str) or not keyword.strip():
-                    raise SpecError(f"Question {qid}: every keyword must be a non-empty string.")
+                    raise SpecError(
+                        f"Question {qid}: every keyword must be a non-empty string."
+                    )
                 keyword_values.append(keyword.strip())
             if not keyword_values:
-                raise SpecError(f"Question {qid}: text question needs at least one keyword.")
+                raise SpecError(
+                    f"Question {qid}: text question needs at least one keyword."
+                )
 
             placeholder = question.get("placeholder", "Napíšte odpoveď...")
             if not isinstance(placeholder, str):
@@ -457,9 +469,9 @@ def build_fragment(spec: dict[str, Any]) -> tuple[str, dict[str, str]]:
                 )
             question_lines.extend(
                 [
-                '                            <div class="text-input-wrap">',
-                f'                                <input type="text" id="{escape(qid, quote=True)}-input" placeholder="{escape(placeholder, quote=True)}" autocomplete="off" spellcheck="false" />',
-                "                            </div>",
+                    '                            <div class="text-input-wrap">',
+                    f'                                <input type="text" id="{escape(qid, quote=True)}-input" placeholder="{escape(placeholder, quote=True)}" autocomplete="off" spellcheck="false" />',
+                    "                            </div>",
                 ]
             )
             if hint_html:
@@ -532,9 +544,7 @@ def register_in_config(config_path: Path, set_id: str, label: str) -> bool:
     marker = "window.QUIZ_SETS = window.QUIZ_SETS || ["
     start = config_text.find(marker)
     if start == -1:
-        raise SpecError(
-            f"Could not find QUIZ_SETS array in {config_path.name}."
-        )
+        raise SpecError(f"Could not find QUIZ_SETS array in {config_path.name}.")
 
     array_start = start + len(marker)
     array_end = config_text.find("];", array_start)
@@ -555,7 +565,9 @@ def register_in_config(config_path: Path, set_id: str, label: str) -> bool:
     return True
 
 
-def write_outputs(root: Path, set_id: str, fragment_html: str, explanations_js: str) -> tuple[Path, Path, Path]:
+def write_outputs(
+    root: Path, set_id: str, fragment_html: str, explanations_js: str
+) -> tuple[Path, Path, Path]:
     frag_path = root / "quiz_sets" / f"{set_id}.frag.html"
     expl_path = root / "quiz_sets" / f"{set_id}.explanations.js"
     embed_path = root / "quiz_sets" / f"{set_id}.frag.embed.js"
@@ -593,11 +605,7 @@ def main() -> None:
     args = parser.parse_args()
 
     script_root = Path(__file__).resolve().parent
-    output_root = (
-        Path(args.output_root).resolve()
-        if args.output_root
-        else script_root
-    )
+    output_root = Path(args.output_root).resolve() if args.output_root else script_root
     spec_path = Path(args.spec).resolve()
 
     spec = load_spec(spec_path)
