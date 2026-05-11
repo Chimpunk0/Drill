@@ -22,7 +22,8 @@ dist/
 *.txt
 
 AGENTS.md
-PLAN.md
+PLAN_LOG.md
+checklist.md
 
 # jetbrains
 .idea/
