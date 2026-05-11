@@ -1389,7 +1389,7 @@ function evaluateTextKeywordAnswer(userVal, keywords) {
     return {
         isCorrect:
             keywordList.length > 0 &&
-            matchedKeywords.length === keywordList.length,
+            matchedKeywords.length > 0,
         matchedCount: matchedKeywords.length,
         totalCount: keywordList.length,
     };
