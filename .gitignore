@@ -21,6 +21,11 @@ node_modules/
 *.txt
 
 AGENTS.md
+PLAN_LOG.md
+checklist.md
 
 # jetbrains
 .idea/
+
+# vite
+dist/
