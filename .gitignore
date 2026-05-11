@@ -21,6 +21,7 @@ node_modules/
 *.txt
 
 AGENTS.md
+PLAN.md
 
 # jetbrains
 .idea/
