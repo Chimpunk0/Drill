@@ -15,6 +15,7 @@ const state = {
         answered: false,
         sessionInitialLength: 0,
         sectionIds: [],
+        sectionIds: [],
     },
 };
 
@@ -75,6 +76,10 @@ Object.defineProperties(window, {
         get: () => state.flashcards.sectionIds,
         set: (value) => (state.flashcards.sectionIds = value),
     },
+    fcSectionIds: {
+        get: () => state.flashcards.sectionIds,
+        set: (value) => (state.flashcards.sectionIds = value),
+    },
 });
 
 // ─── localStorage (oddelené per set, ak nepoužijete QUIZ_STORAGE_KEY) ────
@@ -82,6 +87,7 @@ const STORAGE_KEY =
     window.QUIZ_STORAGE_KEY ||
     `vba_kviz_answers_${window.QUIZ_SET_ID || "default"}`;
 const WRONG_STORAGE_KEY = `${STORAGE_KEY}_wrong_answers`;
+const FLASHCARD_STORAGE_KEY = `${STORAGE_KEY}_flashcards`;
 const FLASHCARD_STORAGE_KEY = `${STORAGE_KEY}_flashcards`;
 
 function saveAnswers() {
@@ -426,6 +432,15 @@ function setFlashcardsActive(active) {
     flashcardView.setAttribute("aria-hidden", active ? "false" : "true");
 }
 
+function setFlashcardsActive(active) {
+    const normalView = document.getElementById("normal-mode-view");
+    const flashcardView = document.getElementById("flashcard-view");
+    if (!normalView || !flashcardView) return;
+    normalView.classList.toggle("hidden", active);
+    flashcardView.classList.toggle("active", active);
+    flashcardView.setAttribute("aria-hidden", active ? "false" : "true");
+}
+
 // ─── Shuffle helpers ─────────────────────────────────────────────────────
 function shuffleArray(arr) {
     for (let i = arr.length - 1; i > 0; i--) {
@@ -657,18 +672,14 @@ function updateRightSidebarAvailability() {
     const rightSidebar = document.getElementById("right-sidebar");
     const mainContent = document.getElementById("main-content");
     if (!btn || !rightSidebar || !mainContent) return;
-    if (!sidebarVisible) {
-        btn.classList.add("hidden");
+    btn.classList.remove("hidden");
+    if (!rightSidebarVisible) {
         rightSidebar.classList.add("hidden");
         mainContent.classList.remove("with-right-sidebar");
-        rightSidebarVisible = false;
-    } else {
-        btn.classList.remove("hidden");
     }
 }
 
 function toggleRightSidebar() {
-    if (!sidebarVisible) return;
     const rightSidebar = document.getElementById("right-sidebar");
     const mainContent = document.getElementById("main-content");
     if (!rightSidebar || !mainContent) return;
@@ -754,6 +765,7 @@ function bindUiEvents() {
     bind("select-no-sections-btn",   "click", () => selectAllSections(false));
     bind("apply-filter-btn",         "click", applySectionFilter);
     bind("open-flashcards-btn",      "click", () => openFlashcards());
+    bind("open-flashcards-btn",      "click", () => openFlashcards());
     bind("sidebar-overlay",          "click", toggleSidebar);
 
     // Right sidebar
@@ -778,6 +790,7 @@ function bindUiEvents() {
     bind("fc-end-btn",   "click", closeFlashcards);
     bind("fc-next-btn",  "click", fcNext);
     bind("fc-reset-btn", "click", resetFlashcardsProgress);
+    bind("fc-reset-btn", "click", resetFlashcardsProgress);
 
     // Quiz set selector – event delegation on container
     const quizSetList = document.getElementById("quiz-set-list");
@@ -789,6 +802,9 @@ function bindUiEvents() {
     }
 
     // Flashcard body – event delegation for options + submit + final actions
+    const flashcardView = document.getElementById("flashcard-view");
+    if (flashcardView) {
+        flashcardView.addEventListener("click", (e) => {
     const flashcardView = document.getElementById("flashcard-view");
     if (flashcardView) {
         flashcardView.addEventListener("click", (e) => {
@@ -814,6 +830,8 @@ function bindUiEvents() {
             }
             const action = e.target.closest("[data-fc-action]");
             if (action) {
+                if (action.dataset.fcAction === "restart")
+                    resetFlashcardsProgress();
                 if (action.dataset.fcAction === "restart")
                     resetFlashcardsProgress();
                 else if (action.dataset.fcAction === "close") closeFlashcards();
@@ -1218,7 +1236,16 @@ function evaluateQuiz() {
                 } else {
                     let isCorrect = false;
                     let partialText = null;
+                    let partialText = null;
                     if (keywords) {
+                        const evaluation = evaluateTextKeywordAnswer(
+                            userVal,
+                            keywords,
+                        );
+                        isCorrect = evaluation.isCorrect;
+                        partialText = getPartialTextKeywordAnswerText(
+                            evaluation.matchedCount,
+                            evaluation.totalCount,
                         const evaluation = evaluateTextKeywordAnswer(
                             userVal,
                             keywords,
@@ -1252,6 +1279,7 @@ function evaluateQuiz() {
                             acceptedAnswers.length
                                 ? acceptedAnswers.join(" / ")
                                 : null,
+                            partialText,
                             partialText,
                         );
                     }
@@ -1519,6 +1547,8 @@ function getActiveSectionIds() {
 
 function buildFcQueue(sectionIds = getActiveSectionIds()) {
     const activeSections = normalizeSectionIds(sectionIds);
+function buildFcQueue(sectionIds = getActiveSectionIds()) {
+    const activeSections = normalizeSectionIds(sectionIds);
     const allQuestions = [];
     activeSections.forEach((secId) => {
         const sec = document.getElementById(secId);
@@ -1573,6 +1603,9 @@ function buildFcQueue(sectionIds = getActiveSectionIds()) {
     return allQuestions;
 }
 
+function startNewFlashcardsSession(sectionIds = getActiveSectionIds()) {
+    fcSectionIds = normalizeSectionIds(sectionIds);
+    fcQueue = buildFcQueue(fcSectionIds);
 function startNewFlashcardsSession(sectionIds = getActiveSectionIds()) {
     fcSectionIds = normalizeSectionIds(sectionIds);
     fcQueue = buildFcQueue(fcSectionIds);
@@ -1666,12 +1699,21 @@ function openFlashcards(forceNew = false) {
     );
     if (fcQueue.length === 0) {
         clearFlashcardProgress(fcSectionIds);
+        clearFlashcardProgress(fcSectionIds);
         alert("Nie sú vybraté žiadne sekcie!");
         return;
     }
     resetFlashcardFooter();
     setFlashcardsActive(true);
+    setFlashcardsActive(true);
     if (window.innerWidth <= 768 && sidebarVisible) toggleSidebar();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    renderFcCard(restorableSession?.currentCard || null);
+}
+
+function resetFlashcardsProgress() {
+    clearFlashcardProgress(fcSectionIds);
+    openFlashcards(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
     renderFcCard(restorableSession?.currentCard || null);
 }
@@ -1735,6 +1777,8 @@ function updateFcProgress() {
         `${Math.max(left, 0)} zostáva`;
 }
 
+function renderFcCard(snapshot = null) {
+    fcAnswered = snapshot ? !!snapshot.answered : false;
 function renderFcCard(snapshot = null) {
     fcAnswered = snapshot ? !!snapshot.answered : false;
     resetFlashcardFooter();
@@ -1819,7 +1863,14 @@ function renderFcCard(snapshot = null) {
 
     saveFlashcardProgress();
 
+    if (snapshot) {
+        restoreFlashcardSnapshot(snapshot);
+    }
+
+    saveFlashcardProgress();
+
     // focus text input
+    if (q.kind === "text" && !fcAnswered) {
     if (q.kind === "text" && !fcAnswered) {
         setTimeout(() => {
             const inp = document.getElementById("fc-text-input");
@@ -1863,6 +1914,7 @@ function fcShowFeedback(isCorrect, correctText, qId, extraText = null) {
     // keyboard shortcut for next
     document.getElementById("fc-next-btn").focus();
     saveFlashcardProgress();
+    saveFlashcardProgress();
 }
 
 function fcSelectOption(btn, selectedVal, correctVal, qId) {
@@ -1887,6 +1939,7 @@ function fcSelectOption(btn, selectedVal, correctVal, qId) {
 function fcToggleMultiOption(btn) {
     if (fcAnswered) return;
     btn.classList.toggle("selected");
+    saveFlashcardProgress();
     saveFlashcardProgress();
 }
 
@@ -1955,7 +2008,13 @@ function fcSubmitText(qId, keywords, correctVal) {
 
     let isCorrect = false;
     let partialText = null;
+    let partialText = null;
     if (keywords) {
+        const evaluation = evaluateTextKeywordAnswer(userVal, keywords);
+        isCorrect = evaluation.isCorrect;
+        partialText = getPartialTextKeywordAnswerText(
+            evaluation.matchedCount,
+            evaluation.totalCount,
         const evaluation = evaluateTextKeywordAnswer(userVal, keywords);
         isCorrect = evaluation.isCorrect;
         partialText = getPartialTextKeywordAnswerText(
@@ -1977,9 +2036,16 @@ function fcSubmitText(qId, keywords, correctVal) {
           ? [correctVal]
           : [];
     const correctText = accepted.length ? accepted.join(" / ") : null;
+    const correctText = accepted.length ? accepted.join(" / ") : null;
     if (!isCorrect) {
         fcQueue.push({ ...fcQueue[fcIndex] });
     }
+    fcShowFeedback(
+        isCorrect,
+        isCorrect ? null : correctText,
+        qId,
+        partialText,
+    );
     fcShowFeedback(
         isCorrect,
         isCorrect ? null : correctText,
@@ -2046,6 +2112,7 @@ document.addEventListener("keydown", (e) => {
         closeShortcutSettings();
         return;
     }
+    const flashcardOverlay = document.getElementById("flashcard-view");
     const flashcardOverlay = document.getElementById("flashcard-view");
     const flashcardsOpen =
         flashcardOverlay && flashcardOverlay.classList.contains("active");
@@ -2386,7 +2453,12 @@ document.addEventListener("DOMContentLoaded", async () => {
             saveAnswers();
             if (e.target.id === "fc-text-input") saveFlashcardProgress();
         }
+        if (e.target.matches('input[type="text"]')) {
+            saveAnswers();
+            if (e.target.id === "fc-text-input") saveFlashcardProgress();
+        }
     });
+    window.addEventListener("beforeunload", saveFlashcardProgress);
     window.addEventListener("beforeunload", saveFlashcardProgress);
 
     window.addEventListener("scroll", handleScroll);
@@ -2413,6 +2485,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
         updateRightSidebarAvailability();
     });
+
+    maybeResumeFlashcardsSession();
 
     maybeResumeFlashcardsSession();
 });

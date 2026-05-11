@@ -95,14 +95,6 @@
                 id="sidebar-overlay"
             ></div>
 
-            <button
-                class="right-sidebar-toggle"
-                id="right-sidebar-toggle"
-                title="Zobraziť štruktúru kvízu"
-            >
-                Štruktúra
-            </button>
-
             <aside class="right-sidebar hidden" id="right-sidebar">
                 <div class="right-sidebar-header">
                     <h2>Štruktúra kvízu</h2>
@@ -159,12 +151,30 @@
 
             <!-- Main Content -->
             <main class="main-content" id="main-content">
-                <button
-                    class="menu-toggle"
-                    id="menu-toggle"
-                >
-                    <span>Menu</span>
-                </button>
+                <div class="top-bar">
+                    <div class="top-bar-actions">
+                        <button
+                            class="top-bar-btn menu-toggle"
+                            id="menu-toggle"
+                            title="Zobraziť menu"
+                        >
+                            <span>Menu</span>
+                        </button>
+                        <button
+                            class="top-bar-btn right-sidebar-toggle"
+                            id="right-sidebar-toggle"
+                            title="Zobraziť štruktúru kvízu"
+                        >
+                            Štruktúra
+                        </button>
+                        <img
+                            class="top-bar-paper-edge"
+                            src="torn_paper_header.svg"
+                            alt=""
+                            aria-hidden="true"
+                        />
+                    </div>
+                </div>
 
                 <div class="container">
                     <div id="normal-mode-view">
