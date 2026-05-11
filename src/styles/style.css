@@ -83,7 +83,7 @@ body::before {
     pointer-events: none;
     z-index: -1;
     opacity: var(--grid-pattern-opacity);
-    background-image: url("./blueprint-pattern-tile.svg");
+    background-image: url("../assets/blueprint-pattern-tile.svg");
     background-size: 168px 160px;
     background-repeat: repeat;
     background-position: 0 0;

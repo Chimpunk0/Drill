@@ -46,6 +46,7 @@ npm run validate
 
 - `index.html` contains the current app shell.
 - `src/app.js` contains the current quiz runtime.
+- `src/assets/` contains shared app images, icons, and visual theme assets.
 - `src/config/quizSets.js` registers available quiz sets.
 - `src/styles/style.css` contains the current visual styles.
 - `quiz_sets/` contains generated static quiz files.

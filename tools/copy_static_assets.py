@@ -10,18 +10,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / "dist"
 
-FILES = [
-    "favicon.svg",
-    "sun-svgrepo-com.svg",
-    "moon-stars-svgrepo-com.svg",
-    "blueprint-background.svg",
-    "blueprint-background-dark.svg",
-    "blueprint-background-affinity.svg",
-    "blueprint-background-dark-affinity.svg",
-]
-
 DIRS = [
     "quiz_sets",
+    "src/assets",
     "src/config",
     "src/styles",
 ]
@@ -49,9 +40,6 @@ def copy_dir(relative_path: str) -> None:
 def main() -> None:
     if not DIST.exists():
         raise SystemExit("dist/ does not exist. Run vite build first.")
-
-    for file_path in FILES:
-        copy_file(file_path)
 
     copy_file("src/app.js")
 
