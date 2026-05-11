@@ -45,7 +45,12 @@ npm run validate
 ## Project Structure
 
 - `index.html` contains the current app shell.
-- `src/app.js` contains the current quiz runtime.
+- `src/bootstrap.js` starts the app after the page loads.
+- `src/state/` contains shared browser state bindings.
+- `src/storage/` contains localStorage and progress persistence behavior.
+- `src/quiz/` contains quiz loading, evaluation, filtering, and practice behavior.
+- `src/flashcards/` contains flashcard queue, answer checking, and session restore behavior.
+- `src/ui/` contains sidebar, theme, command palette, shortcuts, and layout behavior.
 - `src/assets/` contains shared app images, icons, and visual theme assets.
 - `src/config/quizSets.js` registers available quiz sets.
 - `src/styles/style.css` contains the current visual styles.
@@ -53,7 +58,7 @@ npm run validate
 - `context/` contains source/import examples and templates.
 - Python scripts in the root import, generate, embed, and validate quiz content.
 
-The current app runtime is still loaded as classic browser scripts for compatibility. Future refactors can split `src/app.js` into modules under `src/quiz/`, `src/flashcards/`, `src/ui/`, and `src/storage/`.
+The current app runtime is split into ordered classic browser scripts for compatibility. Future refactors can convert each area to ES module imports and exports.
 
 ## Hosting
 

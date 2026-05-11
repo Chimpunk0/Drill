@@ -41,8 +41,6 @@ def main() -> None:
     if not DIST.exists():
         raise SystemExit("dist/ does not exist. Run vite build first.")
 
-    copy_file("src/app.js")
-
     for dir_path in DIRS:
         copy_dir(dir_path)
 

@@ -1,3 +1,3 @@
 # Quiz Modules
 
-Future home for quiz loading, rendering, evaluating, filtering, and shuffling logic currently living in `src/app.js`.
+Quiz loading, evaluation, filtering, shuffling, and wrong-answer practice logic.
