@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "sets": [
+    {
+      "id": "bpc-vba-2026/default",
+      "label": "BPC-VBA 2026",
+      "dataUrl": "bpc-vba-2026/default.json"
+    },
+    {
+      "id": "bpc-sos-2026/polsemestralka",
+      "label": "BPC-SOS 2026 – Polsemestralka",
+      "dataUrl": "bpc-sos-2026/polsemestralka.json"
+    },
+    {
+      "id": "sos-skuska/sos-skuska",
+      "label": "SOS-SKUSKA (Skúška)",
+      "dataUrl": "sos-skuska/sos-skuska.json"
+    },
+    {
+      "id": "bpc-ic1-2026/skuska",
+      "label": "BPC-IC1 2026 – Skúška",
+      "dataUrl": "bpc-ic1-2026/skuska.json"
+    },
+    {
+      "id": "bpc-vba/kodove-chytaky-quiz-large",
+      "label": "BPC-VBA cviko-skuska large",
+      "dataUrl": "bpc-vba/kodove-chytaky-quiz-large.json"
+    }
+  ]
+}

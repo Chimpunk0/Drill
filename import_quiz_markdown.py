@@ -10,10 +10,8 @@ from typing import Any
 
 from generate_quiz_set import (
     SpecError,
-    build_explanations_js,
-    build_fragment,
+    build_quiz_data,
     register_in_config,
-    validate_generated,
     write_outputs,
 )
 
@@ -243,7 +241,7 @@ def main() -> None:
     )
     parser.add_argument(
         "--label",
-        help="Human-readable label for confg.js and sidebar. Defaults to the Markdown title.",
+        help="Human-readable label for src/config/quizSets.js and sidebar. Defaults to the Markdown title.",
     )
     parser.add_argument(
         "--section-size",
@@ -257,12 +255,12 @@ def main() -> None:
     )
     parser.add_argument(
         "--output-root",
-        help="Repo root containing quiz_sets/ and confg.js. Defaults to this repo.",
+        help="Repo root containing quiz_sets/ and src/config/quizSets.js. Defaults to this repo.",
     )
     parser.add_argument(
         "--no-register-config",
         action="store_true",
-        help="Do not register the generated set in confg.js.",
+        help="Do not register the generated set in src/config/quizSets.js.",
     )
     args = parser.parse_args()
 
@@ -288,19 +286,11 @@ def main() -> None:
     spec_out.write_text(yaml_dump(spec) + "\n", encoding="utf-8")
     print(f"OK: wrote spec {spec_out}")
 
-    fragment_html, explanations = build_fragment(spec)
-    explanations_js = build_explanations_js(set_id, explanations)
-    frag_path, expl_path, embed_path = write_outputs(
-        repo_root, set_id, fragment_html, explanations_js
-    )
-    validate_generated(frag_path, expl_path)
-
-    print(f"OK: generated {frag_path}")
-    print(f"OK: generated {expl_path}")
-    print(f"OK: generated {embed_path}")
+    data_path = write_outputs(repo_root, build_quiz_data(spec))
+    print(f"OK: generated {data_path}")
 
     if not args.no_register_config:
-        config_path = repo_root / "confg.js"
+        config_path = repo_root / "src" / "config" / "quizSets.js"
         added = register_in_config(config_path, set_id, label)
         if added:
             print(f"OK: registered {set_id} in {config_path}")

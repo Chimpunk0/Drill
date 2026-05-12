@@ -1,0 +1,37 @@
+<svg viewBox="0 0 210 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <g fill="none" stroke="#afadad" stroke-linecap="round">
+    <path
+      d="M 10 100 H 70"
+      stroke-width="4"
+      stroke-dasharray="20 20"
+      opacity="0.2"
+    />
+    
+    <path
+      d="M 140 100 H 200"
+      stroke-width="4"
+      stroke-dasharray="20 20"
+      opacity="0.2"
+    />
+    
+    <path
+      d="M 105 5 V 65"
+      stroke-width="4"
+      stroke-dasharray="20 20"
+      opacity="0.2"
+    />
+    
+    <path
+      d="M 105 135 V 195"
+      stroke-width="4"
+      stroke-dasharray="20 20"
+      opacity="0.2"
+    />
+    
+    <path
+      d="M 90 100 H 120 M 105 85 V 115"
+      stroke-width="8"
+      opacity="0.2"
+    />
+  </g>
+</svg>

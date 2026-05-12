@@ -1,0 +1,2876 @@
+{
+  "schemaVersion": 1,
+  "setId": "sos-skuska/sos-skuska",
+  "label": "SOS-SKUSKA (Skúška)",
+  "title": "SOS-SKUSKA",
+  "sections": [
+    {
+      "id": "sec_1",
+      "title": "1. Siete a protokoly",
+      "questions": [
+        {
+          "id": "q1_1",
+          "type": "mcq",
+          "label": "1. Pro porty na transportní vrstvě protokolového modelu TCP/IP platí, že:",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "Porty v rozsahu 49152-65535 se používají na straně serveru. Tyto porty jsou staticky přiděleny konkrétním službám."
+            },
+            {
+              "value": "b",
+              "text": "Porty v rozsahu 0-1023 se používají v OS UNIX a Linux. Porty v rozsahu 49152-65535 se používají v jiných operačních systémech."
+            },
+            {
+              "value": "c",
+              "text": "Porty v rozsahu 0-1023 se používají na straně klienta. Číslo portu odpovídá PID procesu, který tento port obsadil. Pokud je PID procesu vyšší než 1023, tak tento proces nemůže port obsadit."
+            },
+            {
+              "value": "d",
+              "text": "Porty v rozsahu 0-1023 se používají na straně serveru. Tyto porty jsou staticky přiděleny konkrétním službám."
+            }
+          ]
+        },
+        {
+          "id": "q1_2",
+          "type": "mcq",
+          "label": "2. Služba SSH používá šifrování pomocí veřejného a tajného klíče. Vyberte správné tvrzení:",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Šifrování dat se provede tajným klíčem a dešifrování veřejným klíčem."
+            },
+            {
+              "value": "b",
+              "text": "Šifrování dat se provede veřejným klíčem a dešifrování tajným klíčem."
+            },
+            {
+              "value": "c",
+              "text": "V případě šifrování tajným klíčem lze data přečíst i bez dešifrování pokud je uživatel správce systému (root)."
+            },
+            {
+              "value": "d",
+              "text": "V případě šifrování veřejným klíčem lze data přečíst i bez dešifrování pokud je uživatel správce systému (root)."
+            }
+          ]
+        },
+        {
+          "id": "q1_3",
+          "type": "mcq",
+          "label": "3. Lze se vzdáleně přihlásit pomocí služby SSH (Secure Socket Shell) na vzdálenou stanici bez nutnosti zadávat heslo?",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Ano, pomocí použití tajného a veřejného klíče."
+            },
+            {
+              "value": "b",
+              "text": "Ano, pouze pokud má uživatel heslo stejné na klientské i serverové stanici."
+            },
+            {
+              "value": "c",
+              "text": "Ano, pouze za podmínky jestliže má uživatel zadáno prázdné heslo."
+            },
+            {
+              "value": "d",
+              "text": "Ne, při jakémkoliv druhu vzdáleného přihlášení je nutné použít heslo."
+            }
+          ]
+        },
+        {
+          "id": "q1_4",
+          "type": "mcq",
+          "label": "4. Pro typické sestavení spojení mezi dvěma stanicemi pomocí protokolu TCP (Transmission Control Protocol) je zapotřebí",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "2 segmentů v pořadí: žádost o navázání obousměrného spojení (nastaven příznak SYN), potvrzení obousměrného spojení (nastaven příznak ACK)."
+            },
+            {
+              "value": "b",
+              "text": "4 segmentů v pořadí: žádost o navázaní 1. jednosměrného spojení (nastaven příznak SYN), potvrzení 1. jednosměrného spojení (nastaven příznak ACK), žádost o navázaní 2. jednosměrného spojení (nastaven příznakSYN), potvrzení 2. jednosměrného spojení (nastaven příznak ACK)."
+            },
+            {
+              "value": "c",
+              "text": "2 segmentů v pořadí: žádost o navázaní 1. jednosměrného spojení (nastaven příznak SYN), žádost o navázaní 2. jednosměrného spojení (nastaven příznak SYN)."
+            },
+            {
+              "value": "d",
+              "text": "3 segmentů v pořadí: žádost o navázaní 1. jednosměrného spojení (nastaven příznak SYN), žádost o navázaní 2. jednosměrného spojení a potvrzení 1. jednosměrného spojení (nastaveny příznaky SYN+ACK), potvrzení2. jednosměrného spojení (nastaven příznak ACK)."
+            }
+          ]
+        },
+        {
+          "id": "q1_5",
+          "type": "mcq",
+          "label": "5. Jakou funkci plní v referenčním modelu OSI síťová vrstva:",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Synchronizaci portů na straně serveru a na straně klienta."
+            },
+            {
+              "value": "b",
+              "text": "Směruje tok dat organizovaných do paketů a provádí směrování."
+            },
+            {
+              "value": "c",
+              "text": "Koordinuje kódování a syntax vyměňovaných dat."
+            },
+            {
+              "value": "d",
+              "text": "Zpřístupňuje prostředí modelu OSI komunikujícím systémům"
+            }
+          ]
+        },
+        {
+          "id": "q1_6",
+          "type": "mcq",
+          "label": "6. Při zaslání segmentu s příznakem FIN ze strany serveru dojde:",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "K ukončení jednosměrného spojení TCP. Server může dále posílat data, dokud neukončí druhé jednosměrné spojení dalším segmentem s příznakem FIN."
+            },
+            {
+              "value": "b",
+              "text": "K ukončení celého obousměrného spojení TCP mezi klientem a serverem. Žádná strana již nemůže posílat data."
+            },
+            {
+              "value": "c",
+              "text": "K ukončení jednosměrného spojení TCP. Klient může dále posílat data, dokud sám neukončí druhé jednosměrné spojení segmentem s příznakem FIN."
+            },
+            {
+              "value": "d",
+              "text": "K restartu spojení UDP protože server detekoval chybu při přenosu (chyba kontrolního součtu CRC přenášených informací)."
+            }
+          ]
+        },
+        {
+          "id": "q1_7",
+          "type": "mcq",
+          "label": "7. Minimálně které vrstvy referenčního modelu OSI musí mít implementován směrovač (router)?",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Fyzickou, linkovou/spojovou a síťovou."
+            },
+            {
+              "value": "b",
+              "text": "Fyzickou a linkovou/spojovou."
+            },
+            {
+              "value": "c",
+              "text": "Pouze síťovou."
+            },
+            {
+              "value": "d",
+              "text": "Všechny."
+            }
+          ]
+        },
+        {
+          "id": "q1_8",
+          "type": "mcq",
+          "label": "8. Seřaďte vrstvy referenčního modelu OSI od nejnižší vrstvy k nejvyšší vrstvě",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "Fyzická, síťová, linková/spojová, transportní, relační, prezentační, aplikační."
+            },
+            {
+              "value": "b",
+              "text": "Fyzická, transportní, síťová, relační, linková/spojová, prezentační, aplikační."
+            },
+            {
+              "value": "c",
+              "text": "Fyzická, linková/spojová, transportní, prezentační, relační, aplikační, síťová."
+            },
+            {
+              "value": "d",
+              "text": "Fyzická, linková/spojová, síťová, transportní, relační, prezentační, aplikační."
+            }
+          ]
+        },
+        {
+          "id": "q1_9",
+          "type": "mcq",
+          "label": "9. Datové jednotky na transportní vrstvě protokolového modelu TCP/IP se nazývají:",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Pakety."
+            },
+            {
+              "value": "b",
+              "text": "Bity."
+            },
+            {
+              "value": "c",
+              "text": "Segmenty/datagramy."
+            },
+            {
+              "value": "d",
+              "text": "Rámce."
+            }
+          ]
+        },
+        {
+          "id": "q1_10",
+          "type": "mcq",
+          "label": "10. Firewally dělíme podle způsobu filtrování na paketové, stavové a aplikační. Jaká je hlavní výhoda paketového firewallu?",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Vysoká rychlost zpracování dat daná jeho jednoduchostí."
+            },
+            {
+              "value": "b",
+              "text": "Možnost filtrování nevhodného obsahu přenášených dat."
+            },
+            {
+              "value": "c",
+              "text": "Možnost provozu v transparentním a netransparentním režimu."
+            },
+            {
+              "value": "d",
+              "text": "Schopnost rozlišit segmenty, které zahajují nový přenos"
+            }
+          ]
+        },
+        {
+          "id": "q1_11",
+          "type": "mcq",
+          "label": "11. Minimálně které vrstvy referenčního modelu OSI musí mít implementována klasická serverová stanice (server) poskytující služby v síti Internet (například webový a emailový server)?",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Fyzickou, linkovou/spojovou a síťovou."
+            },
+            {
+              "value": "b",
+              "text": "Pouze transportní."
+            },
+            {
+              "value": "c",
+              "text": "Všechny."
+            },
+            {
+              "value": "d",
+              "text": "Fyzickou a linkovou/spojovou."
+            }
+          ]
+        },
+        {
+          "id": "q1_12",
+          "type": "mcq",
+          "label": "12. Rámec (frame) je jednotkou bloku dat které vrstvy referenčního modelu OSI?",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Síťové."
+            },
+            {
+              "value": "b",
+              "text": "Fyzické."
+            },
+            {
+              "value": "c",
+              "text": "Linkové/spojové."
+            },
+            {
+              "value": "d",
+              "text": "Transportní."
+            }
+          ]
+        },
+        {
+          "id": "q1_13",
+          "type": "mcq",
+          "label": "13. Mezi hlavní účely služby SSH (Secure Socket Shell) NEpatří",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Zajištění autentizace."
+            },
+            {
+              "value": "b",
+              "text": "Zajištění komprese dat."
+            },
+            {
+              "value": "c",
+              "text": "Zajištění integrity dat."
+            },
+            {
+              "value": "d",
+              "text": "Zajištění šifrování dat."
+            }
+          ]
+        },
+        {
+          "id": "q1_14",
+          "type": "mcq",
+          "label": "14. Vyberte správný postup pro zahájení spojení v aktivním režimu FTP:",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Klient naváže spojení pro přenos příkazů se serverem na portu 21; zvolí další port a odešle jeho číslo serveru. Server následně otevře spojení pro přenos dat s cílovým portem, který mu zaslal klient."
+            },
+            {
+              "value": "b",
+              "text": "Klient naváže spojení pro přenos dat i příkazů paralelně."
+            },
+            {
+              "value": "c",
+              "text": "Klient naváže spojení pro přenos příkazů se serverem na portu 21; zvolí další port a odešle jeho číslo serveru. Server toto číslo portu využije jako svůj zdrojový port a naváže spojení s klientem pro přenos dat."
+            },
+            {
+              "value": "d",
+              "text": "Klient naváže spojení pro přenos dat i příkazů sériově."
+            }
+          ]
+        },
+        {
+          "id": "q1_15",
+          "type": "mcq",
+          "label": "15. Vyberte správný popis výpadku stránky (page fault) v konceptu virtuální paměti:",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "Jedná se o chybu čtení stránky z hlavní paměti, typicky je způsobena vadným paměťovým modulem."
+            },
+            {
+              "value": "b",
+              "text": "Jedná se o chybu čtení stránky z vedlejší fodkládací) paměti, typicky je způsobena vadným sektorem na disku."
+            },
+            {
+              "value": "c",
+              "text": "Jedná se o událost, kdy se proces pokouší přistoupit na adresu spadající do stránky, ke které nemá povolený přístup (nemá nastaveno právo pro čtení)."
+            },
+            {
+              "value": "d",
+              "text": "Jedná se o událost, kdy se proces pokouší přistoupit na adresu spadající do stránky, která není uložena v hlavní paměti."
+            }
+          ]
+        },
+        {
+          "id": "q1_16",
+          "type": "mcq",
+          "label": "16. Porty na transportní vrstvě protokolového modelu TCP/IP dělíme do několika kategorii. Jednou z nich jsou známé (privilegované) porty. O těchto portech můžeme říci, že:",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Označují fyzická síťová rozhraní, jejichž komunikace musí být odbavena přednostně."
+            },
+            {
+              "value": "b",
+              "text": "Spadají do rozsahu 0-1023 a jsou rezervovány pro známé služby na straně serveru."
+            },
+            {
+              "value": "c",
+              "text": "Jsou to veškeré porty (z rozsahu 0-65535), které jsou přiděleny procesům běžícím s oprávněním superuživatele."
+            },
+            {
+              "value": "d",
+              "text": "Jsou přidělovány procesům s nejvyšší prioritou (případně s vyššími nároky na zajištění kvality služeb (O0S)) na straně klienta."
+            }
+          ]
+        },
+        {
+          "id": "q1_17",
+          "type": "mcq",
+          "label": "17. Vyberte správné tvrzení pro socket jako prostředek síťové komunikace:",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Zahrnuje adresaci na linkové/spojové vrstvě."
+            },
+            {
+              "value": "b",
+              "text": "Zahrnuje adresaci na síťové i transportní vrstvě."
+            },
+            {
+              "value": "c",
+              "text": "Zahrnuje pouze první polovinu adresy MAC (12bitů)."
+            },
+            {
+              "value": "d",
+              "text": "Zahrnuje adresaci na fyzické vrstvě."
+            }
+          ]
+        },
+        {
+          "id": "q1_18",
+          "type": "mcq",
+          "label": "18. Data při síťové komunikaci zvaná režie jsou:",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Data nutná pro zajištění činnosti komunikačních protokolů."
+            },
+            {
+              "value": "b",
+              "text": "Data, která jsou přenášena za účelem zmatení koncového uživatele."
+            },
+            {
+              "value": "c",
+              "text": "Data, která jsou přenášena za účelem zmatení případného útočníka (obrana proti útoku man-in-the-middle)."
+            },
+            {
+              "value": "d",
+              "text": "Data, která se v síti NEpřenášejí"
+            }
+          ]
+        },
+        {
+          "id": "q1_19",
+          "type": "mcq",
+          "label": "19. Adresace na transportní vrstvě protokolového modelu TCP/IP je realizována pomocí:",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Směrovacích tabulek."
+            },
+            {
+              "value": "b",
+              "text": "Čísel portů (číslo o velikosti 16 bitů)."
+            },
+            {
+              "value": "c",
+              "text": "IP adres (pro IPv4 má adresa velikost 32 bitů)."
+            },
+            {
+              "value": "d",
+              "text": "Adres MAC (číslo o velikost 24 bitů)."
+            }
+          ]
+        },
+        {
+          "id": "q1_20",
+          "type": "mcq",
+          "label": "20. Kolik spojení se sestavuje při komunikaci protokolem TCP?",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Tři spojení - dvě pro přenos dat a jedno pro přenos signalizace."
+            },
+            {
+              "value": "b",
+              "text": "Dvě jednosměrná spojení."
+            },
+            {
+              "value": "c",
+              "text": "Čtyři spojení - dvě pro přenos dat a dvě pro přenos signalizace."
+            },
+            {
+              "value": "d",
+              "text": "Pět spojení - dvě pro přenos dat, dvě pro přenos signalizace a třetí pro autentizaci uživatelů."
+            }
+          ]
+        },
+        {
+          "id": "q1_21",
+          "type": "mcq",
+          "label": "21. Linková/spojová vrstva referenčního modelu OSI zajišťuje:",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Zajišťuje vytvoření, udržení a rušení spojů mezi zařízeními."
+            },
+            {
+              "value": "b",
+              "text": "Synchronizaci portů na straně serveru a na straně klienta."
+            },
+            {
+              "value": "c",
+              "text": "Nezávislost transportní vrstvy na funkcích směrování."
+            },
+            {
+              "value": "d",
+              "text": "Organizaci toku dat do paketů"
+            }
+          ]
+        },
+        {
+          "id": "q1_22",
+          "type": "mcq",
+          "label": "22. Minimálně které vrstvy referenčního modelu OSI musí mít implementován přepínač (switch), který lze vzdáleně spravovat v síti Internet (například přes webové rozhraní nebo přes SSH)?",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Fyzickou, linkovou/spojovou a síťovou."
+            },
+            {
+              "value": "b",
+              "text": "Fyzickou a linkovou/spojovou."
+            },
+            {
+              "value": "c",
+              "text": "Všechny."
+            },
+            {
+              "value": "d",
+              "text": "Pouze aplikační"
+            }
+          ]
+        },
+        {
+          "id": "q1_23",
+          "type": "mcq",
+          "label": "23. Které tvrzení o stránkování jako druhu správy paměti operačního systému NEní správné?",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Paměťový obraz procesu je rozdělen na stejně velké úseky."
+            },
+            {
+              "value": "b",
+              "text": "O minimální a maximální velikosti stránek rozhoduje každý proces zvlášť."
+            },
+            {
+              "value": "c",
+              "text": "Stránky, které proces momentálně nevyužívá, mohou být uloženy ve vedlejší paměti (disku)."
+            },
+            {
+              "value": "d",
+              "text": "Stránky, které proces aktuálně používá, jsou načteny v hlavní paměti. Podmětem pro načtení stránky do hlavní paměti je výpadek stránky (page fault)."
+            }
+          ]
+        },
+        {
+          "id": "q1_24",
+          "type": "mcq",
+          "label": "24. Minimálně které vrstvy referenčního modelu OSI musí mít implementována klasická uživatelská stanice komunikující v síti Internet?",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Fyzickou, linkovou/spojovou a síťovou (IP vrstva)."
+            },
+            {
+              "value": "b",
+              "text": "Všechny."
+            },
+            {
+              "value": "c",
+              "text": "Fyzickou a linkovou/spojovou."
+            },
+            {
+              "value": "d",
+              "text": "Pouze transportní (vrstva TCP/UDP)."
+            }
+          ]
+        },
+        {
+          "id": "q1_25",
+          "type": "mcq",
+          "label": "25. Vyberte protokoly aplikační vrstvy protokolového modelu TCP/IP:",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "IP a ICMP"
+            },
+            {
+              "value": "b",
+              "text": "Ethernet."
+            },
+            {
+              "value": "c",
+              "text": "SSH, FTP HTTP TELNET, TFTP."
+            },
+            {
+              "value": "d",
+              "text": "UDP a TCP."
+            }
+          ]
+        },
+        {
+          "id": "q1_26",
+          "type": "mcq",
+          "label": "26. Paket je jednotkou bloku dat které vrstvy referenčního modelu OSI?",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Transportní."
+            },
+            {
+              "value": "b",
+              "text": "Síťové."
+            },
+            {
+              "value": "c",
+              "text": "Linkové/spojové."
+            },
+            {
+              "value": "d",
+              "text": "Fyzické."
+            }
+          ]
+        },
+        {
+          "id": "q1_27",
+          "type": "mcq",
+          "label": "27. Minimálně které vrstvy referenčního modelu OSI musí mít implementován směrovač (router), který Ize vzdáleně spravovat v síti Internet (například přes webové rozhraní nebo přes SSH)?",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Pouze aplikační."
+            },
+            {
+              "value": "b",
+              "text": "Všechny."
+            },
+            {
+              "value": "c",
+              "text": "Fyzickou, linkovou/spojovou a síťovou. (asi)"
+            },
+            {
+              "value": "d",
+              "text": "Fyzickou a linkovou/spojovou."
+            }
+          ]
+        },
+        {
+          "id": "q1_28",
+          "type": "mcq",
+          "label": "28. Příznak v segmentu TCP zvaný SYN značí, Že se jedná o:",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Segment nesoucí Žádost o navázání spojení."
+            },
+            {
+              "value": "b",
+              "text": "Segment potvrzující ukončení spojení."
+            },
+            {
+              "value": "c",
+              "text": "Segment potvrzující přijatou Žádost o navázání spojení."
+            },
+            {
+              "value": "d",
+              "text": "Segment ukončující spojení."
+            }
+          ]
+        },
+        {
+          "id": "q1_29",
+          "type": "mcq",
+          "label": "29. Stavový firewall využívá informace o stavu spojení - dokáže rozlišit zprávy, které zahajují nové spojení od zpráv již sestaveného spojení pomocí:",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Čísel procesů na komunikujících stanicích."
+            },
+            {
+              "value": "b",
+              "text": "Příznaků (flags) v segmentech TCP."
+            },
+            {
+              "value": "c",
+              "text": "Statistiky způsobu navazování předchozích spojení."
+            },
+            {
+              "value": "d",
+              "text": "Příznaků (flags) v datagramech UDP."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sec_2",
+      "title": "2. Jadro a architektura OS",
+      "questions": [
+        {
+          "id": "q2_1",
+          "type": "mcq",
+          "label": "1. Kde je umístěn operační systém ve vztahu k dalším částem výpočetního prostředku?",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "Na stejné úrovni jako vrstva strojového jazyka. S aplikačními programy komunikuje pomocí registrů procesoru."
+            },
+            {
+              "value": "b",
+              "text": "Na stejné úrovni jako aplikační programy."
+            },
+            {
+              "value": "c",
+              "text": "Na stejné úrovni jako vrstva mikroarchitekury. S aplikačními programy komunikuje pomocí strojového jazyka, který je nezávislý na hardwarové architektuře."
+            },
+            {
+              "value": "d",
+              "text": "Pod úrovní aplikačních programů, navazuje na hardware přes mikroarchitekturu, které předává informace v podobě strojového jazyka"
+            }
+          ]
+        },
+        {
+          "id": "q2_2",
+          "type": "mcq",
+          "label": "2. Mezi přidané moduly modulárního jádra standardně patří",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Ovladače zařízení a souborových systémů."
+            },
+            {
+              "value": "b",
+              "text": "Software zajišťující multitasking."
+            },
+            {
+              "value": "c",
+              "text": "Správce procesů."
+            },
+            {
+              "value": "d",
+              "text": "Software zajišťující virtuální paměť"
+            }
+          ]
+        },
+        {
+          "id": "q2_3",
+          "type": "mcq",
+          "label": "3. O modulárním monolitickém jádru operačního systému platí, že:",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Moduly monolitickému jádru poskytují možnost, jak se za běhu operačního systému transformovat do jiného typu jádra (například klient-server) tak, aby typ jádra odpovídal požadavkům většiny uživatelů v systému."
+            },
+            {
+              "value": "b",
+              "text": "Obsahuje pouze základní části; další části v podobě modulů jsou dynamicky načítány v případě potřeby."
+            },
+            {
+              "value": "c",
+              "text": "Načítání modulů může probíhat pouze při startu operačního systému."
+            },
+            {
+              "value": "d",
+              "text": "Použité moduly pracují jako procesy v uživatelském režimu. Jádro je tak chráněno proti případným chybám v těchto modulech."
+            }
+          ]
+        },
+        {
+          "id": "q2_4",
+          "type": "mcq",
+          "label": "4. Hardware počítače se ovládá operačním systémem jehož součástí je jádro, které je:",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "Potřeba pouze pro zápis a čtení dat z paměťového média."
+            },
+            {
+              "value": "b",
+              "text": "Aktivní jenom při startu operačního systému. Jeho činnost je ukončena po spuštění funkcí nutných pro přihlášení uživatelů."
+            },
+            {
+              "value": "c",
+              "text": "Aktivní jenom po dobu síťové komunikace."
+            },
+            {
+              "value": "d",
+              "text": "Stále aktivní a pracuje přímo s hardware počítače. Prostřednictvím systémových volání jádro poskytuje služby systémových programů."
+            }
+          ]
+        },
+        {
+          "id": "q2_5",
+          "type": "mcq",
+          "label": "5. O modelu klient-server, jako přístupu ke stavbě operačního systému, můžeme říci následující:",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Jádro zprostředkovává komunikaci mezi klienty a servery běžícími v uživatelském režimu."
+            },
+            {
+              "value": "b",
+              "text": "Žádost o službu jádra představuje vyslání požadavku procesem server běžícím v uživatelském režimu procesu klient běžícímu v režimu jádra."
+            },
+            {
+              "value": "c",
+              "text": "Jádro vyžaduje složitou implementaci pro distribuované systémy, proto se pro tyto systémy NEhodí."
+            },
+            {
+              "value": "d",
+              "text": "Komunikace klienta běžícího v jádře se serverem běžícím mimo jádro probíhá pomocí speciálního hardware. Tento hardware se používá pro urychlení komunikace"
+            }
+          ]
+        },
+        {
+          "id": "q2_6",
+          "type": "mcq",
+          "label": "6. Pojmem mikrojádro operačního systému označujeme:",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Pouze jádro 8bitových (b) mikropočítačů."
+            },
+            {
+              "value": "b",
+              "text": "Obecně jádro, kde je pouze nezbytné minimum — správa paměti, multitasking, přerušení, jednoduchá komunikace mezi procesy, atd."
+            },
+            {
+              "value": "c",
+              "text": "Pouze jádro 8bytových (B) mikropočítačů."
+            },
+            {
+              "value": "d",
+              "text": "Pouze jádra operačních systémů na hardwarové platformě Microtic."
+            }
+          ]
+        },
+        {
+          "id": "q2_7",
+          "type": "mcq",
+          "label": "7. Operační systém Linux je tvořen:",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "Volně šiřitelným jádrem s dostupnými zdrojovými kódy. K jádru NEní nutné přidat další programy, aby vznikl typický operační systém."
+            },
+            {
+              "value": "b",
+              "text": "Jádrem operačního systému, ke kterému NEjsou dostupné zdrojové kódy. K jádru NEní nutné přidat další programy, aby vznikl typický operační systém."
+            },
+            {
+              "value": "c",
+              "text": "Jádrem typu klient-server, které je převzat z OS Windows. K jádru jsou přidány další programy. Spolu pak tvoří operační systém."
+            },
+            {
+              "value": "d",
+              "text": "Volně šiřitelným jádrem s dostupnými zdrojovými kódy. K jádru jsou přidány další programy. Spolu pak tvoří operační systém."
+            }
+          ]
+        },
+        {
+          "id": "q2_8",
+          "type": "mcq",
+          "label": "8. O virtuální strojích, jako možné realizaci operačního systému, platí následující:",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Vycházejí z vrstvového přístupu ke stavbě operačního systému."
+            },
+            {
+              "value": "b",
+              "text": "Vycházejí z hybridního jádra operačního systému. Hybridní (polymorfní) jádro se mění podle požadavků daného virtuální stroje. Tímto je zajištěna vyšší rychlost běhu všech virtuálních strojů."
+            },
+            {
+              "value": "c",
+              "text": "Staví na modulárním monolitickém jádře operačního systému. Pomocí různých modulů jsou pak realizovány dílčí virtuální stroje."
+            },
+            {
+              "value": "d",
+              "text": "Staví na principu, že pro každý virtuální stroj je k dispozici jeden fyzický procesor (CPU). Maximální počet virtuálních strojů je tedy dán počtem procesorů v systému."
+            }
+          ]
+        },
+        {
+          "id": "q2_9",
+          "type": "mcq",
+          "label": "9. Systém priorit v operačních systémech UNIX lze popsat následovně",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Procesy běžící v uživatelském režimu mají kladné hodnoty. Procesy běžící v režimu jádra mají záporné hodnoty. Negativní hodnoty mají vyšší prioritu."
+            },
+            {
+              "value": "b",
+              "text": "Procesy běžící v uživatelském režimu mají kladné hodnoty. Procesy běžící v režimu jádra mají záporné hodnoty. Kladné hodnoty mají vyšší prioritu."
+            },
+            {
+              "value": "c",
+              "text": "Procesy běžící v uživatelském režimu mají záporné hodnoty. Procesy běžící v režimu jádra mají kladné hodnoty. Negativní hodnoty mají vyšší prioritu."
+            },
+            {
+              "value": "d",
+              "text": "Procesy běžící v uživatelském režimu mají záporné hodnoty. Procesy běžící v režimu jádra mají kladné hodnoty. Pozitivní hodnoty mají vyšší prioritu."
+            }
+          ]
+        },
+        {
+          "id": "q2_10",
+          "type": "mcq",
+          "label": "10. Který z následujících dějů při běhu procesu v operačním systému je typicky vykonán v režimu jádra?",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Veškeré zpracování procesu, který je spuštěn uživatelem administrátor (root)."
+            },
+            {
+              "value": "b",
+              "text": "Zpracování systémového volání."
+            },
+            {
+              "value": "c",
+              "text": "Dlouhé čekání procesu na I/O operaci."
+            },
+            {
+              "value": "d",
+              "text": "Dlouhé čekání procesu na odpověď ze serveru při síťové komunikaci."
+            }
+          ]
+        },
+        {
+          "id": "q2_11",
+          "type": "mcq",
+          "label": "11. Pojem jádro v operačních systémech definujeme jako",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Vše, co je implementováno procesy, které patří uživateli root (administrator)."
+            },
+            {
+              "value": "b",
+              "text": "Vše, co se nachází pod rozhraním systémových volání a nad fyzickými prostředky počítače."
+            },
+            {
+              "value": "c",
+              "text": "Vše, co se nachází pod rozhraním uživatelských procesů a nad rozhraním systémových volání."
+            },
+            {
+              "value": "d",
+              "text": "Vše, co je implementováno procesy, které jsou spouštěny na požádání."
+            }
+          ]
+        },
+        {
+          "id": "q2_12",
+          "type": "mcq",
+          "label": "12. Které z následujících tvrzení týkajících se hybridního jádra operačního systému je pravdivé?",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Jedná se o mikrojádro, které mimo nezbytných součástí obsahuje některé další prvky."
+            },
+            {
+              "value": "b",
+              "text": "Hybridní jádro se používá výhradně v dávkových systémech."
+            },
+            {
+              "value": "c",
+              "text": "Jedná se o monolitické jádro, které bylo zkompilováno pouze pro menší množství funkcí, než jak je obvyklé."
+            },
+            {
+              "value": "d",
+              "text": "Hybridní jádro je pouze teoretickou konstrukcí a nejde jej prakticky realizovat."
+            }
+          ]
+        },
+        {
+          "id": "q2_13",
+          "type": "mcq",
+          "label": "13. Jak můžeme popsat rozdíl mezi uživatelským režimem a režimem jádra?",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Jakákoliv chyba v uživatelském režimu zastaví chod celého systému."
+            },
+            {
+              "value": "b",
+              "text": "V uživatelském režimu běží procesy bez přímého přístupu k hardwaru. V režimu jádra má prováděný kód plný přístup k hardwaru."
+            },
+            {
+              "value": "c",
+              "text": "Při startu operačního systému se nejprve aktivují procesy v uživatelském režimu a následně se startuje program jádra."
+            },
+            {
+              "value": "d",
+              "text": "V uživatelském režimu běží pouze procesy bez administrátorských oprávnění, proto NEmůžou zasahovat do konfigurace operačního systému. V režimu jádra mají procesy plné oprávnění a můžou tak provádět změnynapříklad v uživatelských účtech."
+            }
+          ]
+        },
+        {
+          "id": "q2_14",
+          "type": "mcq",
+          "label": "14. Jádro operačního systému Linux lze popsat následovně:",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Jádro vznikne kompilací všech procedur, resp. jejich zdrojových kódů a následným svázáním vzniklých objektových modulů do jednoho spustitelného souboru."
+            },
+            {
+              "value": "b",
+              "text": "Jádro je děleno do vrstev a každá vrstva poskytuje abstraktnější virtuální stroj; virtuální stroje jsou kopií vlastního reálného stroje."
+            },
+            {
+              "value": "c",
+              "text": "V jádře zůstává pouze nezbytné minimum - správa paměti, multitasking, jednoduchá komunikace mezi procesy tj. programový kód jádra má tendenci se přesunovat z jádra do vyšších vrstev (uživatelského režimu)."
+            },
+            {
+              "value": "d",
+              "text": "Jádro se chová jako virtuální stroj, který „leží“ na samotném technickém vybavení — nadřazeným vrstvám nabízí několik virtuálních strojů."
+            }
+          ]
+        },
+        {
+          "id": "q2_15",
+          "type": "mcq",
+          "label": "15. Pro systémové programy platí:",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Zahrnují vše, co se nachází pod rozhraním systémových volání a nad fyzickými prostředky výpočetního prostředku."
+            },
+            {
+              "value": "b",
+              "text": "Jedná se o textový a tabulkový procesor a webový prohlížeč."
+            },
+            {
+              "value": "c",
+              "text": "Poskytují prostředí pro spuštění a běh aplikačních programů."
+            },
+            {
+              "value": "d",
+              "text": "Pracují přímo s hardware systému."
+            }
+          ]
+        },
+        {
+          "id": "q2_16",
+          "type": "mcq",
+          "label": "16. Systémové volání v operačním systému Linux je prováděno v posloupnosti následujících kroků (uveden je pouze začátek průběhu):",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Uloží se číslo systémového volání na místo, kde jej očekává jádro operačního systému; vykoná se instrukce trap pro přepnutí do režimu jádra; volající program uloží parametry na zásobník: volá se knihovní funkce pro systémová volání."
+            },
+            {
+              "value": "b",
+              "text": "Volající program uloží parametry na zásobník; volá se knihovní funkce pro systémová volání; uloží se číslo systémového volání na místo, kde jej očekává jádro operačního systému; vykoná se instrukce trap pro přepnutí do režimu jádra."
+            },
+            {
+              "value": "c",
+              "text": "Volá se knihovní funkce pro systémová volání; vykoná se instrukce trap pro přepnutí do režimu jádra; uloží se číslo systémového volání na místo, kde jej očekává jádro operačního systému; volající program uloží parametry na zásobník."
+            },
+            {
+              "value": "d",
+              "text": "Vykoná se instrukce trap pro přepnutí do režimu jádra; uloží se číslo systémového volání na místo, kde jej očekává jádro operačního systému; volající program uloží parametry na zásobník; volá se knihovní funkce pro systém"
+            }
+          ]
+        },
+        {
+          "id": "q2_17",
+          "type": "mcq",
+          "label": "17. Výhodou monolitického jádra operačního systému oproti mikrojádru je:",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Malé množství paměti zabrané jádrem."
+            },
+            {
+              "value": "b",
+              "text": "Větší rychlost."
+            },
+            {
+              "value": "c",
+              "text": "Větší stabilita."
+            },
+            {
+              "value": "d",
+              "text": "Lepší zabezpečení proti síťovým útokům typu DDoS."
+            }
+          ]
+        },
+        {
+          "id": "q2_18",
+          "type": "mcq",
+          "label": "18. V konceptu stavby operačního systému pro model klient-server platí, že:",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Servery realizující služby jádra mohou být realizovány procesy v uživatelském režimu."
+            },
+            {
+              "value": "b",
+              "text": "Obsahuje monolitické jádro."
+            },
+            {
+              "value": "c",
+              "text": "Tento model svým návrhem zaručuje, že procesy v operačním systému nemohou přijít do stavu uvíznutí (deadlock)."
+            },
+            {
+              "value": "d",
+              "text": "Případná chyba v kódu serveru realizujícího danou službu jádra vždy způsobí pád celého systému."
+            }
+          ]
+        },
+        {
+          "id": "q2_19",
+          "type": "mcq",
+          "label": "19. Monolitické jádro operačního systému vznikne tak, že:",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Rozdělíme funkce jádra na klienty a servery. V systému jsou monolitická jádra vždy dvě - jádro klientů a jádro serveru."
+            },
+            {
+              "value": "b",
+              "text": "Zkompilujeme všechny procedury jádra do jednoho souboru."
+            },
+            {
+              "value": "c",
+              "text": "Použijeme speciální komprimační technologii s využitím velkého tlaku."
+            },
+            {
+              "value": "d",
+              "text": "Oddělíme grafické a uživatelské rozhraní do samostatných souborů. Tyto soubory pak tvoří monolitické jádro."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sec_3",
+      "title": "3. Procesy a planovanie",
+      "questions": [
+        {
+          "id": "q3_1",
+          "type": "mcq",
+          "label": "1. Dávkový systém (způsob plánování běhu procesů)",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Používají se tam, kde je potřeba zajistit interaktivitu pro uživatele systému."
+            },
+            {
+              "value": "b",
+              "text": "Používá se ve výkonných informačních centrech."
+            },
+            {
+              "value": "c",
+              "text": "Používají se tam, kde je potřeba zajistit předvídatelnost zpracování úloh."
+            },
+            {
+              "value": "d",
+              "text": "Používá se při řízení časové kritických činností"
+            }
+          ]
+        },
+        {
+          "id": "q3_2",
+          "type": "mcq",
+          "label": "2. \"Proces v operačním systému je ve stavu „uspán a odložen\"\" (sleep, swapped). Jakými stavy projde podle typického devítistavového modelu stavů procesů, aby mohl být spuštěn?",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "\"Je načten do hlavní paměti, přechází do stavu „spící v hlavní paměti“, poté je probuzen, přechází do stavu „Živá mrtvola\"\" (zombie). Pak počká až jej vybere plánovač jádra a přechází do stavu „běžící v režimu jádra“.\""
+            },
+            {
+              "value": "b",
+              "text": "Po určitém časovém intervalu přechází do stavu „živá mrtvola“ (zombie) a pak přímo do stavu „běžící v uživatelském režimu“. Poté počká až jej vybere plánovač jádra a přechází do stavu „běžící v režimu jádra“."
+            },
+            {
+              "value": "c",
+              "text": "\"Je probuzen, přejde do stavu „připravený ke zpracování, ale odloženy\"\", pak je načten do hlavní paměti, přechází do stavu „připravený ke zpracování v hlavní paměti“, poté počká až jej vybere plánovač jádra a přechází dostavu „běžící v režimu jádra“.\""
+            },
+            {
+              "value": "d",
+              "text": "\"Počká až jej vybere plánovač pro běh v režimu jádra (přechází přímo do stavu „běžící v režimu jádra\"\"), žádnými stavy dalšími neprochází.\""
+            }
+          ]
+        },
+        {
+          "id": "q3_3",
+          "type": "mcq",
+          "label": "3. \"Ve vzorci pro výpočet priority procesů v operačních systémech UNIX „priorita=využitíCPU/2+nice+báze\"\" hodnota „nice\"\" značí:\"",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Modifikovatelný parametr, pomocí kterého může uživatel/ administrátor systému ovlivňovat hodnotu priority zvoleného procesu."
+            },
+            {
+              "value": "b",
+              "text": "Relativní priority události (například čekání na I/O operaci) napevno zakompilovány v systému."
+            },
+            {
+              "value": "c",
+              "text": "Hodnotu, pomocí které je automaticky ovlivňována priorita na základě velikosti zabrané paměti procesem."
+            },
+            {
+              "value": "d",
+              "text": "Průměr počtu taktů za sekundu, které proces spotřeboval za uplynulých několik sekund."
+            }
+          ]
+        },
+        {
+          "id": "q3_4",
+          "type": "mcq",
+          "label": "4. Celočíselný identifikátor procesu (PID) je typicky přidělován podle následujícího pravidla/pravidel:",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "PID je odvozeno od ID uživatele, který proces spustil."
+            },
+            {
+              "value": "b",
+              "text": "Přiděluje se při vytváření procesu."
+            },
+            {
+              "value": "c",
+              "text": "Přiděluje se podle funkce procesu, více procesů může mít stejné PID."
+            },
+            {
+              "value": "d",
+              "text": "Přiděluje se podle funkce procesu, každý proces musí mít jedinečné PID."
+            }
+          ]
+        },
+        {
+          "id": "q3_5",
+          "type": "mcq",
+          "label": "5. Část uživatelského kontextu procesu, která obsahuje strojové instrukce vykonávané procesorem, se nazývá",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "Halda (heap)."
+            },
+            {
+              "value": "b",
+              "text": "Zásobník (stack)."
+            },
+            {
+              "value": "c",
+              "text": "Datová část (data segment)."
+            },
+            {
+              "value": "d",
+              "text": "Textová část (text segment)."
+            }
+          ]
+        },
+        {
+          "id": "q3_6",
+          "type": "mcq",
+          "label": "6. Pro trvání výpočetních intervalů procesů (práce CPU) lze říci",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "Trvání výpočetního intervalu procesu lze odvodit jako druhou odmocninu z hodnoty PID procesu."
+            },
+            {
+              "value": "b",
+              "text": "Je typicky více procesů s dlouhými intervaly výpočtů a méně procesů s krátkými intervaly výpočtů."
+            },
+            {
+              "value": "c",
+              "text": "Trvání výpočetního intervalu procesu [ze odvodit jako čtvrtou odmocninu z hodnoty PID procesu."
+            },
+            {
+              "value": "d",
+              "text": "Je typicky více procesů s krátkými intervaly výpočtů a méně procesů s dlouhými intervaly výpočtů"
+            }
+          ]
+        },
+        {
+          "id": "q3_7",
+          "type": "mcq",
+          "label": "7. Řídící tabulka procesů PCB (Process Control Block) obsahuje informace, pro",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Všechny procesy, které běžely v minulosti."
+            },
+            {
+              "value": "b",
+              "text": "Všechny běžící procesy."
+            },
+            {
+              "value": "c",
+              "text": "Všechny neběžící procesy, u kterých se předpokládá, že budou spuštěny v budoucnosti."
+            },
+            {
+              "value": "d",
+              "text": "Jen pro procesy alespoň z části umístěné v odkládací paměti (například na disku)."
+            }
+          ]
+        },
+        {
+          "id": "q3_8",
+          "type": "mcq",
+          "label": "8. Předpokládejme typický devitistavovy model stavů procesů v operačních systémech. Když rodičovský proces vytvoří nový proces, první stav procesu je „vytvořený“ Nový proces pak může přímo přejít do jednoho ze dvou možných stavů podle aktuálního množství volné hlavní paměti. Které dva stavy běhu procesu to jsou",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "\"„spící v hlavní paměti“ a „spící, odložený ve vedlejší paměti\"\".\""
+            },
+            {
+              "value": "b",
+              "text": "\"„připravený ke zpracování, ale odložený\"\" a „připravený ke zpracování v hlavní paměti\"\".\""
+            },
+            {
+              "value": "c",
+              "text": "\"„vykonávaný v režimu jádra\"\" a „živá mrtvola\"\" (zombie).\""
+            },
+            {
+              "value": "d",
+              "text": "\"„vykonávaný v uživatelském režimu\"\" a „vykonávaný v režimu jádra“.\""
+            }
+          ]
+        },
+        {
+          "id": "q3_9",
+          "type": "mcq",
+          "label": "9. U kterého typu systému je nejdůležitějším kritériem dodržení termínu?",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Pouze dávkový."
+            },
+            {
+              "value": "b",
+              "text": "Real-time"
+            },
+            {
+              "value": "c",
+              "text": "Pouze interaktivní."
+            },
+            {
+              "value": "d",
+              "text": "Dávkový i interaktivní"
+            }
+          ]
+        },
+        {
+          "id": "q3_10",
+          "type": "mcq",
+          "label": "10. Co vyjadřuje číslo procesu PID (Process IDentifier) v operačních systémech?",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Počet stránek, ze kterých se skládá paměťový obraz procesu."
+            },
+            {
+              "value": "b",
+              "text": "Jednoznačné identifikační číslo procesu."
+            },
+            {
+              "value": "c",
+              "text": "První adresu v paměti právě probíhajícího procesu (počáteční adresu paměťového obrazu procesu)."
+            },
+            {
+              "value": "d",
+              "text": "Velikost paměti rezervovanou pro proces."
+            }
+          ]
+        },
+        {
+          "id": "q3_11",
+          "type": "mcq",
+          "label": "11. Uvažme tří procesy: první je stavu čekající v hlavní pamětí s PID=10, druhý je stavu vykonávaný s PID=25 a u třetího s PID=55 nastal výpadek stránky při jeho předešlém vykonávání. Který proces bude vykonáván vnásledujícím intervalu při preemptivním plánování?",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Nelze s jistotou určit."
+            },
+            {
+              "value": "b",
+              "text": "Proces s PID=10."
+            },
+            {
+              "value": "c",
+              "text": "Proces s PID=35."
+            },
+            {
+              "value": "d",
+              "text": "Proces s PID=25."
+            }
+          ]
+        },
+        {
+          "id": "q3_12",
+          "type": "mcq",
+          "label": "12. Předpokládejme typický devítistavový model stavů procesů v operačních systémech. Stav procesu v operačním systému nazývaný zombie (živá mrtvola) je:",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Proces, který vykonal volání jádra pro své ukončení, ale stále o něm existuje záznam v systému."
+            },
+            {
+              "value": "b",
+              "text": "Proces, který je potřeba ihned zabít, aby v systému nevznikaly další procesy stejného druhu."
+            },
+            {
+              "value": "c",
+              "text": "Proces, který je potřeba ihned oživit, aby v systému nevznikaly další procesy stejného druhu."
+            },
+            {
+              "value": "d",
+              "text": "Proces, který běží na pozadí a provádí úkoly bez zásahu člověka."
+            }
+          ]
+        },
+        {
+          "id": "q3_13",
+          "type": "mcq",
+          "label": "13. Uvažme tří procesy: první je stavu čekající v hlavní pamět s PID=10, druhý je stavu vykonávaný s PID=25 a u třetího s PID=35 nastal výpadek stránky při jeho předešlém vykonávání. Který proces bude vykonáván vnásledujícím intervalu při preemptivním plánování?",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Proces s PID=25."
+            },
+            {
+              "value": "b",
+              "text": "Proces s PID=35."
+            },
+            {
+              "value": "c",
+              "text": "Nelze s jistotou určit."
+            },
+            {
+              "value": "d",
+              "text": "Proces s PID=10."
+            }
+          ]
+        },
+        {
+          "id": "q3_14",
+          "type": "mcq",
+          "label": "14. Proces je ve většině operačních systémů jednoznačně identifikován pomocí:",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Názvu spuštěného programu a dobou běhu procesu v CPU."
+            },
+            {
+              "value": "b",
+              "text": "Názvu spuštěného programu."
+            },
+            {
+              "value": "c",
+              "text": "Celočíselného identifikátoru PID (Process IDentifier)."
+            },
+            {
+              "value": "d",
+              "text": "Názvu spuštěného programu a počtem vyvolaných přerušení daným procesem."
+            }
+          ]
+        },
+        {
+          "id": "q3_15",
+          "type": "mcq",
+          "label": "15. Nulová hodnota frekvence výpadku stránek značí skutečnost, že:",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Systém má odkládací prostor (soubor nebo oddíl na disku) stejné velikosti jako velikost hlavní paměti (fyzická paměť RAM)."
+            },
+            {
+              "value": "b",
+              "text": "Systém má dostatek hlavní paměti (fyzická paměť RAM)."
+            },
+            {
+              "value": "c",
+              "text": "Systém má dostatečně velký odkládací prostor (soubor nebo oddíl na disku)."
+            },
+            {
+              "value": "d",
+              "text": "Systém NEmá dostatek hlavní paměti (fyzická paměť RAM)."
+            }
+          ]
+        },
+        {
+          "id": "q3_16",
+          "type": "mcq",
+          "label": "16. Maximální velikost logického adresového prostoru, který je adresován 32bitovým adresami (bez dodatečných rozšíření) je",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "32 GiB."
+            },
+            {
+              "value": "b",
+              "text": "4 GiB."
+            },
+            {
+              "value": "c",
+              "text": "4 MiB."
+            },
+            {
+              "value": "d",
+              "text": "32 MiB."
+            }
+          ]
+        },
+        {
+          "id": "q3_17",
+          "type": "mcq",
+          "label": "17. Jakým způsobem typicky operační systémy označují své procesy:",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Identifikátorem fyzického umístění v paměti."
+            },
+            {
+              "value": "b",
+              "text": "Datem a Časem spuštění procesu."
+            },
+            {
+              "value": "c",
+              "text": "Celočíselným identifikátorem — PID."
+            },
+            {
+              "value": "d",
+              "text": "Procesy operační systémy NEoznačují, nemají tedy žádnou identifikaci."
+            }
+          ]
+        },
+        {
+          "id": "q3_18",
+          "type": "mcq",
+          "label": "18. Jaké z následujících tvrzení o vláknech a procesech v operačních systémech je pravdivé?",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Vlákna jsou procesy, které jsou ve stavu živé mrtvoly (zombie)."
+            },
+            {
+              "value": "b",
+              "text": "Jeden proces může mít jedno nebo více vláken."
+            },
+            {
+              "value": "c",
+              "text": "\"Vlákna jsou procesy, které jsou ve stavu „vykonávaný\"\" při čekání na nějakou dlouhodobou operaci (například diskový I/O).\""
+            },
+            {
+              "value": "d",
+              "text": "Vlákna jsou procesy, které běží pouze v kontextu jádra."
+            }
+          ]
+        },
+        {
+          "id": "q3_19",
+          "type": "mcq",
+          "label": "19. Mezi typické základní stavy běhu procesu v operačním systému patří:",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Nový, připravený ke zpracování, běžící, čekající, ukončený."
+            },
+            {
+              "value": "b",
+              "text": "Starý, mladý, režim nízkého PID, režim vysokého PID."
+            },
+            {
+              "value": "c",
+              "text": "Krátkodobý (běží do určitě doby zvolené administrátorem) a dlouhodobý (běží nad určitou dobu zvolenou administrátorem. Doba je zadávána v počtu hodinových taktů procesoru, aby se vyhnulo nepřesnostem při měření času. V opačném případě je nutné, aby stanice disponovala rádiem řízenými hodinami."
+            },
+            {
+              "value": "d",
+              "text": "Nezadaný, ženatý, rozvedený, vdovec"
+            }
+          ]
+        },
+        {
+          "id": "q3_20",
+          "type": "mcq",
+          "label": "20. Který z následujících základních parametrů z hlediska plánování algoritmů NEní sledován v dávkovém systému",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Rychlost obsloužení."
+            },
+            {
+              "value": "b",
+              "text": "Využití CPU."
+            },
+            {
+              "value": "c",
+              "text": "Propustnost sběrnice."
+            },
+            {
+              "value": "d",
+              "text": "Výkonnost (počet zpracovaných za jednotku času)"
+            }
+          ]
+        },
+        {
+          "id": "q3_21",
+          "type": "mcq",
+          "label": "21. Předpokládejme typický devítistavový model stavů procesů v operačních systémech. Proces v operačním systému je ve stavu „vykonávaný v režimu jádra“ a vyžaduje diskový I/O při kterému musí čekat na jeho dokončení. První stav do kterého proces přejde je:",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Zablokován a uložen v hlavní paměti (asleep in memory)."
+            },
+            {
+              "value": "b",
+              "text": "Vykonávaný ve stavu živé mrtvoly (zombie)."
+            },
+            {
+              "value": "c",
+              "text": "Nuceně přerušený (preempted)."
+            },
+            {
+              "value": "d",
+              "text": "Zablokován a uložen v odkládací paměti (sleep, swapped)."
+            }
+          ]
+        },
+        {
+          "id": "q3_22",
+          "type": "mcq",
+          "label": "22. Co mimo jiné platí o řídící tabulce procesů (PCB) v operačním systému?",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Procesy zde mají uloženou hodnotu programového čítače."
+            },
+            {
+              "value": "b",
+              "text": "Jednotlivé řádky tabulky jsou uloženy v paměti daného procesu, jádro k nim nemá přístup."
+            },
+            {
+              "value": "c",
+              "text": "Tabulka procesů se používala dříve v jednoprocesorových systémech. Ve víceprocesorových systémech se nepoužívá."
+            },
+            {
+              "value": "d",
+              "text": "Procesy do ní ukládají data, ke kterým je potřeba mít rychlý přístup."
+            }
+          ]
+        },
+        {
+          "id": "q3_23",
+          "type": "mcq",
+          "label": "23. Vyberte pravdivé tvrzení týkající se plánování procesů:",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "Kooperativní multitasking znamená, že procesy jsou přepínány podle jejich aktuálního čísla (PID)."
+            },
+            {
+              "value": "b",
+              "text": "Preemptivní multitasking znamená, že procesy jsou přepínány podle velikosti zabrané paměti."
+            },
+            {
+              "value": "c",
+              "text": "Preemptivní multitasking znamená, že procesy jsou přepínány podle jejich aktuálního čísla PID."
+            },
+            {
+              "value": "d",
+              "text": "Na počítači s jedním procesorem může v jednom okamžiku být vykonáván vždy jen jeden proces a ostatní musí čekat."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sec_4",
+      "title": "4. Synchronizacia a IPC",
+      "questions": [
+        {
+          "id": "q4_1",
+          "type": "mcq",
+          "label": "1. Uvažte základní podmínky synchronizace procesů. Kdy je možné blokovat proces předvstupem do kritické sekce?",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Pokud je již jiný proces v kritické sekci."
+            },
+            {
+              "value": "b",
+              "text": "Pokud NEní jakýkoliv proces uživatele administrátor ve své kritické sekci."
+            },
+            {
+              "value": "c",
+              "text": "Pokud NEní proces, který tvoří vrchol hierarchie procesů, ve své kritické sekci."
+            },
+            {
+              "value": "d",
+              "text": "Pokud NEní žádný proces ve své kritické sekci"
+            }
+          ]
+        },
+        {
+          "id": "q4_2",
+          "type": "mcq",
+          "label": "2. Co je to „vzájemné vyloučení“ v terminologii synchronizace procesů?",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Zajištění výhradního přístupu ke sdíleným prostředkům pro jeden proces."
+            },
+            {
+              "value": "b",
+              "text": "Blokování procesu, který je ve stavu uvíznutí."
+            },
+            {
+              "value": "c",
+              "text": "Zajištění výhradního přístupu k síti pro jeden proces."
+            },
+            {
+              "value": "d",
+              "text": "Blokování procesu, který se nachází ve své kritické sekci."
+            }
+          ]
+        },
+        {
+          "id": "q4_3",
+          "type": "mcq",
+          "label": "3. Uvažujte synchronizaci procesů. Jaký je problém metody vstupu do kritické sekce pomocí sdílené dvouhodnotové proměnné?",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Lze ji použít pouze v operačním systému Linux."
+            },
+            {
+              "value": "b",
+              "text": "Lze ji použít pouze v programovacím jazyce asembler."
+            },
+            {
+              "value": "c",
+              "text": "NEzaručuje 100% vyloučení souběhu procesů."
+            },
+            {
+              "value": "d",
+              "text": "Lze ji použít pouze v operačních systémech s monolitickým jádrem."
+            }
+          ]
+        },
+        {
+          "id": "q4_4",
+          "type": "mcq",
+          "label": "4. Co se stane při vzájemném vyloučení, pokud chtějí dva procesy vstoupit do své kritické sekce?",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Vždy je umožněn okamžitý vstup procesu s vyšší prioritou a to iv případě, kdy je druhý proces již ve své kritické sekci."
+            },
+            {
+              "value": "b",
+              "text": "Oba procesy si vygenerují náhodné číslo. Proces s vyšším náhodným číslem vstoupí do své kritické sekce a to i v případě, kdy je druhý proces již ve své kritické sekci."
+            },
+            {
+              "value": "c",
+              "text": "První proces do ní vstoupí a druhý je blokován/čeká."
+            },
+            {
+              "value": "d",
+              "text": "První proces do ní vstoupí a druhý musí svou kritickou sekci přeskočit."
+            }
+          ]
+        },
+        {
+          "id": "q4_5",
+          "type": "mcq",
+          "label": "5. \"Co je „kritická sekce\"\" v terminologii synchronizace procesů?\"",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Část programového kódu procesu, ve které se přistupuje ke sdíleným prostředkům."
+            },
+            {
+              "value": "b",
+              "text": "Část programového kódu procesu, jehož vykonávání trvá déle a bude proto s velkou pravděpodobností pozastaveno přerušením."
+            },
+            {
+              "value": "c",
+              "text": "Závěrečná Část života každého procesu."
+            },
+            {
+              "value": "d",
+              "text": "Část paměti do které má přístup pouze proces jádra."
+            }
+          ]
+        },
+        {
+          "id": "q4_6",
+          "type": "mcq",
+          "label": "6. Co je příčinnou souběhu (race condition) při synchronizaci procesů?",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Stejná rychlost vykonávání instrukcí pro všechny úlohy v systému."
+            },
+            {
+              "value": "b",
+              "text": "Problém při sdílení prostředků mezi procesy."
+            },
+            {
+              "value": "c",
+              "text": "Spouštění více procesů jedním uživatelem."
+            },
+            {
+              "value": "d",
+              "text": "Spouštění více procesů ve stejném okamžiku."
+            }
+          ]
+        },
+        {
+          "id": "q4_7",
+          "type": "mcq",
+          "label": "7. Vyberte nejlepší způsob blokování procesu před vstupem do kritické sekce při synchronizaci procesů.",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Ukončení procesu a jeho nové spuštění až je vstup do kritické sekce umožněn."
+            },
+            {
+              "value": "b",
+              "text": "Aktivní čekání ve smyčce."
+            },
+            {
+              "value": "c",
+              "text": "Přechod do režimu spánku a čekání na signál probuzení."
+            },
+            {
+              "value": "d",
+              "text": "Uvedení dvou a více procesů do stavu uvíznutí."
+            }
+          ]
+        },
+        {
+          "id": "q4_8",
+          "type": "mcq",
+          "label": "8. Co je principem „vzájemného vyloučení“ ve víceúlohovém systému při synchronizaci procesů?",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Zabránění dvěma a více procesům vstoupit současně do své kritické sekce, která ovládá práci se společnými prostředky."
+            },
+            {
+              "value": "b",
+              "text": "Zabránění dvěma a více procesům vstoupit současně do své kritické sekce, která zajišťuje spolupráci s plánovačem pro výpočet priority zúčastněných procesů."
+            },
+            {
+              "value": "c",
+              "text": "Zabránění běhu dvou a více procesů současně."
+            },
+            {
+              "value": "d",
+              "text": "Zajištění si procesorového času na úkor jiného procesu pomocí změny priorit."
+            }
+          ]
+        },
+        {
+          "id": "q4_9",
+          "type": "mcq",
+          "label": "9. Co dělá ze souběhu (race condition) při synchronizaci procesů komplikovaný problém?",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "Nízká režie jeho detekce."
+            },
+            {
+              "value": "b",
+              "text": "NEidentifikovatelnost zainteresovaných procesů."
+            },
+            {
+              "value": "c",
+              "text": "NEidentifikovatelnost paměťových oblastí zúčastněných procesů."
+            },
+            {
+              "value": "d",
+              "text": "Náhodný výskyt jevu a často nízká pravděpodobnost výskytu."
+            }
+          ]
+        },
+        {
+          "id": "q4_10",
+          "type": "mcq",
+          "label": "10. Co je to souběh (race condition) v terminologii synchronizace procesů?",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Počáteční podmínka běhu každého procesu, který běží ve víceúlohovém systému."
+            },
+            {
+              "value": "b",
+              "text": "Spuštění více procesů ve stejném okamžiku."
+            },
+            {
+              "value": "c",
+              "text": "Situace, kdy dva nebo více procesů nezávisle přistupují ke sdíleným prostředkům a výsledek závisí na tom v jakém pořadí a v jakém přesném časovém okamžiku k nim přistoupí."
+            },
+            {
+              "value": "d",
+              "text": "Počáteční podmínka běhu každého procesu, který běží v jednoúlohovém systému."
+            }
+          ]
+        },
+        {
+          "id": "q4_11",
+          "type": "mcq",
+          "label": "11. Jakou problematiku synchronizace popisuje problém večeřících filosofů?",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Efektivní využívání výpočetního času procesů, které jsou odložené ve vedlejší paměti."
+            },
+            {
+              "value": "b",
+              "text": "Efektivní sdílení společných prostředků."
+            },
+            {
+              "value": "c",
+              "text": "Řešení problému obrácených priorit — priority lock problem."
+            },
+            {
+              "value": "d",
+              "text": "Řešení problému přerušitelnosti atomických instrukcí."
+            }
+          ]
+        },
+        {
+          "id": "q4_12",
+          "type": "mcq",
+          "label": "12. Který typ komunikace mezi procesy je nejrychlejší?",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Pomocí sdílené paměti."
+            },
+            {
+              "value": "b",
+              "text": "Pomocí zasílání zpráv potrubní poštou mezi uživateli systému."
+            },
+            {
+              "value": "c",
+              "text": "Pomocí zasílání zpráv v mezi více počítači v síti."
+            },
+            {
+              "value": "d",
+              "text": "Pomoci zasílání zpráv v rámci jednoho počítače."
+            }
+          ]
+        },
+        {
+          "id": "q4_13",
+          "type": "mcq",
+          "label": "13. Jaké jsou základní požadavky na synchronizaci procesů:",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Vyloučení přihlášení více uživatelů do systém v jednom časovém okamžiku."
+            },
+            {
+              "value": "b",
+              "text": "Vyloučení spuštění více procesů v jednom časovém okamžiku."
+            },
+            {
+              "value": "c",
+              "text": "Vyloučení konfliktu kritických činností a zajištění časové souslednosti ovlivňujících se procesů."
+            },
+            {
+              "value": "d",
+              "text": "Vyloučení ukončení více procesů v jednom časovém okamžiku."
+            }
+          ]
+        },
+        {
+          "id": "q4_14",
+          "type": "mcq",
+          "label": "14. Uvažujte synchronizaci procesů. Jaký je problém metody vstupu do kritické sekce pomocí striktního střídání procesů?",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Porušuje jednu z podmínek synchronizace a to že proces NEsmí blokovat jiný proces, pokud není v kritické sekci."
+            },
+            {
+              "value": "b",
+              "text": "NEzaručuje 100% vyloučení souběhu procesů."
+            },
+            {
+              "value": "c",
+              "text": "NEzaručuje provádění instrukcí v atomickém (nepřerušitelném) režimu."
+            },
+            {
+              "value": "d",
+              "text": "Porušuje jednu z podmínek synchronizace a to že proces NEsmí blokovat jiný proces, pokud má vyšší prioritu."
+            }
+          ]
+        },
+        {
+          "id": "q4_15",
+          "type": "mcq",
+          "label": "15. Jaké typické nebezpečí hrozí v případě používání sdílené paměti jako prostředku meziprocesorové komunikace?",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "Automatické snižování priority procesů, které NEkomunikují."
+            },
+            {
+              "value": "b",
+              "text": "Automatické snižování priority procesů, které komunikují."
+            },
+            {
+              "value": "c",
+              "text": "Automatické zvyšování priority procesů, které patří uživateli žádajícího o komunikaci."
+            },
+            {
+              "value": "d",
+              "text": "NEkonzistence dat."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sec_5",
+      "title": "5. Pamat a virtualna pamat",
+      "questions": [
+        {
+          "id": "q5_1",
+          "type": "mcq",
+          "label": "1. Segmentace jako způsob správy paměti operačního systému zahrnuje:",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Rozdělení paměťového obrazu procesů na úseky pevné velikosti."
+            },
+            {
+              "value": "b",
+              "text": "Rozdělení paměťového obrazu procesů na logicky související části."
+            },
+            {
+              "value": "c",
+              "text": "Rozdělení paměťového obrazu procesů na úseky o velikostech násobků čísla 4."
+            },
+            {
+              "value": "d",
+              "text": "Rozdělení paměťového obrazu procesů na úseky o velikostech násobků čísla 2."
+            }
+          ]
+        },
+        {
+          "id": "q5_2",
+          "type": "mcq",
+          "label": "2. Když proces za běhu dynamicky alokuje více datového prostoru, je použita jeho částuživatelského kontextu nazvaná",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Data jádra."
+            },
+            {
+              "value": "b",
+              "text": "Halda (heap)."
+            },
+            {
+              "value": "c",
+              "text": "Zásobník (stack)."
+            },
+            {
+              "value": "d",
+              "text": "Textová."
+            }
+          ]
+        },
+        {
+          "id": "q5_3",
+          "type": "mcq",
+          "label": "3. Co je pravda o zásobníku jako části uživatelského kontextu procesu v operačním systému?",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Zásobník se používá pouze pro procesy, které běží v režimu jádra."
+            },
+            {
+              "value": "b",
+              "text": "Zásobník má pevnou velikost tj. jeho velikost NElze za běhu procesu měnit."
+            },
+            {
+              "value": "c",
+              "text": "Zásobník se používá dynamicky. Za běhu se plní parametry volaných funkcí."
+            },
+            {
+              "value": "d",
+              "text": "Zásobník se používá pouze pro systémové procesy"
+            }
+          ]
+        },
+        {
+          "id": "q5_4",
+          "type": "mcq",
+          "label": "4. Co provádí metoda stránkování jako druh správy paměti operačního systému?",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Maximalizuje počet výpadků stránek tím, že udržuje vždy nejméně 75% hlavní paměti stále volné."
+            },
+            {
+              "value": "b",
+              "text": "Rozdělí paměťový obraz procesů v systému na stejně velké části a v případě potřeby je přenáší z vedlejší paměti do stejně velkého místa v hlavní paměti, které se nazývá rámec."
+            },
+            {
+              "value": "c",
+              "text": "Rozdělí paměťový obraz procesů v systému na různě velké části a v případě potřeby je přenáší z vedlejší paměti (disku) do stejně velkého místa v hlavní paměti. Toto stejně velké místo v hlavní paměti je potřeba před přenosem vytvořit pomocí defragmentace paměti."
+            },
+            {
+              "value": "d",
+              "text": "Maximalizuje počet výpadků stránek tím, že udržuje vždy alespoň polovinu hlavní paměti stále volnou."
+            }
+          ]
+        },
+        {
+          "id": "q5_5",
+          "type": "mcq",
+          "label": "5. Co značí pojem interní fragmentace při správě paměti operačního systému?",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Celkový volný NEsouvislý prostor v operační paměti."
+            },
+            {
+              "value": "b",
+              "text": "Obsazený prostor v rámci první stránky alokovaného bloku, kde jsou uloženy adresy fragmentů dat procesu obsažených v dalších stránkách tohoto bloku."
+            },
+            {
+              "value": "c",
+              "text": "Volný prostor v rámci poslední stránky alokovaného bloku."
+            },
+            {
+              "value": "d",
+              "text": "Celkový volný souvislý prostor v operační paměti"
+            }
+          ]
+        },
+        {
+          "id": "q5_6",
+          "type": "mcq",
+          "label": "6. Existuje-li logický adresní prostor (paměť využívaná procesy) a fyzický adresní prostor (fyzická operační paměť), pak používáme systém:",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Šifrování paměti — fyzický adresní prostor je šifrován, logický adresní prostor šifrován NEní."
+            },
+            {
+              "value": "b",
+              "text": "Autentizace paměti — probíhá autentizace procesů pro přístup do fyzického adresního prostoru, přístup do logického adresního prostoru NEní nijak omeze"
+            },
+            {
+              "value": "c",
+              "text": "Virtuální paměti — logický a fyzický adresní prostor NEjsou stejné."
+            },
+            {
+              "value": "d",
+              "text": "Komprese paměti — logický adresní prostor je komprimován, fyzický adresní prostor komprimován NEní."
+            }
+          ]
+        },
+        {
+          "id": "q5_7",
+          "type": "mcq",
+          "label": "7. Menší počet výpadků stránek (page fault) zajistíme:",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "Použitím konceptu anonymních stránek."
+            },
+            {
+              "value": "b",
+              "text": "Náhodným přesouváním stránek mezi hlavní pamětí a odkládacím prostorem."
+            },
+            {
+              "value": "c",
+              "text": "Zvětšením virtuální paměti."
+            },
+            {
+              "value": "d",
+              "text": "Zvětšením hlavní paměti (RAM)."
+            }
+          ]
+        },
+        {
+          "id": "q5_8",
+          "type": "mcq",
+          "label": "8. Co jsou anonymní stránky u virtuální paměti, která je realizována pomocí stránkování?",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Jsou to stránky v rámci volného prostoru kontextu jádra, který nebyl dosud alokován žádnou datovou strukturou."
+            },
+            {
+              "value": "b",
+              "text": "Jsou to stránky v hlavní nebo vedlejší paměti, které zůstaly v paměti po ukončení svého procesu."
+            },
+            {
+              "value": "c",
+              "text": "Jsou to stránky v hlavní paměti, které nemají svou kopii v existujícím souboru. Pro odložení takových stránek se používá odkládací oddíl nebo soubor (swap file)."
+            },
+            {
+              "value": "d",
+              "text": "Jsou to stránky nově vytvořeného procesu potomka s PID=0. Tento stav trvá dokud operační systém pomocí systémového volání nepřidělí procesu platné číslo."
+            }
+          ]
+        },
+        {
+          "id": "q5_9",
+          "type": "mcq",
+          "label": "9. Při alokaci paměťového prostoru v hlavní paměti pomocí analýzy frekvence výpadků stránek dochází k následujícímu:",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "S větším počtem paměťových rámců přidělených procesu frekvence výpadků stránek klesá."
+            },
+            {
+              "value": "b",
+              "text": "S větším počtem paměťových rámců přidělených procesu frekvence výpadků stránek roste."
+            },
+            {
+              "value": "c",
+              "text": "Pokud je frekvence výpadků stránek konstantní, značí to vždy situaci, že proces NEpotřebuje více paměťového prostoru."
+            },
+            {
+              "value": "d",
+              "text": "Pokud je frekvence výpadků stránek konstantní, značí to vždy situaci, že proces potřebuje více paměťového prostoru"
+            }
+          ]
+        },
+        {
+          "id": "q5_10",
+          "type": "mcq",
+          "label": "10. Uživatelský kontext procesu se skládá z několika částí. Která část mezi ně NEpatří?",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "Zásobník."
+            },
+            {
+              "value": "b",
+              "text": "Programový kód."
+            },
+            {
+              "value": "c",
+              "text": "Halda."
+            },
+            {
+              "value": "d",
+              "text": "Řídící tabulka procesů PCB (Process Control Block)."
+            }
+          ]
+        },
+        {
+          "id": "q5_11",
+          "type": "mcq",
+          "label": "11. V jakých systémech zpracování dat je důležitá předvídatelnost?",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Dávkové a interaktivní."
+            },
+            {
+              "value": "b",
+              "text": "Pouze dávkové."
+            },
+            {
+              "value": "c",
+              "text": "Real-time."
+            },
+            {
+              "value": "d",
+              "text": "Pouze interaktivní."
+            }
+          ]
+        },
+        {
+          "id": "q5_12",
+          "type": "mcq",
+          "label": "12. Vyberte správné tvrzení o segmentaci jako způsobu správy paměti operačního systému",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "Různá velikost segmentů minimalizuje fragmentaci fyzické (hlavní) paměti."
+            },
+            {
+              "value": "b",
+              "text": "Stejná velikost segmentů je výhodná pro procesy běžící na pozadí."
+            },
+            {
+              "value": "c",
+              "text": "Počet výpadků segmentů je typicky větší než počet výpadků stránek u metody stránkování."
+            },
+            {
+              "value": "d",
+              "text": "Paměťový obraz procesu je rozdělen na části — segmenty — různé velikosti."
+            }
+          ]
+        },
+        {
+          "id": "q5_13",
+          "type": "mcq",
+          "label": "13. Při správě paměti operačního systému pomocí stránkování:",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "Je paměťový obraz procesu rozdělen na různě velké úseky — stránky. Tyto stránky mají větší velikost než rámce v hlavní paměti."
+            },
+            {
+              "value": "b",
+              "text": "Je paměťový obraz procesu rozdělen vždy na 32 stránek. Počet stránek 32 byl zvolen z důvodu předcházení fragmentace hlavní paměti."
+            },
+            {
+              "value": "c",
+              "text": "Je paměťový obraz procesu rozdělen vždy na 64 stránek. Počet stránek 64 byl zvolen z důvodu rychlejší zápisu do hlavní paměti."
+            },
+            {
+              "value": "d",
+              "text": "Je paměťový obraz procesu rozdělen na stejně velké úseky — stránky. Tyto stránky mají stejnou velikost jako rámce v hlavní paměti"
+            }
+          ]
+        },
+        {
+          "id": "q5_14",
+          "type": "mcq",
+          "label": "14. Uvažujme správu paměti operačního systému pomocí stránkování. Podnětem k výpadku stránky je situace, kdy právě běžící proces vygeneruje adresu spadající do stránky, která se momentálně nachází:",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "V odkládací paměti."
+            },
+            {
+              "value": "b",
+              "text": "V hlavní paměti pouze za podmínky, že byla předešle použita — obsahovala předešlou instrukci programového kódu."
+            },
+            {
+              "value": "c",
+              "text": "V hlavní paměti pouze za podmínky, že byla v minulosti zhusta používána."
+            },
+            {
+              "value": "d",
+              "text": "V hlavní paměti pouze za podmínky, že NEbyla předešle použita minimálně jeden hodinový takt."
+            }
+          ]
+        },
+        {
+          "id": "q5_15",
+          "type": "mcq",
+          "label": "15. Najdi chybu: Správa paměti operačního systému pomocí stránkování:",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Je pro procesy plně transparentní (nezjistitelný) děj."
+            },
+            {
+              "value": "b",
+              "text": "Fyzická (hlavní) paměť je rozdělena na stejně velké rámce (frames)."
+            },
+            {
+              "value": "c",
+              "text": "Zaručuje souvislé umístění dat procesu v hlavní paměti, které logicky patří k sobě."
+            },
+            {
+              "value": "d",
+              "text": "Adresní prostor tvoří stránky stejné velikosti"
+            }
+          ]
+        },
+        {
+          "id": "q5_16",
+          "type": "mcq",
+          "label": "16. U algoritmu NFU je aktuální hodnota 4bitového čítače přiřazeného k paměťové stránce 0010. Následně se 2x provede algoritmus. Zvolte správnou hodnotu čítače:",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "0100"
+            },
+            {
+              "value": "b",
+              "text": "1100"
+            },
+            {
+              "value": "c",
+              "text": "1110"
+            },
+            {
+              "value": "d",
+              "text": "0111"
+            }
+          ]
+        },
+        {
+          "id": "q5_17",
+          "type": "mcq",
+          "label": "17. V OS Linux lze odkládací prostor pro virtuální paměť realizovat:",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Pouze oddílem na disku."
+            },
+            {
+              "value": "b",
+              "text": "Pouze souborem v souborovém systému."
+            },
+            {
+              "value": "c",
+              "text": "Oddílem na disku a souborem v souborovém systému - lze provozovat současně."
+            },
+            {
+              "value": "d",
+              "text": "Oddílem na disku a souborem v souborovém systému - nelze provozovat současně."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sec_6",
+      "title": "6. Subory, FHS a zariadenia",
+      "questions": [
+        {
+          "id": "q6_1",
+          "type": "mcq",
+          "label": "1. Konfigurační soubory se podle standardu FHS (Filesystem Standard) nachází v adresáři:",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "/cfg"
+            },
+            {
+              "value": "b",
+              "text": "/sys"
+            },
+            {
+              "value": "c",
+              "text": "/etc"
+            },
+            {
+              "value": "d",
+              "text": "/proc"
+            }
+          ]
+        },
+        {
+          "id": "q6_2",
+          "type": "mcq",
+          "label": "2. Pro ukládání dat souborů v souborovém systému se typicky využívá jaká strategie?",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Data souboru jsou uložena v datových blocích, které NEmusí být na paměťovém médiu uloženy za sebou."
+            },
+            {
+              "value": "b",
+              "text": "Data souboru jsou uložena vždy v jednom datovém bloku na paměťovém médiu. Datový blok má velikost danou velikostí souboru."
+            },
+            {
+              "value": "c",
+              "text": "Data souboru jsou uložena v datových blocích, které musí být vždy na paměťovém médiu uloženy za sebou."
+            },
+            {
+              "value": "d",
+              "text": "Data souboru jsou uložena vždy v jednom datovém bloku na paměťovém médiu. Jednotlivé bajty tohoto datového bloku se pravidelně přesunují (defragmentují) tak, aby byly uloženy kontinuálně. Zvýší se tím rychlostpráce s daty souboru."
+            }
+          ]
+        },
+        {
+          "id": "q6_3",
+          "type": "mcq",
+          "label": "3. Podle standardu FHS (Filesystem Standard) se v adresáři /root nachází:",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Konfigurační soubory všech programů vlastněných uživatelem root."
+            },
+            {
+              "value": "b",
+              "text": "Programy, které uživatel root standardně potřebuje pro správu systému."
+            },
+            {
+              "value": "c",
+              "text": "Domovský adresář uživatele root."
+            },
+            {
+              "value": "d",
+              "text": "Kořenový adresář."
+            }
+          ]
+        },
+        {
+          "id": "q6_4",
+          "type": "mcq",
+          "label": "4. Proměnlivá data (například data webového serveru) se podle standardu FHS (Filesystem Standard) nachází v adresáři:",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "/var"
+            },
+            {
+              "value": "b",
+              "text": "/lib"
+            },
+            {
+              "value": "c",
+              "text": "/usr"
+            },
+            {
+              "value": "d",
+              "text": "/bin"
+            }
+          ]
+        },
+        {
+          "id": "q6_5",
+          "type": "mcq",
+          "label": "5. Podle standardu FHS (Filesystem Standard) se v adresáři /opt nachází:",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "Konfigurace protokolu Open Protocol Transfer, ovšem pokud je jeho implementace napsána pod svobodnou licencí."
+            },
+            {
+              "value": "b",
+              "text": "Konfigurace protokolu Open Protocol Transfer, nezáleží na použité licenci."
+            },
+            {
+              "value": "c",
+              "text": "Optimalizované programy pouze pro uživatele root."
+            },
+            {
+              "value": "d",
+              "text": "Přídavné programové balíky"
+            }
+          ]
+        },
+        {
+          "id": "q6_6",
+          "type": "mcq",
+          "label": "6. Část uživatelského kontextu procesu, která obsahuje parametry volaných funkcí, se nazývá:",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Halda (heap)."
+            },
+            {
+              "value": "b",
+              "text": "Zásobník (stack)."
+            },
+            {
+              "value": "c",
+              "text": "Data jádra."
+            },
+            {
+              "value": "d",
+              "text": "Textová část (programový kód)."
+            }
+          ]
+        },
+        {
+          "id": "q6_7",
+          "type": "mcq",
+          "label": "7. Jak závisí rychlost práce s diskem na velikosti datových bloků souborového systému?",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Přenosová rychlost čtení roste s velikostí datových bloků. Přenosová rychlost zápisu klesá s velikostí datových bloků."
+            },
+            {
+              "value": "b",
+              "text": "Přenosová rychlost zápisu roste s velikostí datových bloků. Přenosová rychlost čtení klesá s velikostí datových bloků."
+            },
+            {
+              "value": "c",
+              "text": "Přenosová rychlost čtení/zápisu roste s velikostí datových bloků."
+            },
+            {
+              "value": "d",
+              "text": "Přenosová rychlost čtení; zápisu klesá s velikostí datových bloků"
+            }
+          ]
+        },
+        {
+          "id": "q6_8",
+          "type": "mcq",
+          "label": "8. Podle standardu FHS (Filesystem Hierarchy Standard) nize uvedené názvy adresářů v primární struktuře odpovídají tomuto využití: spustitelné soubory pro základní práci, konfigurační soubory, speciální soubory zařízení adynamická/proměnlivá data? (vyberte správné pořadí)",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "/bin, /cfg, /dev, /run"
+            },
+            {
+              "value": "b",
+              "text": "/sbin, /ete, /hw, /run"
+            },
+            {
+              "value": "c",
+              "text": "/bin, /etc, /dev, /var"
+            },
+            {
+              "value": "d",
+              "text": "/sbin, /cfg, /dev, /dnm"
+            }
+          ]
+        },
+        {
+          "id": "q6_9",
+          "type": "mcq",
+          "label": "9. Systémové nástroje pro správu operačního systému se podle standardu FHS (Filesystem Standard) nachází v adresáři:",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "/bin"
+            },
+            {
+              "value": "b",
+              "text": "/usr"
+            },
+            {
+              "value": "c",
+              "text": "/sbin"
+            },
+            {
+              "value": "d",
+              "text": "/sys"
+            }
+          ]
+        },
+        {
+          "id": "q6_10",
+          "type": "mcq",
+          "label": "10. Proměnlivá data (například data webového serveru) se podle standardu FHS (Filesystem Standard) nachází v adresáři:",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "/var"
+            },
+            {
+              "value": "b",
+              "text": "/lib"
+            },
+            {
+              "value": "c",
+              "text": "/bin"
+            },
+            {
+              "value": "d",
+              "text": "/usr"
+            }
+          ]
+        },
+        {
+          "id": "q6_11",
+          "type": "mcq",
+          "label": "11. Vyberte CHYBNÝ popis speciálních souborů, které se používají pro přístup k zařízením připojených do systému.",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Speciální soubory přinášejí velkou míru abstrakce, protože se zařízeními lze pracovat pomocí univerzálních funkcí zápisu a čtení do/ze souboru."
+            },
+            {
+              "value": "b",
+              "text": "Speciální soubory mohou reprezentovat i softwarová zařízení (například generátory náhodných dat)."
+            },
+            {
+              "value": "c",
+              "text": "Speciální soubory NElze použít pro bloková zařízení."
+            },
+            {
+              "value": "d",
+              "text": "Speciální soubory může operační systém vytvářet automaticky podle stavu připojeních zařízení"
+            }
+          ]
+        },
+        {
+          "id": "q6_12",
+          "type": "mcq",
+          "label": "12. Sekundární hierarchie adresářů vztažená k uživatelům operačního systému (mimo základní adresářovou strukturu) se podle standardu FHS (Filesystem Standard) nachází v adresáři:",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "/etc"
+            },
+            {
+              "value": "b",
+              "text": "/usr"
+            },
+            {
+              "value": "c",
+              "text": "/lib"
+            },
+            {
+              "value": "d",
+              "text": "/var"
+            }
+          ]
+        },
+        {
+          "id": "q6_13",
+          "type": "mcq",
+          "label": "13. Pro speciální soubory zařízení /dev/zero a /dev/random platí:",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Lze z nich číst data jako u normálních souborů."
+            },
+            {
+              "value": "b",
+              "text": "Nelze na ně vytvořit symbolický odkaz."
+            },
+            {
+              "value": "c",
+              "text": "Jsou vytvářeny až při připojení daného zařízení do systému."
+            },
+            {
+              "value": "d",
+              "text": "Reprezentují bloková zařízení."
+            }
+          ]
+        },
+        {
+          "id": "q6_14",
+          "type": "mcq",
+          "label": "14. Pro všechny žurnálovací souborové systémy platí:",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Žurnál musí být umístěn na jiném paměťovém médiu, než kde jsou ukládána vlastní data souborů."
+            },
+            {
+              "value": "b",
+              "text": "Každou plánovanou operaci v žurnálu lze provést pouze atomicky, tedy jako jeden celek."
+            },
+            {
+              "value": "c",
+              "text": "Pracují pouze s vlastním obsahem souborů."
+            },
+            {
+              "value": "d",
+              "text": "Pracují pouze s metadaty souborů."
+            }
+          ]
+        },
+        {
+          "id": "q6_15",
+          "type": "mcq",
+          "label": "15. Níže uvedené nežádoucí situace jsou následkem kolapsu systému. Kterou z nich je možno napravit použitím žurnálovacího systému?",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "Bylo poškozeno několik sektorů na disku."
+            },
+            {
+              "value": "b",
+              "text": "Byl poškozen zaváděcí sektor MBR."
+            },
+            {
+              "value": "c",
+              "text": "Byla porušena tabulka diskových oddílů."
+            },
+            {
+              "value": "d",
+              "text": "Při mazání souboru nebyly původně obsazené datové bloky začleněny do seznamu volných bloků."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

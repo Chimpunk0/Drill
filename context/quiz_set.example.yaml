@@ -1,7 +1,7 @@
 # Example input for generate_quiz_set.py
 # Run:
 #   python3 generate_quiz_set.py context/quiz_set.example.yaml
-# By default this also registers the generated set in confg.js.
+# By default this also registers the generated set in src/config/quizSets.js.
 # Use --no-register-config to skip that step.
 
 set_id: "example/demo-quiz"
