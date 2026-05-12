@@ -6,10 +6,17 @@
     padding: 0;
 }
 
+html,
+body {
+    overscroll-behavior-y: none;
+}
+
 :root {
     --sidebar-width: 320px;
     --sidebar-collapsed: -320px;
     --right-sidebar-width: 300px;
+    --top-bar-height: 70px;
+    --top-bar-content-gap: 5rem;
 
     /* Light mode — paper / school */
     /* Change the light background color here. */
@@ -17,8 +24,8 @@
     --secondary-bg: #ffffff;
     --tertiary-bg: #f5f0e1;
     --border-color: #d4cfc4;
-    --accent-color: #1d6b12;
-    --accent-hover: #155a0c;
+    --accent-color: #000000;
+    --accent-hover: #1a1a1a;
     --text-primary: #2d2d2d;
     --text-secondary: #6b6b6b;
     --success: #2e7d32;
@@ -28,7 +35,7 @@
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
     --overlay-bg: rgba(0, 0, 0, 0.35);
     --code-bg: #eef1e8;
-    --code-color: #1d6b12;
+    --code-color: #000000;
     --grid-vignette: rgba(0, 0, 0, 0.42);
     --grid-pattern-opacity: 1;
 }
@@ -39,8 +46,8 @@
     --secondary-bg: #1e1e1e;
     --tertiary-bg: #2a2a2a;
     --border-color: #333333;
-    --accent-color: #5aa84f;
-    --accent-hover: #4a9340;
+    --accent-color: #000000;
+    --accent-hover: #1a1a1a;
     --text-primary: #e8e8e8;
     --text-secondary: #a0a0a0;
     --success: #4caf50;
@@ -49,8 +56,8 @@
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
     --overlay-bg: rgba(0, 0, 0, 0.75);
-    --code-bg: rgba(90, 168, 79, 0.12);
-    --code-color: #7dd67f;
+    --code-bg: rgba(255, 255, 255, 0.08);
+    --code-color: #ffffff;
     --grid-vignette: rgba(0, 0, 0, 0.56);
     --grid-pattern-opacity: 0.75;
 }
@@ -118,7 +125,7 @@ body::before {
     height: 100vh;
     background: var(--secondary-bg);
     border-right: 1px solid var(--border-color);
-    z-index: 1000;
+    z-index: 1100;
     overflow-y: auto;
     transition: transform 0.3s ease;
     display: flex;
@@ -280,7 +287,7 @@ body::before {
     right: 0;
     bottom: 0;
     background: var(--overlay-bg);
-    z-index: 999;
+    z-index: 1000;
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s;
@@ -295,7 +302,7 @@ body::before {
 .main-content {
     flex: 1;
     margin-left: var(--sidebar-width);
-    padding: 0 2rem 2rem;
+    padding: calc(var(--top-bar-height) + var(--top-bar-content-gap)) 2rem 2rem;
     transition:
         margin-left 0.3s ease,
         margin-right 0.3s ease;
@@ -311,14 +318,17 @@ body::before {
 }
 
 .top-bar {
-    position: sticky;
+    position: fixed;
     top: 0;
-    z-index: 100;
+    left: 0;
+    right: 0;
+    z-index: 900;
     display: flex;
     justify-content: stretch;
-    margin-bottom: 5rem;
-    margin-left: -2rem;
-    margin-right: -2rem;
+    margin: 0;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    will-change: transform;
 }
 
 .top-bar-actions {
@@ -328,7 +338,7 @@ body::before {
     gap: 0.75rem;
     width: 100%;
     padding: 1rem 2rem 1.1rem;
-    min-height: 70px;
+    min-height: var(--top-bar-height);
     background: transparent;
     box-shadow:
         0 1px 0 rgba(255, 255, 255, 0.35) inset,
@@ -708,12 +718,14 @@ h1 {
     :root {
         --sidebar-width: 280px;
         --sidebar-collapsed: -280px;
+        --top-bar-height: 58px;
+        --top-bar-content-gap: 3.8rem;
     }
 
     .main-content {
         padding: 1rem;
         margin-left: 0;
-        padding-top: 0;
+        padding-top: calc(var(--top-bar-height) + var(--top-bar-content-gap));
     }
 
     .main-content.with-right-sidebar {
@@ -726,9 +738,7 @@ h1 {
     }
 
     .top-bar {
-        margin-bottom: 3.8rem;
-        margin-left: -1rem;
-        margin-right: -1rem;
+        margin: 0;
     }
 
     .top-bar-actions {
@@ -1248,7 +1258,7 @@ h1 {
     height: 100vh;
     background: var(--secondary-bg);
     border-left: 1px solid var(--border-color);
-    z-index: 950;
+    z-index: 1100;
     overflow-y: auto;
     transition: transform 0.3s ease;
     box-shadow: -4px 0 16px rgba(0, 0, 0, 0.06);
