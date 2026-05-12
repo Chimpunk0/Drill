@@ -1427,7 +1427,7 @@
 <div class="question" id="q7_17" data-answer="text"
                             data-keywords="EVP_DigestInit">
                             <div class="question-label">
-                                17. Doplňte následující kód tak, aby provedl hashování zprávy.<br /><br />```c<br />char *ms_salt = &quot;salt&quot;;<br />char *ms_value = &quot;password&quot;;<br />unsigned char md_value[EVP_MAX_MD_SIZE];<br />unsigned int md_len;<br /><br />EVP_MD *md = EVP_MD_fetch( NULL, &quot;sha256&quot;, NULL);<br />EVP_MD_CTX *ctx = EVP_MD_CTX_new();<br />EVP_____________(ctx, md); // Initialize the context<br />EVP_DigestUpdate(ctx, ms_salt, strlen(ms_salt));<br />EVP_DigestUpdate(ctx, ms_value, strlen(ms_value));<br />EVP_DigestFinal(ctx, md_value, &amp;md_len);<br />EVP_MD_CTX_free(ctx);<br />EVP_MD_free(md);<br />```
+                                17. Doplňte následující kód tak, aby provedl hashování zprávy.<br /><br />```c<br />char *ms_salt = &quot;salt&quot;;<br />char *ms_value = &quot;password&quot;;<br />unsigned char md_value[EVP_MAX_MD_SIZE];<br />unsigned int md_len;<br /><br />EVP_MD *md = EVP_MD_fetch( NULL, &quot;sha256&quot;, NULL);<br />EVP_MD_CTX *ctx = EVP_MD_CTX_new();<br />________________(ctx, md); // Initialize the context<br />EVP_DigestUpdate(ctx, ms_salt, strlen(ms_salt));<br />EVP_DigestUpdate(ctx, ms_value, strlen(ms_value));<br />EVP_DigestFinal(ctx, md_value, &amp;md_len);<br />EVP_MD_CTX_free(ctx);<br />EVP_MD_free(md);<br />```
                             </div>
                             <div class="question-image">
                                 <img
