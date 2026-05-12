@@ -1,49 +1,53 @@
-// ─── Dynamic quiz-set script loader ─────────────────────────────────────────
-function loadScript(src) {
-    return new Promise((resolve, reject) => {
-        const el = document.createElement("script");
-        el.src = src;
-        el.onload = resolve;
-        el.onerror = () => reject(new Error(`Failed to load script: ${src}`));
-        document.head.appendChild(el);
-    });
-}
-
 function showAppError(title, detail) {
     const mount = document.getElementById("quiz-sections-mount");
     if (!mount) return;
     mount.innerHTML = `
         <div class="app-error">
-            <strong>${title}</strong>
-            <p>${detail}</p>
+            <strong>${escapeHtml(title)}</strong>
+            <p>${escapeHtml(detail)}</p>
         </div>
     `;
 }
 
-async function loadQuizSetScripts() {
+function getCurrentQuizSet() {
     const id = window.QUIZ_SET_ID;
     const sets = window.QUIZ_SETS || [];
-    const set = sets.find((s) => s.id === id);
+    return sets.find((set) => set.id === id) || null;
+}
+
+function getCurrentQuizSetAssetBase() {
+    const set = getCurrentQuizSet();
+    const dataUrl = set?.dataUrl || `quiz_sets/${window.QUIZ_SET_ID}.json`;
+    const slashIndex = dataUrl.lastIndexOf("/");
+    return slashIndex === -1 ? "" : dataUrl.slice(0, slashIndex + 1);
+}
+
+function getQuizDataUrl() {
+    const set = getCurrentQuizSet();
+    return set?.dataUrl || `quiz_sets/${window.QUIZ_SET_ID}.json`;
+}
+
+async function loadQuizSetData() {
+    const set = getCurrentQuizSet();
     if (!set) {
         showAppError(
             "Neznámy kvízový set.",
-            `Set "${id}" nie je zaregistrovaný v src/config/quizSets.js.`,
+            `Set "${window.QUIZ_SET_ID}" nie je zaregistrovaný v src/config/quizSets.js.`,
         );
-        return false;
+        return null;
     }
-    window.QUIZ_FRAGMENT_HTML = undefined;
-    window.QUIZ_EXPLANATIONS = undefined;
+
     try {
-        await loadScript(set.fragEmbed);
-        await loadScript(set.explanations);
-        return true;
+        const res = await fetch(getQuizDataUrl(), { cache: "no-cache" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return await res.json();
     } catch (err) {
-        console.error("loadQuizSetScripts", err);
+        console.error("loadQuizSetData", err);
         showAppError(
             "Nepodarilo sa načítať kvízový set.",
-            err.message || "Skontrolujte cesty ku quiz set súborom.",
+            err.message || "Skontrolujte cestu k JSON súboru quiz setu.",
         );
-        return false;
+        return null;
     }
 }
 
@@ -55,7 +59,7 @@ function renderQuizSetSelector() {
     container.innerHTML = sets
         .map(
             (s) =>
-                `<button class="quiz-set-btn${s.id === current ? " active" : ""}" data-quiz-set-id="${s.id}">${s.label}</button>`,
+                `<button class="quiz-set-btn${s.id === current ? " active" : ""}" data-quiz-set-id="${escapeHtml(s.id)}">${escapeHtml(s.label)}</button>`,
         )
         .join("");
 }
@@ -107,20 +111,6 @@ function loadTheme() {
     applyTheme(theme);
 }
 
-function getHtmlFragmentUrl() {
-    if (window.QUIZ_SET_FRAGMENT_URL)
-        return window.QUIZ_SET_FRAGMENT_URL;
-    const id = window.QUIZ_SET_ID || "default";
-    return `quiz_sets/${id}.frag.html`;
-}
-
-function getCurrentQuizSetAssetBase() {
-    const id = window.QUIZ_SET_ID || "default";
-    const slashIndex = id.lastIndexOf("/");
-    if (slashIndex === -1) return "quiz_sets/";
-    return `quiz_sets/${id.slice(0, slashIndex + 1)}`;
-}
-
 function normalizeQuizMediaUrls(root) {
     if (!root) return;
     const base = getCurrentQuizSetAssetBase();
@@ -137,94 +127,164 @@ function normalizeQuizMediaUrls(root) {
     });
 }
 
-function applyQuizFragmentHtml(html) {
+function htmlText(item, plainKey, htmlKey) {
+    const snakeKey = htmlKey.replace(/[A-Z]/g, (char) => `_${char.toLowerCase()}`);
+    if (typeof item?.[htmlKey] === "string") return item[htmlKey];
+    if (typeof item?.[snakeKey] === "string") return item[snakeKey];
+    return escapeHtml(item?.[plainKey] || "");
+}
+
+function renderQuestionImage(question) {
+    const imageHtml = question.imageHtml || question.image_html;
+    if (typeof imageHtml === "string") {
+        return `<div class="question-image">${imageHtml}</div>`;
+    }
+    if (typeof question.image === "string" && question.image.trim()) {
+        return `
+            <div class="question-image">
+                <img class="question-image" src="${escapeHtml(question.image)}" alt="${escapeHtml(question.imageAlt || question.image_alt || "")}" loading="lazy" />
+            </div>
+        `;
+    }
+    return "";
+}
+
+function renderOptions(question, inputType) {
+    return (question.options || [])
+        .map((option) => {
+            const value = escapeHtml(option.value);
+            const label = typeof option.html === "string"
+                ? option.html
+                : escapeHtml(option.text || "");
+            return `
+                <label class="option">
+                    <input type="${inputType}" name="${escapeHtml(question.id)}" value="${value}" /><span>${label}</span>
+                </label>
+            `;
+        })
+        .join("");
+}
+
+function renderQuestion(question) {
+    const labelHtml = htmlText(question, "label", "labelHtml");
+    const imageHtml = renderQuestionImage(question);
+    const feedback = `<div class="feedback" id="${escapeHtml(question.id)}-fb"></div>`;
+
+    if (question.type === "mcq" || question.type === "mcq_multi") {
+        const answer = Array.isArray(question.answer)
+            ? question.answer.join(",")
+            : question.answer || "";
+        const inputType = question.type === "mcq_multi" ? "checkbox" : "radio";
+        return `
+            <div class="question" id="${escapeHtml(question.id)}" data-answer="${escapeHtml(answer)}">
+                <div class="question-label">${labelHtml}</div>
+                ${imageHtml}
+                <div class="options">${renderOptions(question, inputType)}</div>
+                ${feedback}
+            </div>
+        `;
+    }
+
+    const keywords = Array.isArray(question.keywords)
+        ? question.keywords.join(",")
+        : "";
+    const hintHtmlValue = question.hintHtml || question.hint_html;
+    const hintHtml = typeof hintHtmlValue === "string"
+        ? hintHtmlValue
+        : question.hint
+          ? escapeHtml(question.hint)
+          : "";
+
+    return `
+        <div class="question" id="${escapeHtml(question.id)}" data-answer="text" data-keywords="${escapeHtml(keywords)}">
+            <div class="question-label">${labelHtml}</div>
+            ${imageHtml}
+            <div class="text-input-wrap">
+                <input type="text" id="${escapeHtml(question.id)}-input" placeholder="${escapeHtml(question.placeholder || "Napíšte odpoveď...")}" autocomplete="off" spellcheck="false" />
+            </div>
+            ${hintHtml ? `<div class="text-answer-hint">${hintHtml}</div>` : ""}
+            ${feedback}
+        </div>
+    `;
+}
+
+function renderQuizData(data) {
     const mount = document.getElementById("quiz-sections-mount");
-    if (!mount) return;
-    mount.innerHTML = html;
+    if (!mount) return false;
+    if (!data || !Array.isArray(data.sections)) {
+        showAppError(
+            "Neplatný kvízový set.",
+            "JSON súbor musí obsahovať pole sections.",
+        );
+        return false;
+    }
+
+    const explanations = {};
+    const sections = data.sections
+        .map((section, index) => {
+            const sectionId = section.id || `sec_${index + 1}`;
+            const questions = Array.isArray(section.questions)
+                ? section.questions
+                : [];
+            questions.forEach((question) => {
+                if (question.id && typeof question.explanation === "string") {
+                    explanations[question.id] = question.explanation;
+                }
+            });
+            return `
+                <div class="section" id="${escapeHtml(sectionId)}" data-section="${index + 1}">
+                    <div class="section-title">${htmlText(section, "title", "titleHtml")}</div>
+                    ${questions.map(renderQuestion).join("")}
+                </div>
+            `;
+        })
+        .join("");
+
+    mount.innerHTML = `
+        <h1>${escapeHtml(data.title || getCurrentQuizSet()?.label || "Kvíz")}</h1>
+        ${sections}
+    `;
     normalizeQuizMediaUrls(mount);
-    const h1 = mount.querySelector("h1");
-    if (h1 && h1.textContent.trim()) document.title = h1.textContent.trim();
+    document.title = data.title || getCurrentQuizSet()?.label || document.title;
+    EXPLANATIONS = explanations;
+    window.QUIZ_DATA = data;
+    return true;
 }
 
 async function loadQuizContent() {
-    const mount = document.getElementById("quiz-sections-mount");
-    if (!mount) return false;
-
-    const embedded =
-        typeof window.QUIZ_FRAGMENT_HTML === "string"
-            ? window.QUIZ_FRAGMENT_HTML
-            : "";
-
-    if (window.QUIZ_TRY_FETCH_FIRST === true) {
-        try {
-            const url = getHtmlFragmentUrl();
-            const res = await fetch(url, { cache: "no-cache" });
-            if (!res.ok) throw new Error(`HTTP ${res.status}`);
-            applyQuizFragmentHtml(await res.text());
-            return true;
-        } catch (err) {
-            console.warn("fetch fragment; pokus o embed", err);
-            if (embedded) {
-                applyQuizFragmentHtml(embedded);
-                return true;
-            }
-        }
-    } else if (embedded) {
-        applyQuizFragmentHtml(embedded);
-        return true;
-    }
-
-    const url = getHtmlFragmentUrl();
-    try {
-        const res = await fetch(url, { cache: "no-cache" });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        applyQuizFragmentHtml(await res.text());
-        return true;
-    } catch (err) {
-        console.error("loadQuizContent", err);
-        mount.innerHTML =
-            `<p class="quiz-load-error">` +
-            `Nepodarilo sa načítať otázky. Bez HTTP servera musí byť načítaný súbor ` +
-            `<code>quiz_sets/&lt;id&gt;.frag.embed.js</code> ` +
-            `(vygenerujte ho príkazom ` +
-            `<code>python3 embed_quiz_fragment.py</code>). ` +
-            `Alternatíva: spustite server v koreňovom priečinku ` +
-            `(napr. <code>python3 -m http.server</code>) ` +
-            `a otvorte stránku cez HTTP; fetch sa pokúsi stiahnuť ` +
-            `<code>${url}</code>.` +
-            `</p>`;
-        return false;
-    }
+    const data = await loadQuizSetData();
+    if (!data) return false;
+    return renderQuizData(data);
 }
 
 Object.assign(window, {
-    loadScript,
     showAppError,
-    loadQuizSetScripts,
+    getCurrentQuizSet,
+    getCurrentQuizSetAssetBase,
+    getQuizDataUrl,
+    loadQuizSetData,
     renderQuizSetSelector,
     selectQuizSet,
     applyTheme,
     toggleTheme,
     loadTheme,
-    getHtmlFragmentUrl,
-    getCurrentQuizSetAssetBase,
     normalizeQuizMediaUrls,
-    applyQuizFragmentHtml,
+    renderQuizData,
     loadQuizContent,
 });
 
 export {
-    loadScript,
     showAppError,
-    loadQuizSetScripts,
+    getCurrentQuizSet,
+    getCurrentQuizSetAssetBase,
+    getQuizDataUrl,
+    loadQuizSetData,
     renderQuizSetSelector,
     selectQuizSet,
     applyTheme,
     toggleTheme,
     loadTheme,
-    getHtmlFragmentUrl,
-    getCurrentQuizSetAssetBase,
     normalizeQuizMediaUrls,
-    applyQuizFragmentHtml,
+    renderQuizData,
     loadQuizContent,
 };

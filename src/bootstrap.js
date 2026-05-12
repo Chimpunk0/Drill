@@ -21,10 +21,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    const scriptsOk = await loadQuizSetScripts();
-    if (!scriptsOk) return;
-    EXPLANATIONS = window.QUIZ_EXPLANATIONS || {};
-
     const ok = await loadQuizContent();
     if (!ok) return;
 

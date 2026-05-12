@@ -1,0 +1,1118 @@
+{
+  "schemaVersion": 1,
+  "setId": "bpc-sos-2026/polsemestralka",
+  "label": "BPC-SOS 2026 – Polsemestralka",
+  "title": "🐧 BPC-SOS – Polsemestrálka 2026",
+  "sections": [
+    {
+      "id": "sec_1",
+      "title": "1. Sieťová konfigurácia",
+      "questions": [
+        {
+          "id": "q1_1",
+          "type": "mcq",
+          "label": "1. Pomocí kterého základního příkazu nastavíme IP adresu a masku sítě?",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "route"
+            },
+            {
+              "value": "b",
+              "text": "ping"
+            },
+            {
+              "value": "c",
+              "text": "ifconfig nebo ip"
+            },
+            {
+              "value": "d",
+              "text": "traceroute"
+            }
+          ]
+        },
+        {
+          "id": "q1_2",
+          "type": "mcq",
+          "label": "2. Jaké jsou důležité programy pro zobrazení konfigurace sítě?",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "bash a sudo"
+            },
+            {
+              "value": "b",
+              "text": "config a chmod"
+            },
+            {
+              "value": "c",
+              "text": "ifconfig a ip"
+            },
+            {
+              "value": "d",
+              "text": "chmod a touch"
+            }
+          ]
+        },
+        {
+          "id": "q1_3",
+          "type": "mcq",
+          "label": "3. Řádek 147.229.147.10 kancelar01.utko.vutbr.cz v souboru /etc/hosts značí:",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "IP adresa 147.229.147.10 bude zavedena do globálního systému DNS pro doménový název kancelar01.utko.vutbr.cz."
+            },
+            {
+              "value": "b",
+              "text": "IP adresa 147.229.147.10 je adresa místní stanice."
+            },
+            {
+              "value": "c",
+              "text": "Doménové jméno místní stanice je kancelar01.utko.vutbr.cz."
+            },
+            {
+              "value": "d",
+              "text": "Při komunikaci se stanicí kancelar01.utko.vutbr.cz bude použita IP adresa 147.229.147.10."
+            }
+          ]
+        },
+        {
+          "id": "q1_4",
+          "type": "mcq",
+          "label": "4. Co můžete říci o těchto dvou různých zápisech IP adresy z pohledu masky sítě? 1) 192.168.1.0 255.255.255.0; 2) 192.168.1.0/24",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Oba dva zápisy jsou chybné."
+            },
+            {
+              "value": "b",
+              "text": "Uvedená maska sítě je v obou případech stejná."
+            },
+            {
+              "value": "c",
+              "text": "Případ 2) NEvyjadřuje zápis IP adresy a masky sítě, případ 1) ano."
+            },
+            {
+              "value": "d",
+              "text": "Případ 1) NEvyjadřuje správný zápis IP adresy a masky sítě, případ 2) ano."
+            }
+          ]
+        },
+        {
+          "id": "q1_5",
+          "type": "mcq",
+          "label": "5. Na počítači byla nastavena statická IP adresa. Jakým příkazem by mohlo dojít k aktivaci nového nastavení?",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "rm -rf ~"
+            },
+            {
+              "value": "b",
+              "text": "sudo /etc/init.d/network restart"
+            },
+            {
+              "value": "c",
+              "text": "sudo touch /etc/network"
+            },
+            {
+              "value": "d",
+              "text": "sudo vi /etc/network"
+            }
+          ]
+        },
+        {
+          "id": "q1_6",
+          "type": "mcq",
+          "label": "6. K čemu je dobré zobrazení přehledu síťových spojení na síťovém zařízení?",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Pro získání přehledu otevřených portů a stavu jednotlivých spojení."
+            },
+            {
+              "value": "b",
+              "text": "Pro zjištění trasy ke vzdálené stanici, která s místní aktivně komunikuje."
+            },
+            {
+              "value": "c",
+              "text": "Pro zjištění verze operačního systému vzdálené stanice, která s místní komunikuje."
+            },
+            {
+              "value": "d",
+              "text": "Pro zjištění stavu směrovací tabulky vázané k danému síťovému rozhraní."
+            }
+          ]
+        },
+        {
+          "id": "q1_7",
+          "type": "mcq",
+          "label": "7. V jakých sítích je vhodné použití programu Telnet?",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "Pro svou grafickou náročnost je vhodné jeho využití zejména v novějších sítích s rychlostí nad 1 Gb/s."
+            },
+            {
+              "value": "b",
+              "text": "Pro svou jednoduchost je vhodné jeho využití zejména ve veřejné síti Internet."
+            },
+            {
+              "value": "c",
+              "text": "Pro svou jednoduchost je vhodné jeho využití zejména ve starších sítích s rychlostí do 10 Mb/s."
+            },
+            {
+              "value": "d",
+              "text": "Pouze v privátních sítích (např. laboratoř), bez napojení na vnější síť."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sec_2",
+      "title": "2. Prístupové práva a oprávnenia",
+      "questions": [
+        {
+          "id": "q2_1",
+          "type": "mcq",
+          "label": "1. Pokud chceme práva u souboru nastavit tak, aby spuštěný kód měl přístupová práva jako vlastník i skupina vlastníka souboru, a dále plná práva pro vlastníka; pro skupinu a ostatní pouze právo spouštět, použijeme chmod:",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "4744"
+            },
+            {
+              "value": "b",
+              "text": "6711"
+            },
+            {
+              "value": "c",
+              "text": "711"
+            },
+            {
+              "value": "d",
+              "text": "2477"
+            }
+          ]
+        },
+        {
+          "id": "q2_2",
+          "type": "mcq",
+          "label": "2. Pokud chceme práva u souboru nastavit tak, aby spuštěný kód měl přístupová práva jako skupina vlastníka souboru, a dále právo spouštění souboru pouze pro vlastníka a skupinu vlastníka souboru, použijeme chmod:",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "1661"
+            },
+            {
+              "value": "b",
+              "text": "671"
+            },
+            {
+              "value": "c",
+              "text": "2001"
+            },
+            {
+              "value": "d",
+              "text": "2110"
+            }
+          ]
+        },
+        {
+          "id": "q2_3",
+          "type": "mcq",
+          "label": "3. Pokud chceme práva u adresáře nastavit tak, aby soubory vytvořené v tomto adresáři získaly skupinové vlastnictví podle adresáře, a dále plná práva pro vlastníka; žádná práva pro skupinu a ostatní, použijeme chmod:",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "0077"
+            },
+            {
+              "value": "b",
+              "text": "2007"
+            },
+            {
+              "value": "c",
+              "text": "700"
+            },
+            {
+              "value": "d",
+              "text": "2700"
+            }
+          ]
+        },
+        {
+          "id": "q2_4",
+          "type": "mcq",
+          "label": "4. Pokud chceme u souboru nastavit plná práva pro vlastníka; právo čtení pro skupinu vlastníka; právo spouštění pro ostatní uživatele, použijeme chmod:",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "147"
+            },
+            {
+              "value": "b",
+              "text": "167"
+            },
+            {
+              "value": "c",
+              "text": "461"
+            },
+            {
+              "value": "d",
+              "text": "741"
+            }
+          ]
+        },
+        {
+          "id": "q2_5",
+          "type": "mcq",
+          "label": "5. Pokud chceme u adresáře nastavit pro vlastníka a skupinu vlastníka právo vstoupit a zobrazit soubory v adresáři; žádná práva pro ostatní uživatele, použijeme chmod:",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "442"
+            },
+            {
+              "value": "b",
+              "text": "551"
+            },
+            {
+              "value": "c",
+              "text": "550"
+            },
+            {
+              "value": "d",
+              "text": "660"
+            }
+          ]
+        },
+        {
+          "id": "q2_6",
+          "type": "mcq",
+          "label": "6. Co značí u nastavení oprávnění souboru hodnota 664?",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Všichni uživatelé mohou soubor číst, vlastník souboru a skupina vlastníka souboru mohou do souboru zapisovat."
+            },
+            {
+              "value": "b",
+              "text": "Vlastník souboru a skupina vlastníka souboru může soubor spustit. Ostatní uživatelé mohou do souboru pouze zapisovat."
+            },
+            {
+              "value": "c",
+              "text": "Vlastník souboru a skupina vlastníka souboru může soubor spustit. Ostatní uživatelé mohou provádět vše mimo spouštění."
+            },
+            {
+              "value": "d",
+              "text": "Všichni uživatelé mohou soubor číst, vlastník souboru a skupina vlastníka souboru může soubor spustit."
+            }
+          ]
+        },
+        {
+          "id": "q2_7",
+          "type": "mcq",
+          "label": "7. Jaké informace značí výpis lrwxrwxrwx u položky ve výpisu obsahu adresáře? (varianta – práva)",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Nastala chyba v souborovém systému."
+            },
+            {
+              "value": "b",
+              "text": "Práva jsou ignorována."
+            },
+            {
+              "value": "c",
+              "text": "Právo čtení, zápisu a spouštění má vlastník, skupina vlastníka a ostatní uživatelé."
+            },
+            {
+              "value": "d",
+              "text": "Jedná se o adresář uživatele root."
+            }
+          ]
+        },
+        {
+          "id": "q2_8",
+          "type": "mcq",
+          "label": "8. Jaké informace značí výpis lrwxrwxrwx u položky ve výpisu obsahu adresáře? (varianta – typ souboru)",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Pouze to, že se jedná o symbolický odkaz."
+            },
+            {
+              "value": "b",
+              "text": "Pouze to, že se jedná o adresář."
+            },
+            {
+              "value": "c",
+              "text": "Vlastníkem položky s těmito právy je uživatel root."
+            },
+            {
+              "value": "d",
+              "text": "Vlastníkem položky s těmito právy je aktuální uživatel."
+            }
+          ]
+        },
+        {
+          "id": "q2_9",
+          "type": "mcq",
+          "label": "9. U adresáře je uvedeno oprávnění označené jako x. Co toto oprávnění značí?",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Oprávnění k přesunu."
+            },
+            {
+              "value": "b",
+              "text": "Oprávnění ke spuštění."
+            },
+            {
+              "value": "c",
+              "text": "Oprávnění ke vstupu."
+            },
+            {
+              "value": "d",
+              "text": "Oprávnění k mazání."
+            }
+          ]
+        },
+        {
+          "id": "q2_10",
+          "type": "mcq",
+          "label": "10. Jaké vlastnictví získává soubor vytvořený v adresáři ve výchozím nastavení?",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Soubor získává skupinové vlastnictví podle adresáře, ve kterém byl vytvořen."
+            },
+            {
+              "value": "b",
+              "text": "Soubor získává vlastnictví podle uživatele, který jej vytvořil."
+            },
+            {
+              "value": "c",
+              "text": "Soubor získává vlastnictví podle způsobu vytvoření."
+            },
+            {
+              "value": "d",
+              "text": "Soubor získává vlastnictví podle uživatele, který vlastní adresář, ve kterém byl vytvořen."
+            }
+          ]
+        },
+        {
+          "id": "q2_11",
+          "type": "mcq",
+          "label": "11. Přítomnost příznaku setgid (s) v právech skupiny vlastníka souboru značí, že:",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "Pokud je soubor spuštěn, vzniklý proces má přístupová práva uživatele root."
+            },
+            {
+              "value": "b",
+              "text": "Pokud je soubor spuštěn, vzniklý proces má přístupová práva toho, kdo soubor spustil."
+            },
+            {
+              "value": "c",
+              "text": "Pokud je soubor spuštěn, vzniklý proces má přístupová práva všech uživatelů v systému."
+            },
+            {
+              "value": "d",
+              "text": "Pokud je soubor spuštěn, vzniklý proces má přístupová práva jako skupina vlastníka souboru."
+            }
+          ]
+        },
+        {
+          "id": "q2_12",
+          "type": "mcq",
+          "label": "12. U souboru máme nastaveno toto oprávnění – vlastník: rwx, skupina: rw-, ostatní: r--. Jaká bude číselná hodnota tohoto oprávnění?",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "676"
+            },
+            {
+              "value": "b",
+              "text": "670"
+            },
+            {
+              "value": "c",
+              "text": "764"
+            },
+            {
+              "value": "d",
+              "text": "766"
+            }
+          ]
+        },
+        {
+          "id": "q2_13",
+          "type": "mcq",
+          "label": "13. Kterým příkazem změníme přístupová práva k adresáři?",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "ls"
+            },
+            {
+              "value": "b",
+              "text": "chmod"
+            },
+            {
+              "value": "c",
+              "text": "sudo"
+            },
+            {
+              "value": "d",
+              "text": "echo"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sec_3",
+      "title": "3. Príkazový interpret a skripty",
+      "questions": [
+        {
+          "id": "q3_1",
+          "type": "mcq",
+          "label": "1. Výraz ve skriptu příkazového interpretu #!/bin/bash značí:",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Provedení příkazu /bin za podmínky, že příkaz /bash v systému existuje."
+            },
+            {
+              "value": "b",
+              "text": "Provedení příkazu /bin/bash na pozadí, tj. nebude blokován použitý terminál."
+            },
+            {
+              "value": "c",
+              "text": "Deklaraci programu, pomocí kterého se bude skript interpretovat."
+            },
+            {
+              "value": "d",
+              "text": "Provedení příkazu bash pod uživatelem root."
+            }
+          ]
+        },
+        {
+          "id": "q3_2",
+          "type": "mcq",
+          "label": "2. Jakým způsobem se spouští skript v příkazovém interpretu?",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "Pomocí kompilace do binárního kódu pomocí příkazu gcc."
+            },
+            {
+              "value": "b",
+              "text": "Pomocí vytvoření symbolického odkazu na skript. Při následování symbolického odkazu se skript spustí."
+            },
+            {
+              "value": "c",
+              "text": "Pomocí vytvoření pevného odkazu na skript. Při následování pevného odkazu se skript spustí."
+            },
+            {
+              "value": "d",
+              "text": "Pomocí příkazu sh <název skriptu> nebo ./ <název skriptu>."
+            }
+          ]
+        },
+        {
+          "id": "q3_3",
+          "type": "mcq",
+          "label": "3. Co je to příkazový interpret (shell)?",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Hardware, který je připojen k datové sběrnici mezi procesorem a periferiemi."
+            },
+            {
+              "value": "b",
+              "text": "Program, který je součástí jádra operačního systému. Jeho účelem je zavést jádro do paměti."
+            },
+            {
+              "value": "c",
+              "text": "Program, který NEní součástí jádra operačního systému. Je to prostředník mezi uživatelem a operačním systémem."
+            },
+            {
+              "value": "d",
+              "text": "Hardware, který slouží pro ovládání počítače hlasem."
+            }
+          ]
+        },
+        {
+          "id": "q3_4",
+          "type": "mcq",
+          "label": "4. Jaký efekt bude mít sekvence příkazů more hesla.txt; who am i; echo $PATH?",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Příkazy budou provedeny postupně zleva doprava: nejdříve výpis souboru hesla.txt, pak informace o aktuálním uživateli, nakonec výpis proměnné PATH."
+            },
+            {
+              "value": "b",
+              "text": "První dva příkazy budou spuštěny najednou a jejich výstup bude předán na vstup příkazu echo $PATH."
+            },
+            {
+              "value": "c",
+              "text": "Příkazy budou zřetězeny – výstup more hesla.txt bude přesměrován na vstup who am i."
+            },
+            {
+              "value": "d",
+              "text": "Příkazy budou provedeny postupně zprava doleva."
+            }
+          ]
+        },
+        {
+          "id": "q3_5",
+          "type": "mcq",
+          "label": "5. Určete správné použití roury a přesměrování: vypsat obsah /data/seznam, pouze řádky s výskytem slova root, seřazené abecedně do /data/serazeno.",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "cat | grep | sort </data/seznam root > /data/serazeno"
+            },
+            {
+              "value": "b",
+              "text": "sort | grep | sort </data/serazeno >/data/seznam root"
+            },
+            {
+              "value": "c",
+              "text": "cat /data/seznam | grep root | sort >/data/serazeno"
+            },
+            {
+              "value": "d",
+              "text": "cat | grep | sort </data/serazeno root >/data/seznam"
+            }
+          ]
+        },
+        {
+          "id": "q3_6",
+          "type": "mcq",
+          "label": "6. Vyberte funkční variantu zadání příkazu cat pro spojení obsahů souborů vstup1.txt a vstup2.txt do vysledek.txt.",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "cat < vstup1.txt < vstup2.txt << vysledek.txt"
+            },
+            {
+              "value": "b",
+              "text": "cat vstup1.txt vstup2.txt > vysledek.txt"
+            },
+            {
+              "value": "c",
+              "text": "cat vstup1.txt | vstup2.txt >> vysledek.txt"
+            },
+            {
+              "value": "d",
+              "text": "cat [vstup1.txt and vstup2.txt] to vysledek.txt"
+            }
+          ]
+        },
+        {
+          "id": "q3_7",
+          "type": "mcq",
+          "label": "7. Příkaz cat < /etc/passwd > ~/hesla.txt provede:",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "Přečte soubor hesla.txt v kořenovém adresáři, vymaže záznamy se znaky <> a uloží výsledek do /etc/passwd."
+            },
+            {
+              "value": "b",
+              "text": "Přečte soubor hesla.txt v /home, vymaže řádky s textem /etc/passwd a výsledek uloží do stejného souboru."
+            },
+            {
+              "value": "c",
+              "text": "Přečte hesla v souboru /etc/passwd a uloží je do souboru hesla.txt ve stejném adresáři."
+            },
+            {
+              "value": "d",
+              "text": "Přečte soubor s definicí uživatelů systému /etc/passwd a zapíše jej do souboru hesla.txt v domovském adresáři aktuálního uživatele."
+            }
+          ]
+        },
+        {
+          "id": "q3_8",
+          "type": "mcq",
+          "label": "8. Jaký je výstup příkazu echo $??",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Vypíše všechny proměnné s hodnotou $ (tzn. obsahující znak $)."
+            },
+            {
+              "value": "b",
+              "text": "Vypíše návratový kód posledního spuštěného skriptu nebo příkazu."
+            },
+            {
+              "value": "c",
+              "text": "Vypíše návratový kód prvního spuštěného skriptu nebo příkazu po startu OS."
+            },
+            {
+              "value": "d",
+              "text": "Vypíše obsah všech proměnných."
+            }
+          ]
+        },
+        {
+          "id": "q3_9",
+          "type": "mcq",
+          "label": "9. Nová cesta (nova_cesta) do proměnné PATH se přidá pomocí příkazu:",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "nova_cesta+PATH=$PATH"
+            },
+            {
+              "value": "b",
+              "text": "ls $PATH:nova_cesta"
+            },
+            {
+              "value": "c",
+              "text": "echo $PATH:nova_cesta"
+            },
+            {
+              "value": "d",
+              "text": "PATH=$PATH:nova_cesta"
+            }
+          ]
+        },
+        {
+          "id": "q3_10",
+          "type": "mcq",
+          "label": "10. Aktuální adresář se do proměnné PATH nezahrnuje z důvodu:",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Spustitelné soubory z aktuálního adresáře se spouštějí automaticky, není potřeba je do cesty zahrnovat."
+            },
+            {
+              "value": "b",
+              "text": "Bezpečnosti."
+            },
+            {
+              "value": "c",
+              "text": "Spustitelné soubory nebývají umístěny mimo adresář /bin."
+            },
+            {
+              "value": "d",
+              "text": "V proměnné PATH může být jenom adresář /bin."
+            }
+          ]
+        },
+        {
+          "id": "q3_11",
+          "type": "mcq",
+          "label": "11. Příkazy cd /home/uzivatel/temp/; ./skript.sh spustí skript.sh:",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Z adresáře /home"
+            },
+            {
+              "value": "b",
+              "text": "Z adresáře /bin"
+            },
+            {
+              "value": "c",
+              "text": "Z aktuálního adresáře."
+            },
+            {
+              "value": "d",
+              "text": "Z adresáře /root"
+            }
+          ]
+        },
+        {
+          "id": "q3_12",
+          "type": "mcq",
+          "label": "12. Co bude provádět konstrukce ***** ~/copy.sh >> ~/zaloha.txt, kterou předáte programu crontab?",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Program crontab NEbude provádět nic, protože znak \"~\" NElze v tomto zápisu použít."
+            },
+            {
+              "value": "b",
+              "text": "Do souboru zaloha.txt se bude přidávat textový výstup skriptu copy.sh."
+            },
+            {
+              "value": "c",
+              "text": "Obsah skriptu copy.sh bude každou minutu zkopírován do souboru zaloha.txt. Původní data budou přepsána."
+            },
+            {
+              "value": "d",
+              "text": "Skript copy.sh se bude spouštět jednou za rok."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sec_4",
+      "title": "4. Jadro Linuxu a dynamické moduly",
+      "questions": [
+        {
+          "id": "q4_1",
+          "type": "mcq",
+          "label": "1. Vyberte správnou vlastnost modulů jádra:",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Po vložení do jádra NEní možné modul odebrat bez restartu systému."
+            },
+            {
+              "value": "b",
+              "text": "Typicky každý uživatel v systému (tj. root i ostatní uživatelé) může vkládat moduly do jádra."
+            },
+            {
+              "value": "c",
+              "text": "Umožňují použití pouze těch funkcí jádra, které jsou v současné konfiguraci potřeba."
+            },
+            {
+              "value": "d",
+              "text": "Po vložení do jádra NEní možné modul používat bez restartu systému."
+            }
+          ]
+        },
+        {
+          "id": "q4_2",
+          "type": "mcq",
+          "label": "2. Při vytváření modulu jádra a jeho zavedení může dojít k poskvrnění jádra. Co je tím myšleno?",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "Zavedený modul jádra NEobsahoval povinný odkaz na hlavičkový soubor module.h."
+            },
+            {
+              "value": "b",
+              "text": "Zavedený modul jádra používá i softwarově zakázané prostředky systému."
+            },
+            {
+              "value": "c",
+              "text": "Zavedený modul jádra NEbyl správně zkompilován a je tedy NEfunkční."
+            },
+            {
+              "value": "d",
+              "text": "Zavedený modul jádra NEobsahoval formuli určující, že se jedná o software pod licencí GPL."
+            }
+          ]
+        },
+        {
+          "id": "q4_3",
+          "type": "mcq",
+          "label": "3. Hlášení module licence XY taints kernel v systémovém logu může znamenat, že:",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "Do jádra byl vložen modul s neoriginálním ovladačem."
+            },
+            {
+              "value": "b",
+              "text": "Nastala chyba v modulu jádra, která podle licenčních ujednání musí být ohlášena dodavateli modulu."
+            },
+            {
+              "value": "c",
+              "text": "Jádro bylo infikováno virem nebo malwarem s licencí."
+            },
+            {
+              "value": "d",
+              "text": "Do jádra byl zaveden modul bez zadané licence."
+            }
+          ]
+        },
+        {
+          "id": "q4_4",
+          "type": "mcq",
+          "label": "4. Který z důvodů pro používání dynamických modulů jádra je NEpravdivý?",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Dynamické moduly je možné přidávat do jádra za jeho běhu, aniž by byl nutný restart operačního systému."
+            },
+            {
+              "value": "b",
+              "text": "Ovladače zařízení mohou být realizovány v podobě dynamického modulu."
+            },
+            {
+              "value": "c",
+              "text": "Dynamické moduly jsou nezbytné pro stabilní funkci jádra."
+            },
+            {
+              "value": "d",
+              "text": "Dynamické moduly umožňují rozšíření funkcí jádra."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sec_5",
+      "title": "5. Bezpečnosť systému",
+      "questions": [
+        {
+          "id": "q5_1",
+          "type": "mcq",
+          "label": "1. Jakým způsobem pracuje slovníkový útok na hesla?",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Z NEzašifrovaného textu (jako možného hesla) ve slovníku je šifrovací funkcí vytvořen otisk a tento otisk je porovnán s otiskem uloženým v systému pro zadané heslo uživatele."
+            },
+            {
+              "value": "b",
+              "text": "Daný uživatel je ze systému odhlášen. Je inicializováno jeho přihlášení. NEzašifrovaná hesla ze slovníku jsou postupně kopírována na místo, kde je výzva k zadání hesla."
+            },
+            {
+              "value": "c",
+              "text": "Ve slovníku jsou uložena zašifrovaná hesla v podobě otisků vytvořených různými šifrovacími funkcemi. Volba funkce se liší podle druhu OS."
+            },
+            {
+              "value": "d",
+              "text": "Ve slovníku jsou uložena zašifrovaná hesla – otisky. Tyto otisky jsou přímo porovnány s otiskem uloženým v systému."
+            }
+          ]
+        },
+        {
+          "id": "q5_2",
+          "type": "mcq",
+          "label": "2. Uvažujme uživatelský účet, kde uživatel je znalý základů bezpečnosti a zvolil náležitě dobré heslo. Máme přístup k souboru s otiskem (hashem) hesla. Jaký je nejlepší typ útoku k prolomení tohoto hesla?",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Útok založený na porovnání uživatelského jména a hesla."
+            },
+            {
+              "value": "b",
+              "text": "Slovníkový útok založený na slovníku slov všech dostupných jazyků."
+            },
+            {
+              "value": "c",
+              "text": "Útok hrubou silou, tj. testování kombinací všech možných znaků."
+            },
+            {
+              "value": "d",
+              "text": "Stažení běžných hesel dostupných na Internetu a jejich automatické testování podle frekvence jejich používání."
+            }
+          ]
+        },
+        {
+          "id": "q5_3",
+          "type": "mcq",
+          "label": "3. Vyberte pravdivé tvrzení o stínových heslech:",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Při použití stínových hesel jsou hesla v zašifrované podobě uvedena v souboru /etc/passwd i /etc/shadow."
+            },
+            {
+              "value": "b",
+              "text": "Použití stínových hesel má výhodu v tom, že je uplatněn vyšší stupeň jejich šifrování než u běžných hesel."
+            },
+            {
+              "value": "c",
+              "text": "Soubor se stínovými hesly v zašifrované podobě může číst pouze root."
+            },
+            {
+              "value": "d",
+              "text": "Soubor se stínovými hesly v NEzašifrované podobě může číst pouze root."
+            }
+          ]
+        },
+        {
+          "id": "q5_4",
+          "type": "mcq",
+          "label": "4. Administrátor se rozhodl přejít na stínová hesla a uložit je v souboru /etc/shadow. Vyberte správnou akci pro zavedení souboru. Berte v potaz princip stínových hesel.",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "chmod 400 /etc/shadow"
+            },
+            {
+              "value": "b",
+              "text": "chmod 004 /etc/shadow"
+            },
+            {
+              "value": "c",
+              "text": "chmod 444 /etc/shadow"
+            },
+            {
+              "value": "d",
+              "text": "chmod 006 /etc/shadow"
+            }
+          ]
+        },
+        {
+          "id": "q5_5",
+          "type": "mcq",
+          "label": "5. Ve cvičení jste si příkazem gpg pro účely bezpečné komunikace generovali:",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Veřejný a privátní klíč."
+            },
+            {
+              "value": "b",
+              "text": "Pouze tajný klíč."
+            },
+            {
+              "value": "c",
+              "text": "Symetrický klíč (použit pro šifrování i dešifrování zpráv)."
+            },
+            {
+              "value": "d",
+              "text": "Pouze veřejný klíč."
+            }
+          ]
+        },
+        {
+          "id": "q5_6",
+          "type": "mcq",
+          "label": "6. Vyberte správné tvrzení o digitálním podpisu:",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "Stejný pár veřejného a tajného klíče NElze zároveň použít pro digitální podpis a šifrování zpráv."
+            },
+            {
+              "value": "b",
+              "text": "Pro digitální podpis si uživatel generuje tajný klíč. Veřejný klíč je sdílený mezi všemi uživateli v jednom OS a je generován při jeho instalaci."
+            },
+            {
+              "value": "c",
+              "text": "Uživatel A si může importovat veřejný klíč uživatele B pro ověření jeho podpisu za podmínky, že již vlastní tajný klíč uživatele B."
+            },
+            {
+              "value": "d",
+              "text": "Digitální podpis je NEplatný pokud změníme podepsaný text."
+            }
+          ]
+        },
+        {
+          "id": "q5_7",
+          "type": "mcq",
+          "label": "7. Ve firewallu iptables, který běží na koncové stanici – NE na směrovači, chceme změnit cílovou IP adresu. K tomuto účelu použijeme začátek které konstrukce?",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "sudo /sbin/iptables -t nat -A POSTROUTING"
+            },
+            {
+              "value": "b",
+              "text": "sudo /sbin/iptables -t nat -A PREROUTING"
+            },
+            {
+              "value": "c",
+              "text": "sudo /sbin/iptables -t nat -A OUTPUT"
+            },
+            {
+              "value": "d",
+              "text": "sudo /sbin/iptables -t nat -A FORWARD"
+            }
+          ]
+        },
+        {
+          "id": "q5_8",
+          "type": "mcq",
+          "label": "8. Vyberte správné tvrzení o startu bezdiskové stanice po síti:",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "DHCP server předává bezdiskové stanici soubory s programy potřebnými pro její start."
+            },
+            {
+              "value": "b",
+              "text": "Bezdiskové stanici musí být předán soubor s programem pro její restartování."
+            },
+            {
+              "value": "c",
+              "text": "DHCP server předává bezdiskové stanici název souboru se zavaděčem."
+            },
+            {
+              "value": "d",
+              "text": "Bezdisková stanice požádá v DHCP dotazu o heslo pro přístup na TFTP server."
+            }
+          ]
+        },
+        {
+          "id": "q5_9",
+          "type": "mcq",
+          "label": "9. Jak je možné zajistit neprivilegovanému uživateli možnost spouštět určité příkazy s právy administrátora (root)?",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Lze použít nástroj sudo ve formátu: sudo příkaz. V souboru /etc/sudoers jsou pak uloženy příkazy, které může daný uživatel spouštět s právy administrátora (root)."
+            },
+            {
+              "value": "b",
+              "text": "Vytvořením symbolického odkazu z domovského adresáře uživatele na soubor, který obsahuje programový kód vyžadovaného příkazu."
+            },
+            {
+              "value": "c",
+              "text": "Vytvořením pevného odkazu z domovského adresáře administrátora (root) na soubor, který obsahuje programový kód vyžadovaného příkazu."
+            },
+            {
+              "value": "d",
+              "text": "Pomocí zamezení používání stínových hesel jednotlivých uživatelů."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

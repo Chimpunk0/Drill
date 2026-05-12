@@ -36,7 +36,7 @@ Preview the production build locally:
 npm run preview
 ```
 
-Validate quiz fragments:
+Validate quiz JSON data:
 
 ```bash
 npm run validate
@@ -54,11 +54,11 @@ npm run validate
 - `src/assets/` contains shared app images, icons, and visual theme assets.
 - `src/config/quizSets.js` registers available quiz sets.
 - `src/styles/style.css` contains the current visual styles.
-- `quiz_sets/` contains generated static quiz files.
+- `quiz_sets/` contains generated static quiz JSON files and colocated quiz images.
 - `context/` contains source/import examples and templates.
-- Python scripts in the root import, generate, embed, and validate quiz content.
+- Python scripts in the root import, generate, migrate, and validate quiz content.
 
-The current app runtime is split into ordered classic browser scripts for compatibility. Future refactors can convert each area to ES module imports and exports.
+Quiz content now uses structured JSON at runtime. YAML/Markdown remain the human-editable input formats, and the Python scripts generate the JSON files that the browser loads.
 
 ## Hosting
 

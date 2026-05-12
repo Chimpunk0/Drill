@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build && python3 tools/copy_static_assets.py",
     "preview": "vite preview",
-    "validate": "python3 validate_quiz.py --all"
+    "validate": "python3 validate_quiz_data.py --all"
   },
   "devDependencies": {
     "vite": "^5.4.0"

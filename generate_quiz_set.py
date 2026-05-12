@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate quiz fragment, explanations, and embed files from a simple YAML spec.
+"""Generate structured quiz JSON from a simple YAML spec.
 
 The parser intentionally supports a small YAML subset tailored for quiz specs:
 - mappings via `key: value`
@@ -290,6 +290,152 @@ def normalize_multi_answers(
     return answers
 
 
+def build_quiz_data(spec: dict[str, Any]) -> dict[str, Any]:
+    set_id = spec.get("set_id")
+    if not isinstance(set_id, str) or not set_id.strip():
+        raise SpecError("'set_id' is required and must be a non-empty string.")
+
+    title = spec.get("title")
+    if not isinstance(title, str) or not title.strip():
+        raise SpecError("'title' is required and must be a non-empty string.")
+
+    label = spec.get("label", title)
+    if not isinstance(label, str) or not label.strip():
+        raise SpecError("'label' must be a non-empty string when provided.")
+
+    sections = ensure_list(spec.get("sections"), "sections")
+    if not sections:
+        raise SpecError("At least one section is required.")
+
+    output_sections: list[dict[str, Any]] = []
+    seen_question_ids: set[str] = set()
+
+    for section_index, raw_section in enumerate(sections, start=1):
+        section = ensure_dict(raw_section, f"sections[{section_index - 1}]")
+        section_id = section.get("id") or f"sec_{section_index}"
+        if not isinstance(section_id, str) or not section_id.strip():
+            raise SpecError(f"Section {section_index}: invalid 'id'.")
+
+        section_entry: dict[str, Any] = {"id": section_id}
+        if "title_html" in section:
+            section_entry["titleHtml"] = normalized_html_text(
+                section, "title", "title_html"
+            )
+        else:
+            section_title = section.get("title")
+            if not isinstance(section_title, str) or not section_title.strip():
+                raise SpecError(f"Section {section_index}: 'title' is required.")
+            section_entry["title"] = section_title
+
+        questions = ensure_list(
+            section.get("questions"), f"sections[{section_index - 1}].questions"
+        )
+        if not questions:
+            raise SpecError(
+                f"Section {section_index}: at least one question is required."
+            )
+
+        output_questions: list[dict[str, Any]] = []
+        for question_index, raw_question in enumerate(questions, start=1):
+            question = ensure_dict(
+                raw_question,
+                f"sections[{section_index - 1}].questions[{question_index - 1}]",
+            )
+            qid = question.get("id") or f"q{section_index}_{question_index}"
+            if not isinstance(qid, str) or not qid.strip():
+                raise SpecError(
+                    f"Question {section_index}.{question_index}: invalid 'id'."
+                )
+            if qid in seen_question_ids:
+                raise SpecError(f"Question {qid}: duplicate question id.")
+            seen_question_ids.add(qid)
+
+            qtype = question.get("type")
+            if qtype not in {"mcq", "mcq_multi", "text"}:
+                raise SpecError(
+                    f"Question {qid}: 'type' must be 'mcq', 'mcq_multi', or 'text'."
+                )
+
+            question_entry: dict[str, Any] = {"id": qid, "type": qtype}
+            if "label_html" in question:
+                question_entry["labelHtml"] = normalized_html_text(
+                    question, "label", "label_html"
+                )
+            else:
+                label_text = question.get("label")
+                if not isinstance(label_text, str) or not label_text.strip():
+                    raise SpecError(f"Question {qid}: 'label' is required.")
+                question_entry["label"] = label_text
+
+            for source_key, target_key in (
+                ("image", "image"),
+                ("image_alt", "imageAlt"),
+                ("placeholder", "placeholder"),
+                ("hint", "hint"),
+                ("explanation", "explanation"),
+            ):
+                if source_key in question and question[source_key] is not None:
+                    if not isinstance(question[source_key], str):
+                        raise SpecError(f"Question {qid}: '{source_key}' must be a string.")
+                    question_entry[target_key] = question[source_key]
+
+            for source_key, target_key in (
+                ("image_html", "imageHtml"),
+                ("hint_html", "hintHtml"),
+            ):
+                if source_key in question:
+                    if not isinstance(question[source_key], str):
+                        raise SpecError(f"Question {qid}: '{source_key}' must be a string.")
+                    question_entry[target_key] = question[source_key]
+
+            if qtype in {"mcq", "mcq_multi"}:
+                options = normalize_mcq_options(question.get("options"))
+                values = [value for value, _ in options]
+                question_entry["options"] = [
+                    {"value": value, "text": text} for value, text in options
+                ]
+                answer = question.get("answer")
+                if qtype == "mcq":
+                    if not isinstance(answer, str) or not answer:
+                        raise SpecError(f"Question {qid}: MCQ needs string 'answer'.")
+                    if answer not in values:
+                        raise SpecError(
+                            f"Question {qid}: answer '{answer}' is not present in options."
+                        )
+                    question_entry["answer"] = answer
+                else:
+                    question_entry["answer"] = normalize_multi_answers(
+                        answer, qid, values
+                    )
+            else:
+                keywords = ensure_list(question.get("keywords"), f"{qid}.keywords")
+                keyword_values: list[str] = []
+                for keyword in keywords:
+                    if not isinstance(keyword, str) or not keyword.strip():
+                        raise SpecError(
+                            f"Question {qid}: every keyword must be a non-empty string."
+                        )
+                    keyword_values.append(keyword.strip())
+                if not keyword_values:
+                    raise SpecError(
+                        f"Question {qid}: text question needs at least one keyword."
+                    )
+                question_entry["keywords"] = keyword_values
+
+            output_questions.append(question_entry)
+
+        section_entry["questions"] = output_questions
+        output_sections.append(section_entry)
+
+    return {
+        "schemaVersion": 1,
+        "setId": set_id,
+        "label": label,
+        "title": title,
+        "sections": output_sections,
+    }
+
+
 def build_fragment(spec: dict[str, Any]) -> tuple[str, dict[str, str]]:
     title = spec.get("title")
     if not isinstance(title, str) or not title.strip():
@@ -527,8 +673,7 @@ def build_config_snippet(set_id: str, label: str) -> str:
         "{\n"
         f'    id: "{set_id}",\n'
         f'    label: "{label}",\n'
-        f'    fragEmbed: "quiz_sets/{set_id}.frag.embed.js",\n'
-        f'    explanations: "quiz_sets/{set_id}.explanations.js",\n'
+        f'    dataUrl: "quiz_sets/{set_id}.json",\n'
         "},"
     )
 
@@ -565,17 +710,15 @@ def register_in_config(config_path: Path, set_id: str, label: str) -> bool:
     return True
 
 
-def write_outputs(
-    root: Path, set_id: str, fragment_html: str, explanations_js: str
-) -> tuple[Path, Path, Path]:
-    frag_path = root / "quiz_sets" / f"{set_id}.frag.html"
-    expl_path = root / "quiz_sets" / f"{set_id}.explanations.js"
-    embed_path = root / "quiz_sets" / f"{set_id}.frag.embed.js"
-    frag_path.parent.mkdir(parents=True, exist_ok=True)
-    frag_path.write_text(fragment_html, encoding="utf-8")
-    expl_path.write_text(explanations_js, encoding="utf-8")
-    embed_path.write_text(build_embed_js(set_id, fragment_html), encoding="utf-8")
-    return frag_path, expl_path, embed_path
+def write_outputs(root: Path, quiz_data: dict[str, Any]) -> Path:
+    set_id = quiz_data["setId"]
+    data_path = root / "quiz_sets" / f"{set_id}.json"
+    data_path.parent.mkdir(parents=True, exist_ok=True)
+    data_path.write_text(
+        json.dumps(quiz_data, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    return data_path
 
 
 def validate_generated(frag_path: Path, expl_path: Path) -> None:
@@ -613,16 +756,10 @@ def main() -> None:
     if not isinstance(set_id, str) or not set_id.strip():
         raise SpecError("'set_id' is required and must be a non-empty string.")
 
-    fragment_html, explanations = build_fragment(spec)
-    explanations_js = build_explanations_js(set_id, explanations)
-    frag_path, expl_path, embed_path = write_outputs(
-        output_root, set_id, fragment_html, explanations_js
-    )
-    validate_generated(frag_path, expl_path)
+    quiz_data = build_quiz_data(spec)
+    data_path = write_outputs(output_root, quiz_data)
 
-    print(f"OK: generated {frag_path}")
-    print(f"OK: generated {expl_path}")
-    print(f"OK: generated {embed_path}")
+    print(f"OK: generated {data_path}")
 
     label = spec.get("label")
     if isinstance(label, str) and label.strip():
