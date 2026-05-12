@@ -141,6 +141,54 @@
                 </div>
             </div>
 
+            <div class="quiz-editor-overlay" id="quiz-editor-overlay" aria-hidden="true">
+                <div class="quiz-editor-panel" role="dialog" aria-modal="true" aria-labelledby="quiz-editor-title">
+                    <div class="quiz-editor-header">
+                        <div>
+                            <p class="quiz-editor-kicker">Local draft editor</p>
+                            <h2 id="quiz-editor-title">Quiz set editor</h2>
+                        </div>
+                        <button class="quiz-editor-close" id="quiz-editor-close-btn" title="Zavrieť editor">×</button>
+                    </div>
+                    <div class="quiz-editor-actions">
+                        <button class="quiz-editor-btn primary" id="quiz-editor-save-btn">Save draft</button>
+                        <button class="quiz-editor-btn" id="quiz-editor-preview-btn">Preview in app</button>
+                        <button class="quiz-editor-btn" id="quiz-editor-validate-btn">Validate</button>
+                        <button class="quiz-editor-btn" id="quiz-editor-import-btn">Import JSON</button>
+                        <button class="quiz-editor-btn" id="quiz-editor-export-btn">Download JSON</button>
+                        <button class="quiz-editor-btn" id="quiz-editor-pr-btn">PR bundle</button>
+                        <button class="quiz-editor-btn danger" id="quiz-editor-reset-btn">Reset draft</button>
+                        <input id="quiz-editor-import-file" type="file" accept="application/json,.json" hidden />
+                    </div>
+                    <div class="quiz-editor-status" id="quiz-editor-status"></div>
+                    <div class="quiz-editor-body">
+                        <aside class="quiz-editor-column quiz-editor-sections">
+                            <div class="quiz-editor-column-head">
+                                <h3>Sections</h3>
+                                <button class="quiz-editor-mini-btn" id="quiz-editor-add-section-btn">+</button>
+                            </div>
+                            <div class="quiz-editor-list" id="quiz-editor-section-list"></div>
+                            <div class="quiz-editor-field">
+                                <label for="quiz-editor-set-title">Quiz title</label>
+                                <input id="quiz-editor-set-title" type="text" />
+                            </div>
+                            <div class="quiz-editor-field">
+                                <label for="quiz-editor-set-label">Set label</label>
+                                <input id="quiz-editor-set-label" type="text" />
+                            </div>
+                        </aside>
+                        <aside class="quiz-editor-column quiz-editor-questions">
+                            <div class="quiz-editor-column-head">
+                                <h3>Questions</h3>
+                                <button class="quiz-editor-mini-btn" id="quiz-editor-add-question-btn">+</button>
+                            </div>
+                            <div class="quiz-editor-list" id="quiz-editor-question-list"></div>
+                        </aside>
+                        <section class="quiz-editor-column quiz-editor-form" id="quiz-editor-form"></section>
+                    </div>
+                </div>
+            </div>
+
             <!-- Main Content -->
             <main class="main-content" id="main-content">
                 <div class="top-bar">
@@ -165,6 +213,14 @@
                             title="Spustiť flashcards"
                         >
                             flashcards
+                        </button>
+                        <button
+                            class="top-bar-btn quiz-editor-toolbar-btn"
+                            id="open-quiz-editor-btn"
+                            title="Upraviť aktuálny kvízový set"
+                        >
+                            editor
+                            <span class="toolbar-alpha-badge">alpha</span>
                         </button>
                         <img
                             class="top-bar-paper-edge"

@@ -42,6 +42,50 @@ Validate quiz JSON data:
 npm run validate
 ```
 
+## Editing Quiz Sets and Making a PR
+
+The app has a browser-only quiz editor. Open the app, click **editor** in the paper toolbar, edit the current quiz set, then use **Preview in app** to check the result.
+
+Drafts are saved only in your browser until you export them. They do not change the Git repository automatically.
+
+To propose your edits as a pull request:
+
+1. Click **Save draft** in the editor.
+2. Click **PR bundle**.
+3. The app downloads:
+   - a `.patch` file with the quiz JSON change,
+   - a `.txt` file with PR instructions.
+4. Create a new Git branch:
+
+```bash
+git switch -c quiz-content-edit
+```
+
+5. Apply the downloaded patch:
+
+```bash
+git apply /path/to/quiz-editor-your-set.patch
+```
+
+6. Validate and build:
+
+```bash
+npm run validate
+npm run build
+```
+
+7. Commit and push:
+
+```bash
+git add quiz_sets
+git commit -m "Update quiz content"
+git push -u origin quiz-content-edit
+```
+
+8. Open GitHub and create a pull request from `quiz-content-edit`.
+
+The editor also opens GitHub’s file editor for the active quiz JSON file. You can use that instead by replacing the file contents with the exported JSON, but the local patch workflow is safer for larger edits.
+
 ## Project Structure
 
 - `index.html` contains the current app shell.
@@ -50,6 +94,7 @@ npm run validate
 - `src/storage/` contains localStorage and progress persistence behavior.
 - `src/quiz/` contains quiz loading, evaluation, filtering, and practice behavior.
 - `src/flashcards/` contains flashcard queue, answer checking, and session restore behavior.
+- `src/editor/` contains the browser-only quiz set editor and PR export helpers.
 - `src/ui/` contains sidebar, theme, command palette, shortcuts, and layout behavior.
 - `src/assets/` contains shared app images, icons, and visual theme assets.
 - `src/config/quizSets.js` registers available quiz sets.

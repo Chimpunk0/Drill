@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     updateSidebarShortcutLabel();
     updateRightSidebarAvailability();
     bindUiEvents();
+    bindQuizEditorEvents();
 
     // Command palette input
     const commandInput = document.getElementById("command-palette-input");
@@ -31,11 +32,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Auto-save on any input change
     document.addEventListener("change", (e) => {
+        if (e.target.closest(".quiz-editor-overlay")) return;
         if (e.target.matches('input[type="radio"], input[type="checkbox"], input[type="text"]')) {
             saveAnswers();
         }
     });
     document.addEventListener("input", (e) => {
+        if (e.target.closest(".quiz-editor-overlay")) return;
         if (e.target.matches('input[type="text"]')) {
             saveAnswers();
             if (e.target.id === "fc-text-input") saveFlashcardProgress();

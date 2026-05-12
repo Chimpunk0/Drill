@@ -11,4 +11,5 @@ import "./ui/ui.js";
 import "./quiz/quiz.js";
 import "./flashcards/flashcards.js";
 import "./quiz/loadQuizContent.js";
+import "./editor/quizEditor.js";
 import "./bootstrap.js";

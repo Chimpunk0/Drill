@@ -89,7 +89,10 @@ async function loadQuizSetData() {
     try {
         const res = await fetch(getQuizDataUrl(), { cache: "no-cache" });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return await res.json();
+        const data = await res.json();
+        window.QUIZ_ORIGINAL_DATA = JSON.parse(JSON.stringify(data));
+        const draft = window.getQuizEditorDraftForCurrentSet?.();
+        return draft || data;
     } catch (err) {
         console.error("loadQuizSetData", err);
         showAppError(

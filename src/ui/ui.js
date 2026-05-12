@@ -123,6 +123,7 @@ const COMMANDS = [
     { id: "toggle-sidebar", label: "Prepnúť ľavý sidebar", action: () => toggleSidebar() },
     { id: "toggle-structure", label: "Prepnúť štruktúru kvízu", action: () => toggleRightSidebar() },
     { id: "toggle-theme", label: "Prepnúť svetlý / tmavý režim", action: () => toggleTheme() },
+    { id: "editor", label: "Upraviť kvízový set", action: () => openQuizEditor() },
     { id: "evaluate", label: "Vyhodnotiť kvíz", action: () => evaluateQuiz() },
     { id: "clear", label: "Vymazať odpovede", action: () => clearQuiz() },
     { id: "flashcards", label: "Spustiť flashcard režim", action: () => openFlashcards() },
