@@ -1,6 +1,7 @@
 // Initialize
 document.addEventListener("DOMContentLoaded", async () => {
     loadTheme();
+    await loadQuizManifest();
     renderQuizSetSelector();
     updateSidebarShortcutLabel();
     updateRightSidebarAvailability();

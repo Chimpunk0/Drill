@@ -1,13 +1,15 @@
 /**
- * Konfigurácia aktívneho setu otázok.
+ * Minimal bootstrap configuration.
  *
- * Quiz sety sa načítavajú ako štruktúrované JSON dáta. Súbor dataUrl má byť
- * statický asset v quiz_sets/ a vzniká z YAML/Markdown zdroja cez Python
- * import/generation nástroje.
+ * Runtime quiz-set registration comes from quiz_sets/index.json. The fallback
+ * list below exists only so local development still has something to render if
+ * the manifest is missing or malformed.
  */
 
-// Available quiz sets – add new entries here to expose them in the UI
-window.QUIZ_SETS = window.QUIZ_SETS || [
+window.QUIZ_MANIFEST_URL =
+  window.QUIZ_MANIFEST_URL || "quiz_sets/index.json";
+
+window.QUIZ_FALLBACK_SETS = window.QUIZ_FALLBACK_SETS || [
   {
     id: "bpc-vba-2026/default",
     label: "BPC-VBA 2026",
@@ -35,15 +37,14 @@ window.QUIZ_SETS = window.QUIZ_SETS || [
   },
 ];
 
-// Read active set from URL param ?set=<id>, fall back to first registered set
+window.QUIZ_SETS = window.QUIZ_SETS || window.QUIZ_FALLBACK_SETS;
+
+// Read active set from URL param ?set=<id>. Manifest loading chooses the final
+// fallback after it knows which sets exist.
 (function () {
   const params = new URLSearchParams(window.location.search);
   const setParam = params.get("set");
   if (setParam) window.QUIZ_SET_ID = setParam;
 })();
 
-window.QUIZ_SET_ID =
-  window.QUIZ_SET_ID ||
-  (window.QUIZ_SETS[0] && window.QUIZ_SETS[0].id) ||
-  "bpc-vba-2026/default";
 window.QUIZ_STORAGE_KEY = window.QUIZ_STORAGE_KEY || null;

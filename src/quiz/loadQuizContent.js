@@ -15,6 +15,55 @@ function getCurrentQuizSet() {
     return sets.find((set) => set.id === id) || null;
 }
 
+function normalizeDataUrl(dataUrl, manifestUrl) {
+    if (!dataUrl || /^(?:[a-z]+:|\/|#)/i.test(dataUrl)) return dataUrl;
+    const manifestBase = manifestUrl.slice(0, manifestUrl.lastIndexOf("/") + 1);
+    return manifestBase + dataUrl;
+}
+
+function normalizeManifestSets(manifest, manifestUrl) {
+    if (!manifest || !Array.isArray(manifest.sets)) {
+        throw new Error("Manifest musí obsahovať pole sets.");
+    }
+    const sets = manifest.sets
+        .filter((set) => set && set.id && set.label && set.dataUrl)
+        .map((set) => ({
+            id: String(set.id),
+            label: String(set.label),
+            dataUrl: normalizeDataUrl(String(set.dataUrl), manifestUrl),
+        }));
+    if (!sets.length) {
+        throw new Error("Manifest neobsahuje žiadne platné quiz sety.");
+    }
+    return sets;
+}
+
+function chooseActiveQuizSet() {
+    const sets = window.QUIZ_SETS || [];
+    const requested = window.QUIZ_SET_ID;
+    if (requested && sets.some((set) => set.id === requested)) return;
+    window.QUIZ_SET_ID =
+        (sets[0] && sets[0].id) ||
+        "bpc-vba-2026/default";
+}
+
+async function loadQuizManifest() {
+    const manifestUrl = window.QUIZ_MANIFEST_URL || "quiz_sets/index.json";
+    try {
+        const res = await fetch(manifestUrl, { cache: "no-cache" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const manifest = await res.json();
+        window.QUIZ_SETS = normalizeManifestSets(manifest, manifestUrl);
+        window.QUIZ_MANIFEST = manifest;
+    } catch (err) {
+        console.warn("loadQuizManifest; using fallback quiz sets", err);
+        window.QUIZ_SETS = window.QUIZ_FALLBACK_SETS || window.QUIZ_SETS || [];
+        window.QUIZ_MANIFEST = null;
+    }
+    chooseActiveQuizSet();
+    return window.QUIZ_SETS;
+}
+
 function getCurrentQuizSetAssetBase() {
     const set = getCurrentQuizSet();
     const dataUrl = set?.dataUrl || `quiz_sets/${window.QUIZ_SET_ID}.json`;
@@ -32,7 +81,7 @@ async function loadQuizSetData() {
     if (!set) {
         showAppError(
             "Neznámy kvízový set.",
-            `Set "${window.QUIZ_SET_ID}" nie je zaregistrovaný v src/config/quizSets.js.`,
+            `Set "${window.QUIZ_SET_ID}" nie je zaregistrovaný v quiz_sets/index.json.`,
         );
         return null;
     }
@@ -260,6 +309,10 @@ async function loadQuizContent() {
 Object.assign(window, {
     showAppError,
     getCurrentQuizSet,
+    normalizeDataUrl,
+    normalizeManifestSets,
+    chooseActiveQuizSet,
+    loadQuizManifest,
     getCurrentQuizSetAssetBase,
     getQuizDataUrl,
     loadQuizSetData,
@@ -276,6 +329,10 @@ Object.assign(window, {
 export {
     showAppError,
     getCurrentQuizSet,
+    normalizeDataUrl,
+    normalizeManifestSets,
+    chooseActiveQuizSet,
+    loadQuizManifest,
     getCurrentQuizSetAssetBase,
     getQuizDataUrl,
     loadQuizSetData,
