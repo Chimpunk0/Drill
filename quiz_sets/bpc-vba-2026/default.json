@@ -613,6 +613,56 @@
           "placeholder": "např. první, druhá",
           "hint": "Hledejte dvě chybějící veličiny vedle rozpočet a kvalita.",
           "explanation": "Správné doplnění je `rozsah, termín dodání`. V tradičních technikách bývá typicky fixní rozsah a proměnný rozpočet i čas, zatímco u agilních technik se častěji fixuje čas a rozpočet a proměnný zůstává rozsah dodávky."
+        },
+        {
+          "type": "mcq",
+          "label": "26. U agilních technik programování je neměnný:",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "rozsah"
+            },
+            {
+              "value": "b",
+              "text": "termín dodání"
+            },
+            {
+              "value": "c",
+              "text": "rozpočet"
+            },
+            {
+              "value": "d",
+              "text": "rozpočet a termín dodání"
+            }
+          ],
+          "explanation": "U agilních technik se typicky fixuje časový rámec a rozpočet, zatímco rozsah se upravuje podle priorit a zpětné vazby. Proto je správně rozpočet a termín dodání.",
+          "id": "q1_26"
+        },
+        {
+          "type": "mcq",
+          "label": "27. Threat modeling je proces, který:",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "nahrazuje unit testy"
+            },
+            {
+              "value": "b",
+              "text": "slouží pouze k vytvoření dokumentace pro audit"
+            },
+            {
+              "value": "c",
+              "text": "řeší jen výkonové problémy"
+            },
+            {
+              "value": "d",
+              "text": "identifikuje hrozby a navrhuje mitigace už při návrhu"
+            }
+          ],
+          "explanation": "Threat modeling se dělá už při návrhu systému: hledají se aktiva, hrozby, možné útoky a protiopatření. Nenahrazuje testování ani neslouží jen jako auditní dokumentace.",
+          "id": "q1_27"
         }
       ]
     },
@@ -1003,7 +1053,7 @@
         {
           "id": "q7_17",
           "type": "text",
-          "label": "17. Doplňte následující kód tak, aby provedl hashování zprávy.```cchar *ms_salt = \"salt\";char *ms_value = \"password\";unsigned char md_value[EVP_MAX_MD_SIZE];unsigned int md_len;EVP_MD *md = EVP_MD_fetch( NULL, \"sha256\", NULL);EVP_MD_CTX *ctx = EVP_MD_CTX_new();EVP_____________(ctx, md); // Initialize the contextEVP_DigestUpdate(ctx, ms_salt, strlen(ms_salt));EVP_DigestUpdate(ctx, ms_value, strlen(ms_value));EVP_DigestFinal(ctx, md_value, &md_len);EVP_MD_CTX_free(ctx);EVP_MD_free(md);```",
+          "label": "17. Doplňte následující kód tak, aby provedl hashování zprávy.\n```c\nchar *ms_salt = \"salt\";\nchar *ms_value = \"password\";\nunsigned char md_value[EVP_MAX_MD_SIZE];\nunsigned int md_len;\nEVP_MD *md = EVP_MD_fetch(NULL, \"sha256\", NULL);\nEVP_MD_CTX *ctx = EVP_MD_CTX_new();\nEVP_____________(ctx, md); // Initialize the context\nEVP_DigestUpdate(ctx, ms_salt, strlen(ms_salt));\nEVP_DigestUpdate(ctx, ms_value, strlen(ms_value));\nEVP_DigestFinal(ctx, md_value, &md_len);\nEVP_MD_CTX_free(ctx);\nEVP_MD_free(md);\n```",
           "keywords": [
             "EVP_DigestInit"
           ],
@@ -1061,7 +1111,7 @@
         {
           "id": "q7_20",
           "type": "text",
-          "label": "20. Doplňte chybějící části kódu tak, aby bezpečně vypočítal hash zadaného hesla. Do odpovědi napište všech pět chybějících částí zleva doprava a oddělte je čárkou.int hashPassword(void) { char *ms_salt = \"salt\"; char *ms_value = \"password\"; unsigned char md_value[EVP_MAX_MD_SIZE]; unsigned int md_len; EVP_MD *md = ___(NULL, \"sha256\", NULL); if (NULL == md) { ERR_print_errors_fp(stderr); return 0; } ___ ctx = EVP_MD_CTX_new(); if (NULL == ctx) { ERR_print_errors_fp(stderr); EVP_MD_free(md); return 0; } if (!EVP_DigestInit(ctx, md) || !___(ctx, ms_salt, strlen(ms_salt)) || !___(ctx, ms_value, strlen(ms_value)) || !EVP_DigestFinal(ctx, md_value, &md_len)) { ERR_print_errors_fp(stderr); EVP_MD_CTX_free(ctx); ___(md); return 0; }}",
+          "label": "20. Doplňte chybějící části kódu tak, aby bezpečně vypočítal hash zadaného hesla. Do odpovědi napište všech pět chybějících částí zleva doprava a oddělte je čárkou.\n```c\nint hashPassword(void) {\n    char *ms_salt = \"salt\";\n    char *ms_value = \"password\";\n    unsigned char md_value[EVP_MAX_MD_SIZE];\n    unsigned int md_len;\n\n    EVP_MD *md = ___(NULL, \"sha256\", NULL);\n    if (NULL == md) {\n        ERR_print_errors_fp(stderr);\n        return 0;\n    }\n\n    ___ ctx = EVP_MD_CTX_new();\n    if (NULL == ctx) {\n        ERR_print_errors_fp(stderr);\n        EVP_MD_free(md);\n        return 0;\n    }\n\n    if (!EVP_DigestInit(ctx, md) ||\n        !___(ctx, ms_salt, strlen(ms_salt)) ||\n        !___(ctx, ms_value, strlen(ms_value)) ||\n        !EVP_DigestFinal(ctx, md_value, &md_len)) {\n        ERR_print_errors_fp(stderr);\n        EVP_MD_CTX_free(ctx);\n        ___(md);\n        return 0;\n    }\n}\n```",
           "keywords": [
             "EVP_MD_fetch",
             "EVP_MD_CTX *",
@@ -1075,7 +1125,7 @@
         {
           "id": "q7_21",
           "type": "text",
-          "label": "21. Doplňte chybějící části kódu tak, aby bezpečně načetl soukromý klíč ze souboru a jeho adresu vrátil jako návratovou hodnotu. Do odpovědi napište všechny tři chybějící části zleva doprava a oddělte je čárkou.EVP_PKEY* read_pkey(char *path) { FILE *fd; ___ = EVP_PKEY_new(); char err[1024]; fd = fopen(path, \"r\"); if (NULL == fd) { perror(__FILE__); exit(-errno); } if (NULL == PEM_read_PrivateKey(fd, ___, NULL, NULL)) { ERR_error_string_n(___(), err, sizeof(err)); fputs(err, stderr); EVP_PKEY_free(pkey); pkey = NULL; } fclose(fd); return pkey;}",
+          "label": "21. Doplňte chybějící části kódu tak, aby bezpečně načetl soukromý klíč ze souboru a jeho adresu vrátil jako návratovou hodnotu. Do odpovědi napište všechny tři chybějící části zleva doprava a oddělte je čárkou.\n```c\nEVP_PKEY* read_pkey(char *path) {\n    FILE *fd;\n    ___ = EVP_PKEY_new();\n    char err[1024];\n\n    fd = fopen(path, \"r\");\n    if (NULL == fd) {\n        perror(__FILE__);\n        exit(-errno);\n    }\n\n    if (NULL == PEM_read_PrivateKey(fd, ___, NULL, NULL)) {\n        ERR_error_string_n(___(), err, sizeof(err));\n        fputs(err, stderr);\n        EVP_PKEY_free(pkey);\n        pkey = NULL;\n    }\n\n    fclose(fd);\n    return pkey;\n}\n```",
           "keywords": [
             "EVP_PKEY *pkey",
             "&pkey",
@@ -1083,6 +1133,31 @@
           ],
           "placeholder": "část1, část2, část3",
           "explanation": "Správné doplnění je `EVP_PKEY *pkey, &pkey, ERR_get_error`. Proměnná `pkey` musí být deklarovaná jako ukazatel na `EVP_PKEY`, `PEM_read_PrivateKey` očekává adresu ukazatele tedy `&pkey`, a pro převod poslední chyby OpenSSL na text se používá `ERR_get_error()`."
+        },
+        {
+          "type": "mcq",
+          "label": "22. Co dělá funkce EVP_DigestFinal()?",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Aktualizuje hashovací kontext"
+            },
+            {
+              "value": "b",
+              "text": "Ukončuje proces hashování a vrací výsledný hash"
+            },
+            {
+              "value": "c",
+              "text": "Generuje klíče"
+            },
+            {
+              "value": "d",
+              "text": "Inicializuje hashovací proces"
+            }
+          ],
+          "explanation": "EVP_DigestFinal dokončí výpočet digestu, zapíše výsledný hash do výstupního bufferu a vrátí jeho délku. EVP_DigestUpdate naopak přidává další vstupní data.",
+          "id": "q7_22"
         }
       ]
     },
@@ -1614,6 +1689,56 @@
             }
           ],
           "explanation": "UEFI Secure Boot při startu kontroluje podpis zavaděče a dalších navazujících boot komponent. Cílem je zabránit spuštění nepodepsaného nebo nedůvěryhodného kódu během bootu."
+        },
+        {
+          "type": "mcq",
+          "label": "22. Co znamená PCR v kontextu TPM?",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Permanent Control Repository"
+            },
+            {
+              "value": "b",
+              "text": "Platform Configuration Register"
+            },
+            {
+              "value": "c",
+              "text": "Personal Crypto Resource"
+            },
+            {
+              "value": "d",
+              "text": "Protected Code Region"
+            }
+          ],
+          "explanation": "PCR znamená Platform Configuration Register. TPM do PCR ukládá měření stavu platformy, například jednotlivých kroků boot procesu.",
+          "id": "q12_22"
+        },
+        {
+          "type": "mcq",
+          "label": "23. Jaký je hlavní účel AIK klíčů v TPM?",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Šifrování dat"
+            },
+            {
+              "value": "b",
+              "text": "Autentizace"
+            },
+            {
+              "value": "c",
+              "text": "Dekomprese dat"
+            },
+            {
+              "value": "d",
+              "text": "Generování náhodných čísel"
+            }
+          ],
+          "explanation": "AIK znamená Attestation Identity Key. Používá se pro atestaci a prokazování identity TPM, tedy k autentizaci platformy, ne k běžnému šifrování dat.",
+          "id": "q12_23"
         }
       ]
     },
@@ -1949,6 +2074,44 @@
             }
           ],
           "explanation": "Commit v Gitu znamená uložení připravených změn do historie repozitáře jako nového revizního bodu. Nejde o vytvoření větve ani o synchronizaci se vzdáleným repozitářem."
+        },
+        {
+          "type": "text",
+          "label": "16. Seřaďte příkazy upravující konfiguraci repozitáře podle klesající priority:",
+          "explanation": "Git čte konfiguraci v pořadí system < global < local. Lokální konfigurace v repozitáři má nejvyšší prioritu, potom globální uživatelská a nejnižší je systémová.",
+          "id": "q2_16",
+          "keywords": [
+            "local, global, system",
+            "local global system",
+            "git config --local, git config --global, git config --system",
+            "--local, --global, --system"
+          ],
+          "placeholder": "local, global, system"
+        },
+        {
+          "type": "mcq",
+          "label": "17. Co dělá příkaz git clone?",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Změní aktuální větev"
+            },
+            {
+              "value": "b",
+              "text": "Vytváří novou větev"
+            },
+            {
+              "value": "c",
+              "text": "Kopíruje repozitář z vzdáleného serveru na lokální stroj"
+            },
+            {
+              "value": "d",
+              "text": "Odstraní soubory z repozitáře"
+            }
+          ],
+          "explanation": "git clone vytvoří lokální kopii vzdáleného repozitáře včetně historie, větví a výchozího remote origin.",
+          "id": "q2_17"
         }
       ]
     },
@@ -2619,6 +2782,91 @@
           ],
           "placeholder": "část1, část2, část3, část4, část5",
           "explanation": "Správné doplnění je `pNode, pNode, NULL, NULL, pNode->right`. Nejprve je třeba uložit výsledek `malloc` do `pNode`, následně ověřit, že `pNode` není `NULL`, po alokaci řetězce zkontrolovat `NULL`, a nově vytvořený uzel inicializovat tak, aby `left` i `right` ukazovaly na `NULL`."
+        },
+        {
+          "type": "mcq",
+          "label": "28. Co znamená Stack Smashing Protection (SSP)?",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Detekce přetečení zásobníku pomocí speciálních funkcí"
+            },
+            {
+              "value": "b",
+              "text": "Komprese dat na zásobníku"
+            },
+            {
+              "value": "c",
+              "text": "Ochrana proti přepsání dat na zásobníku"
+            },
+            {
+              "value": "d",
+              "text": "Zvýšení velikosti zásobníku"
+            }
+          ],
+          "explanation": "Stack Smashing Protection chrání zásobník vložením kontrolní hodnoty (canary) mezi lokální data a návratovou adresu. Při přepsání zásobníku se změna detekuje před návratem z funkce.",
+          "id": "q3_28"
+        },
+        {
+          "type": "text",
+          "label": "29. Místo funkce strcpy je vhodné používat bezpečnou funkci s názvem:",
+          "keywords": [
+            "strlcpy"
+          ],
+          "placeholder": "Název funkce...",
+          "explanation": "strlcpy kopíruje řetězec s ohledem na velikost cílového bufferu. Je bezpečnější než strcpy, která velikost cíle nekontroluje.",
+          "id": "q3_29"
+        },
+        {
+          "type": "mcq",
+          "label": "30. Jaká možná chyba je obsažena v následujícím kódu?```c\nchar *get_text(void)\n{\n    char text[16] = \"hello\";\n    return text;\n}\n```",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Vrácení ukazatele na lokální proměnnou"
+            },
+            {
+              "value": "b",
+              "text": "Format string vulnerability"
+            },
+            {
+              "value": "c",
+              "text": "Double free"
+            },
+            {
+              "value": "d",
+              "text": "Integer overflow"
+            }
+          ],
+          "explanation": "Pole text je lokální proměnná na zásobníku. Po návratu z funkce přestává být platné, takže vrácený ukazatel ukazuje na neplatnou paměť.",
+          "id": "q3_30"
+        },
+        {
+          "type": "mcq",
+          "label": "31. Jaké doplnění je správné, aby bylo možné paměť bezpečně uvolnit pomocí free?```c\nvoid process(void)\n{\n    /* DOPLŇTE */\n\n    strcpy(data, \"abc\");\n    free(data);\n}\n```",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "char *data = malloc(32); if (data == NULL) return;"
+            },
+            {
+              "value": "b",
+              "text": "char *data;"
+            },
+            {
+              "value": "c",
+              "text": "char data[32];"
+            },
+            {
+              "value": "d",
+              "text": "char *data = \"abc\";"
+            }
+          ],
+          "explanation": "free se smí volat jen nad pamětí získanou z malloc/calloc/realloc. Varianta s malloc zároveň kontroluje, jestli alokace neselhala.",
+          "id": "q3_31"
         }
       ]
     },
@@ -3432,6 +3680,56 @@
             }
           ],
           "explanation": "Statická analýza umí rychle odhalit syntaktické, schématické a část logických chyb přímo nad kódem. Nejde o měření výkonu ani o testování uživatelského rozhraní."
+        },
+        {
+          "type": "mcq",
+          "label": "21. Jaký typ chyb může statická analýza efektivně identifikovat?",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Chyby síťové komunikace"
+            },
+            {
+              "value": "b",
+              "text": "Sémantické chyby, jako jsou neinicializované proměnné a nedosažitelný kód"
+            },
+            {
+              "value": "c",
+              "text": "Výkonové problémy za běhu"
+            },
+            {
+              "value": "d",
+              "text": "Chyby způsobené uživatelským vstupem"
+            }
+          ],
+          "explanation": "Statická analýza pracuje bez spuštění programu, proto dobře nachází chyby odvoditelné ze struktury kódu: neinicializované proměnné, nedosažitelný kód, typové chyby nebo podezřelé datové toky.",
+          "id": "q10_21"
+        },
+        {
+          "type": "mcq",
+          "label": "22. Jaká je jedna z hlavních výhod dynamické analýzy?",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "Rychlejší než statická analýza"
+            },
+            {
+              "value": "b",
+              "text": "Schopnost pracovat bez přístupu k zdrojovému kódu"
+            },
+            {
+              "value": "c",
+              "text": "Nenáročnost na systémové zdroje"
+            },
+            {
+              "value": "d",
+              "text": "Schopnost odhalit chyby, které nejsou zřejmé bez spuštění kódu"
+            }
+          ],
+          "explanation": "Dynamická analýza sleduje běžící program. Díky tomu umí zachytit chyby závislé na konkrétním běhu, vstupech, stavu paměti nebo načasování.",
+          "id": "q10_22"
         }
       ]
     },
@@ -3659,6 +3957,56 @@
             }
           ],
           "explanation": "(Zdroj 9.4) Správná odpověď: Pomocí CU_ASSERT_NOT_EQUAL()"
+        },
+        {
+          "type": "mcq",
+          "label": "10. Jaký je hlavní účel použití CUnit?",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Automatizace testování jednotkových testů v C"
+            },
+            {
+              "value": "b",
+              "text": "Kompilace programů v C"
+            },
+            {
+              "value": "c",
+              "text": "Správa databázových spojení v C"
+            },
+            {
+              "value": "d",
+              "text": "Vývoj uživatelských rozhraní v C"
+            }
+          ],
+          "explanation": "CUnit je framework pro psaní a spouštění jednotkových testů v jazyce C. Neslouží ke kompilaci ani k tvorbě UI.",
+          "id": "qut_10"
+        },
+        {
+          "type": "mcq",
+          "label": "11. Jak se v CUnit testuje, že řetězec odpovídá očekávané hodnotě?",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Pomocí CU_ASSERT_EQUAL_STR()"
+            },
+            {
+              "value": "b",
+              "text": "Pomocí CU_ASSERT_TEXT_MATCH()"
+            },
+            {
+              "value": "c",
+              "text": "Pomocí CU_ASSERT_STRING_EQUAL()"
+            },
+            {
+              "value": "d",
+              "text": "Pomocí CU_ASSERT_SAME_TEXT()"
+            }
+          ],
+          "explanation": "Pro porovnání dvou řetězců v CUnit se používá CU_ASSERT_STRING_EQUAL(actual, expected).",
+          "id": "qut_11"
         }
       ]
     },
@@ -4300,6 +4648,56 @@
             }
           ],
           "explanation": "Ve Windows jsou lokální heslové hashe typicky ukládány v databázi SAM, tedy Security Accounts Manager. Proto je správná odpověď varianta s databází SAM."
+        },
+        {
+          "type": "mcq",
+          "label": "27. Jaká jsou bezpečnostní doporučení pro ukládání hesel v systému Windows?",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "Používat stejné heslo pro více účtů"
+            },
+            {
+              "value": "b",
+              "text": "Ukládat hesla v nezašifrované formě"
+            },
+            {
+              "value": "c",
+              "text": "Zapisovat hesla na papír"
+            },
+            {
+              "value": "d",
+              "text": "Používat silná hesla a využívat šifrování"
+            }
+          ],
+          "explanation": "Hesla se nemají ukládat v prostém textu ani opakovat mezi účty. Správný přístup je používat silná hesla a chránit uložená tajemství šifrováním nebo systémovým credential managerem.",
+          "id": "q5_27"
+        },
+        {
+          "type": "mcq",
+          "label": "28. Prvky (klíčenky nebo data) platné pouze v kontextu daného sezení jsou označovány:",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "@u"
+            },
+            {
+              "value": "b",
+              "text": "@s"
+            },
+            {
+              "value": "c",
+              "text": "@t"
+            },
+            {
+              "value": "d",
+              "text": "@g"
+            }
+          ],
+          "explanation": "V Linux keyrings označuje @s session keyring, tedy klíčenku platnou v kontextu daného sezení. @u je user keyring a @t je thread keyring.",
+          "id": "q5_28"
         }
       ]
     },

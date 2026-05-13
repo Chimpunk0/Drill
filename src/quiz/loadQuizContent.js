@@ -186,6 +186,248 @@ function htmlText(item, plainKey, htmlKey) {
     return escapeHtml(item?.[plainKey] || "");
 }
 
+function richText(item, plainKey, htmlKey) {
+    const snakeKey = htmlKey.replace(/[A-Z]/g, (char) => `_${char.toLowerCase()}`);
+    if (typeof item?.[htmlKey] === "string") return item[htmlKey];
+    if (typeof item?.[snakeKey] === "string") return item[snakeKey];
+    return renderFormattedText(item?.[plainKey] || "");
+}
+
+function renderFormattedText(value) {
+    const text = String(value || "");
+    const inlineCode = extractInlineCodeBlock(text);
+    if (inlineCode) {
+        return `${renderTextSegment(inlineCode.before)}${renderCodeBlock(`c\n${inlineCode.code}`)}`;
+    }
+
+    const parts = [];
+    let lastIndex = 0;
+    const fenceRe = /```([\s\S]*?)```/g;
+    let match;
+
+    while ((match = fenceRe.exec(text))) {
+        if (match.index > lastIndex) {
+            parts.push(renderTextSegment(text.slice(lastIndex, match.index)));
+        }
+        parts.push(renderCodeBlock(match[1]));
+        lastIndex = fenceRe.lastIndex;
+    }
+
+    if (lastIndex < text.length) {
+        parts.push(renderTextSegment(text.slice(lastIndex)));
+    }
+
+    return parts.join("");
+}
+
+function extractInlineCodeBlock(text) {
+    if (text.includes("```")) return null;
+    const codeStart = findInlineCodeStart(text);
+    if (codeStart === -1) return null;
+    const before = text.slice(0, codeStart).trimEnd();
+    const code = text.slice(codeStart).trim();
+    if (!before || !/[;{}]/.test(code)) return null;
+    return { before, code };
+}
+
+function findInlineCodeStart(text) {
+    const patterns = [
+        /\b(?:int|void|char|unsigned|static|const)\s+\**[A-Za-z_][A-Za-z0-9_]*\s*\(/,
+        /\bEVP_[A-Za-z0-9_]*\s*\*+\s*[A-Za-z_][A-Za-z0-9_]*\s*\(/,
+        /\bFILE\s*\*\s*[A-Za-z_][A-Za-z0-9_]*\s*;/,
+        /\bfor\s*\(/,
+    ];
+
+    return patterns.reduce((best, pattern) => {
+        const match = pattern.exec(text);
+        if (!match) return best;
+        return best === -1 ? match.index : Math.min(best, match.index);
+    }, -1);
+}
+
+function renderTextSegment(text) {
+    return escapeHtml(text)
+        .replace(/\n{2,}/g, "<br><br>")
+        .replace(/\n/g, "<br>");
+}
+
+function renderCodeBlock(rawContent) {
+    const { language, code } = parseCodeFence(rawContent);
+    const langClass = language ? ` language-${escapeHtml(language)}` : "";
+    const languageLabel = language ? `<span class="codeblock-language">${escapeHtml(language)}</span>` : "";
+    return `
+        <figure class="codeblock${langClass}">
+            ${languageLabel}
+            <pre><code>${highlightCode(code, language)}</code></pre>
+        </figure>
+    `;
+}
+
+function parseCodeFence(rawContent) {
+    let code = String(rawContent || "").replace(/^\r?\n/, "").replace(/\s+$/, "");
+    let language = "";
+    const knownLanguages = [
+        "javascript",
+        "typescript",
+        "python",
+        "bash",
+        "shell",
+        "json",
+        "html",
+        "css",
+        "sql",
+        "cpp",
+        "c++",
+        "c",
+    ];
+    const firstLine = code.match(/^([a-zA-Z0-9_+#.-]+)[ \t]*(?:\r?\n|$)/);
+
+    if (firstLine && knownLanguages.includes(firstLine[1].toLowerCase())) {
+        language = normalizeCodeLanguage(firstLine[1]);
+        code = code.slice(firstLine[0].length);
+    } else if (/^c(?=char|int|unsigned|void|EVP_|FILE|if|for|while|return|\{|\/\*)/.test(code)) {
+        language = "c";
+        code = code.slice(1);
+    }
+
+    code = formatCodeForDisplay(code.trim(), language);
+    return { language, code: code.trim() };
+}
+
+function normalizeCodeLanguage(language) {
+    const lang = language.toLowerCase();
+    if (lang === "c++") return "cpp";
+    if (lang === "shell") return "bash";
+    return lang;
+}
+
+function formatCodeForDisplay(code, language) {
+    if (!["c", "cpp", "javascript", "typescript"].includes(language)) return code;
+    const lines = code.split(/\r?\n/);
+    const looksCollapsed =
+        lines.length <= 2 ||
+        lines.some((line) => line.length > 120 && /[;{}]/.test(line));
+    if (!looksCollapsed) return code;
+    return formatBraceCode(code);
+}
+
+function formatBraceCode(code) {
+    const roughLines = splitCodeStatements(code);
+    const formatted = [];
+    let indent = 0;
+
+    roughLines.forEach((rawLine) => {
+        const line = rawLine.trim();
+        if (!line) return;
+        if (line.startsWith("}")) {
+            indent = Math.max(0, indent - 1);
+        }
+        formatted.push(`${"    ".repeat(indent)}${line}`);
+        if (line.endsWith("{")) {
+            indent += 1;
+        }
+    });
+
+    return formatted.join("\n");
+}
+
+function splitCodeStatements(code) {
+    const lines = [];
+    let current = "";
+    let quote = "";
+    let escaped = false;
+    let lineComment = false;
+    let blockComment = false;
+
+    for (let i = 0; i < code.length; i += 1) {
+        const char = code[i];
+        const next = code[i + 1] || "";
+
+        current += char;
+
+        if (lineComment) {
+            if (char === "\n") {
+                pushCodeLine(lines, current);
+                current = "";
+                lineComment = false;
+            }
+            continue;
+        }
+
+        if (blockComment) {
+            if (char === "*" && next === "/") {
+                current += next;
+                i += 1;
+                blockComment = false;
+            }
+            continue;
+        }
+
+        if (quote) {
+            if (escaped) {
+                escaped = false;
+            } else if (char === "\\") {
+                escaped = true;
+            } else if (char === quote) {
+                quote = "";
+            }
+            continue;
+        }
+
+        if (char === "/" && next === "/") {
+            current += next;
+            i += 1;
+            lineComment = true;
+            continue;
+        }
+
+        if (char === "/" && next === "*") {
+            current += next;
+            i += 1;
+            blockComment = true;
+            continue;
+        }
+
+        if (char === '"' || char === "'") {
+            quote = char;
+            continue;
+        }
+
+        if (char === "\n" || char === ";" || char === "{" || char === "}") {
+            pushCodeLine(lines, current);
+            current = "";
+        }
+    }
+
+    pushCodeLine(lines, current);
+    return lines;
+}
+
+function pushCodeLine(lines, line) {
+    const normalized = line.replace(/\s+/g, " ").trim();
+    if (normalized) lines.push(normalized);
+}
+
+function highlightCode(code, language) {
+    const escaped = escapeHtml(code);
+    if (!language) return escaped;
+    if (["c", "cpp", "javascript", "typescript"].includes(language)) {
+        return escaped
+            .replace(/(&quot;.*?&quot;|'.*?')/g, '<span class="tok-string">$1</span>')
+            .replace(/\b(\d+(?:\.\d+)?)\b/g, '<span class="tok-number">$1</span>')
+            .replace(/\b(char|const|double|else|for|if|int|long|nullptr|return|short|sizeof|static|struct|unsigned|void|while|NULL)\b/g, '<span class="tok-keyword">$1</span>')
+            .replace(/\b(EVP_[A-Za-z0-9_]+|ERR_[A-Za-z0-9_]+|strlen|malloc|free|strcpy|printf|fprintf)\b/g, '<span class="tok-function">$1</span>')
+            .replace(/(\/\/.*?$|\/\*[\s\S]*?\*\/)/gm, '<span class="tok-comment">$1</span>');
+    }
+    if (language === "json") {
+        return escaped
+            .replace(/(&quot;[^&]*?&quot;)(\s*:)/g, '<span class="tok-keyword">$1</span>$2')
+            .replace(/(:\s*)(&quot;.*?&quot;)/g, '$1<span class="tok-string">$2</span>')
+            .replace(/\b(true|false|null|\d+(?:\.\d+)?)\b/g, '<span class="tok-number">$1</span>');
+    }
+    return escaped;
+}
+
 function renderQuestionImage(question) {
     const imageHtml = question.imageHtml || question.image_html;
     if (typeof imageHtml === "string") {
@@ -218,7 +460,7 @@ function renderOptions(question, inputType) {
 }
 
 function renderQuestion(question) {
-    const labelHtml = htmlText(question, "label", "labelHtml");
+    const labelHtml = richText(question, "label", "labelHtml");
     const imageHtml = renderQuestionImage(question);
     const feedback = `<div class="feedback" id="${escapeHtml(question.id)}-fb"></div>`;
 
