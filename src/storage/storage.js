@@ -256,9 +256,47 @@ function isFlashcardSessionValid(session) {
     );
 }
 
+function refreshFlashcardCardFromDom(card) {
+    const questionEl = document.getElementById(card.qId);
+    if (!questionEl) return card;
+
+    const labelEl = questionEl.querySelector(".question-label");
+    const imageEl = questionEl.querySelector("img");
+    const refreshed = {
+        ...card,
+        correctVal: questionEl.getAttribute("data-answer"),
+        keywords: questionEl.getAttribute("data-keywords"),
+        kind: questionEl.querySelector('input[type="text"]')
+            ? "text"
+            : questionEl.querySelector('input[type="checkbox"]')
+              ? "checkbox"
+              : "radio",
+        labelHTML: labelEl ? labelEl.innerHTML : card.labelHTML || "",
+        imageHTML: imageEl ? imageEl.outerHTML : card.imageHTML || "",
+    };
+
+    if (refreshed.kind !== "text") {
+        refreshed.options = Array.from(
+            questionEl.querySelectorAll(".option"),
+        ).map((optionEl) => {
+            const input = optionEl.querySelector(
+                'input[type="radio"], input[type="checkbox"]',
+            );
+            const label = optionEl.querySelector("span");
+            return input && label
+                ? { value: input.value, html: label.innerHTML }
+                : null;
+        }).filter(Boolean);
+    } else {
+        refreshed.options = [];
+    }
+
+    return refreshed;
+}
+
 function applyFlashcardSession(session) {
     fcSectionIds = normalizeSectionIds(session.sectionIds);
-    fcQueue = session.queue;
+    fcQueue = session.queue.map(refreshFlashcardCardFromDom);
     fcIndex = session.index;
     fcCorrect = session.correct || 0;
     fcWrong = session.wrong || 0;
@@ -365,6 +403,7 @@ Object.assign(window, {
     buildFlashcardSnapshot,
     saveFlashcardProgress,
     isFlashcardSessionValid,
+    refreshFlashcardCardFromDom,
     applyFlashcardSession,
     restoreFlashcardSnapshot,
     syncFlashcardRadioAnswer,
@@ -392,6 +431,7 @@ export {
     buildFlashcardSnapshot,
     saveFlashcardProgress,
     isFlashcardSessionValid,
+    refreshFlashcardCardFromDom,
     applyFlashcardSession,
     restoreFlashcardSnapshot,
     syncFlashcardRadioAnswer,

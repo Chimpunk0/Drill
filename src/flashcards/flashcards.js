@@ -16,42 +16,7 @@ function buildFcQueue(sectionIds = getActiveSectionIds()) {
         const sec = document.getElementById(secId);
         if (!sec) return;
         sec.querySelectorAll(".question").forEach((q) => {
-            const qId = q.id;
-            const correctVal = q.getAttribute("data-answer");
-            const keywords = q.getAttribute("data-keywords");
-            const kind = q.querySelector('input[type="text"]')
-                ? "text"
-                : q.querySelector('input[type="checkbox"]')
-                  ? "checkbox"
-                  : "radio";
-            const labelEl = q.querySelector(".question-label");
-            const labelHTML = labelEl ? labelEl.innerHTML : "";
-            const imageEl = q.querySelector("img");
-            const imageHTML = imageEl ? imageEl.outerHTML : "";
-
-            let options = [];
-            if (kind !== "text") {
-                q.querySelectorAll(".option").forEach((opt) => {
-                    const inp = opt.querySelector(
-                        'input[type="radio"], input[type="checkbox"]',
-                    );
-                    const span = opt.querySelector("span");
-                    if (inp && span)
-                        options.push({
-                            value: inp.value,
-                            html: span.innerHTML,
-                        });
-                });
-            }
-            allQuestions.push({
-                qId,
-                correctVal,
-                keywords,
-                kind,
-                labelHTML,
-                imageHTML,
-                options,
-            });
+            allQuestions.push(refreshFlashcardCardFromDom({ qId: q.id }));
         });
     });
     // Fisher-Yates shuffle
