@@ -81,6 +81,15 @@ def validate_file(path: Path) -> tuple[int, list[str], list[str]]:
                     isinstance(item, str) and item.strip() for item in keywords
                 ):
                     errors.append(f"{qprefix}: text question needs keywords")
+                answer_mode = question.get("answerMode")
+                if answer_mode is not None and answer_mode not in {
+                    "contains_any",
+                    "contains_all",
+                    "sequence",
+                }:
+                    errors.append(
+                        f"{qprefix}: answerMode must be contains_any, contains_all, or sequence"
+                    )
 
             explanation = question.get("explanation")
             if explanation is not None and not isinstance(explanation, str):

@@ -266,6 +266,7 @@ function refreshFlashcardCardFromDom(card) {
         ...card,
         correctVal: questionEl.getAttribute("data-answer"),
         keywords: questionEl.getAttribute("data-keywords"),
+        answerMode: questionEl.getAttribute("data-answer-mode"),
         kind: questionEl.querySelector('input[type="text"]')
             ? "text"
             : questionEl.querySelector('input[type="checkbox"]')

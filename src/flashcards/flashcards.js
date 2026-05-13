@@ -170,6 +170,7 @@ function submitCurrentFlashcardText() {
         input.dataset.fcQid,
         input.dataset.fcKeywords || "",
         input.dataset.fcCorrect,
+        input.dataset.fcAnswerMode || "",
     );
 }
 
@@ -253,7 +254,7 @@ function renderFcCard(snapshot = null) {
             : "";
         optionsHTML = `<div class="fc-text-wrap">
             <input class="fc-text-input" id="fc-text-input" type="text" placeholder="Napíšte odpoveď..." autocomplete="off" spellcheck="false"
-                data-fc-qid="${q.qId}" data-fc-keywords="${(q.keywords || "").replace(/"/g, "&quot;")}" data-fc-correct="${q.correctVal}">
+                data-fc-qid="${q.qId}" data-fc-keywords="${(q.keywords || "").replace(/"/g, "&quot;")}" data-fc-correct="${q.correctVal}" data-fc-answer-mode="${(q.answerMode || "").replace(/"/g, "&quot;")}">
             ${hintHTML}
             <button class="fc-submit-text" data-fc-submit="true">Overiť</button>
         </div>`;
@@ -400,7 +401,7 @@ function fcGetCorrectText(qId, correctVal) {
     return correctVal;
 }
 
-function fcSubmitText(qId, keywords, correctVal) {
+function fcSubmitText(qId, keywords, correctVal, answerMode = null) {
     if (fcAnswered) return;
     const inp = document.getElementById("fc-text-input");
     if (!inp) return;
@@ -413,7 +414,7 @@ function fcSubmitText(qId, keywords, correctVal) {
     let isCorrect = false;
     let partialText = null;
     if (keywords) {
-        const evaluation = evaluateTextKeywordAnswer(userVal, keywords);
+        const evaluation = evaluateTextKeywordAnswer(userVal, keywords, answerMode);
         isCorrect = evaluation.isCorrect;
         partialText = getPartialTextKeywordAnswerText(
             evaluation.matchedCount,
@@ -429,7 +430,7 @@ function fcSubmitText(qId, keywords, correctVal) {
 
     // Show accepted answers
     const accepted = keywords
-        ? keywords.split(",").map((k) => k.trim())
+        ? parseTextKeywords(keywords)
         : correctVal !== "text"
           ? [correctVal]
           : [];

@@ -537,6 +537,7 @@
           "id": "q1_22",
           "type": "text",
           "label": "22. Seřaďte do správného pořadí etapy vývoje software podle Microsoft SDLC:1. testování a ověření2. návrh koncepce3. implementace4. analýza požadavků5. vydání nové verze",
+          "answerMode": "sequence",
           "keywords": [
             "4",
             "2",
@@ -1037,6 +1038,7 @@
           "id": "q7_16",
           "type": "text",
           "label": "16. Srovnejte do správného pořadí funkce volané při dešifrování.1. EVP_CIPHER_fetch2. EVP_DecryptFinal3. EVP_DecryptInit4. EVP_DecryptUpdate",
+          "answerMode": "sequence",
           "keywords": [
             "1",
             "3",

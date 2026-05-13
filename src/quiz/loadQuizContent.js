@@ -479,8 +479,12 @@ function renderQuestion(question) {
         `;
     }
 
-    const keywords = Array.isArray(question.keywords)
-        ? question.keywords.join(",")
+    const keywordValues = Array.isArray(question.keywords)
+        ? question.keywords
+        : [];
+    const keywords = JSON.stringify(keywordValues);
+    const answerMode = question.answerMode
+        ? ` data-answer-mode="${escapeHtml(question.answerMode)}"`
         : "";
     const hintHtmlValue = question.hintHtml || question.hint_html;
     const hintHtml = typeof hintHtmlValue === "string"
@@ -490,7 +494,7 @@ function renderQuestion(question) {
           : "";
 
     return `
-        <div class="question" id="${escapeHtml(question.id)}" data-answer="text" data-keywords="${escapeHtml(keywords)}">
+        <div class="question" id="${escapeHtml(question.id)}" data-answer="text" data-keywords="${escapeHtml(keywords)}"${answerMode}>
             <div class="question-label">${labelHtml}</div>
             ${imageHtml}
             <div class="text-input-wrap">

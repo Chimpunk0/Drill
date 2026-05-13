@@ -43,6 +43,7 @@ function evaluateQuiz() {
             const feedbackEl = document.getElementById(`${qId}-fb`);
             const correctVal = q.getAttribute("data-answer");
             const keywords = q.getAttribute("data-keywords");
+            const answerMode = q.getAttribute("data-answer-mode");
             const explanation = getExplanation(
                 qId,
                 getAutoExplanationFromQuestionEl(q),
@@ -139,7 +140,7 @@ function evaluateQuiz() {
                     : "";
                 // Build accepted answers list for display
                 const acceptedAnswers = keywords
-                    ? keywords.split(",").map((k) => k.trim())
+                    ? parseTextKeywords(keywords)
                     : correctVal !== "text"
                       ? [correctVal]
                       : [];
@@ -162,6 +163,7 @@ function evaluateQuiz() {
                         const evaluation = evaluateTextKeywordAnswer(
                             userVal,
                             keywords,
+                            answerMode,
                         );
                         isCorrect = evaluation.isCorrect;
                         partialText = getPartialTextKeywordAnswerText(
@@ -306,7 +308,19 @@ function getPartialMultiAnswerText(selectedValues, correctValues) {
 }
 
 function parseTextKeywords(keywords) {
-    return (keywords || "")
+    if (Array.isArray(keywords)) {
+        return keywords
+            .map((keyword) => String(keyword).trim())
+            .filter(Boolean);
+    }
+    const rawKeywords = String(keywords || "").trim();
+    if (rawKeywords.startsWith("[")) {
+        try {
+            const parsed = JSON.parse(rawKeywords);
+            if (Array.isArray(parsed)) return parseTextKeywords(parsed);
+        } catch (e) {}
+    }
+    return rawKeywords
         .split(",")
         .map((keyword) => keyword.trim().toLowerCase())
         .filter(Boolean);
@@ -321,18 +335,82 @@ function normalizeTextAnswer(value) {
         .trim();
 }
 
-function evaluateTextKeywordAnswer(userVal, keywords) {
+function tokenizeTextAnswer(value) {
+    return normalizeTextAnswer(value).split(" ").filter(Boolean);
+}
+
+function getSequenceKeywords(keywordList) {
+    if (!keywordList.length) return [];
+    const sequenceKeywords =
+        keywordList.length % 2 === 0 &&
+        keywordList
+            .slice(0, keywordList.length / 2)
+            .every((keyword, index) => keyword === keywordList[index + keywordList.length / 2])
+            ? keywordList.slice(0, keywordList.length / 2)
+            : keywordList;
+    const joined = sequenceKeywords.join(" ");
+    return tokenizeTextAnswer(joined);
+}
+
+function inferTextAnswerMode(keywordList, answerMode) {
+    if (answerMode) return answerMode;
+    const sequence = getSequenceKeywords(keywordList);
+    if (
+        sequence.length > 1 &&
+        sequence.every((token) => /^\d+$/.test(token))
+    ) {
+        return "sequence";
+    }
+    return "contains_any";
+}
+
+function countMatchedKeywords(normalizedUser, normalizedKeywords) {
+    return normalizedKeywords.filter((keyword) =>
+        normalizedUser.includes(keyword),
+    ).length;
+}
+
+function evaluateTextKeywordAnswer(userVal, keywords, answerMode = null) {
     const keywordList = parseTextKeywords(keywords);
     const normalizedUser = normalizeTextAnswer(userVal);
-    const matchedKeywords = keywordList.filter((keyword) =>
-        normalizedUser.includes(normalizeTextAnswer(keyword)),
+    const mode = inferTextAnswerMode(keywordList, answerMode);
+    if (mode === "sequence") {
+        const expected = getSequenceKeywords(keywordList);
+        const actual = tokenizeTextAnswer(userVal);
+        const matchedCount = expected.filter(
+            (token, index) => token === actual[index],
+        ).length;
+        return {
+            isCorrect:
+                expected.length > 0 &&
+                actual.length === expected.length &&
+                matchedCount === expected.length,
+            matchedCount,
+            totalCount: expected.length,
+            mode,
+        };
+    }
+
+    const normalizedKeywords = keywordList
+        .map((keyword) => normalizeTextAnswer(keyword))
+        .filter(Boolean);
+    const matchedCount = countMatchedKeywords(
+        normalizedUser,
+        [...new Set(normalizedKeywords)],
     );
+    const totalCount =
+        mode === "contains_all"
+            ? new Set(normalizedKeywords).size
+            : normalizedKeywords.length;
     return {
         isCorrect:
-            keywordList.length > 0 &&
-            matchedKeywords.length > 0,
-        matchedCount: matchedKeywords.length,
-        totalCount: keywordList.length,
+            normalizedKeywords.length > 0 &&
+            (mode === "contains_all"
+                ? matchedCount === totalCount
+                : matchedCount > 0),
+        matchedCount,
+        totalCount,
+        mode,
     };
 }
 
@@ -391,10 +469,7 @@ function getAutoExplanationFromQuestionEl(questionEl) {
         return `Správné odpovědi jsou ${correctText}.`;
     }
     if (keywords) {
-        const accepted = keywords
-            .split(",")
-            .map((k) => k.trim())
-            .filter(Boolean);
+        const accepted = parseTextKeywords(keywords);
         if (accepted.length > 0) {
             return `Akceptuje se odpověď: ${accepted.join(" / ")}.`;
         }
@@ -429,10 +504,7 @@ function getAutoExplanationFromFcQuestion(q) {
         }
     }
     if (q.keywords) {
-        const accepted = q.keywords
-            .split(",")
-            .map((k) => k.trim())
-            .filter(Boolean);
+        const accepted = parseTextKeywords(q.keywords);
         if (accepted.length > 0) {
             return `Akceptuje se odpověď: ${accepted.join(" / ")}.`;
         }
@@ -447,7 +519,7 @@ function getExplanation(qId, fallback) {
     return EXPLANATIONS[qId] || fallback || null;
 }
 
-Object.assign(window, {
+const quizApi = {
     buildFeedbackHTML,
     evaluateQuiz,
     clearQuiz,
@@ -464,7 +536,11 @@ Object.assign(window, {
     getAutoExplanationFromQuestionEl,
     getAutoExplanationFromFcQuestion,
     getExplanation,
-});
+};
+
+if (typeof window !== "undefined") {
+    Object.assign(window, quizApi);
+}
 
 export {
     buildFeedbackHTML,
@@ -476,6 +552,9 @@ export {
     getPartialMultiAnswerText,
     parseTextKeywords,
     normalizeTextAnswer,
+    tokenizeTextAnswer,
+    getSequenceKeywords,
+    inferTextAnswerMode,
     evaluateTextKeywordAnswer,
     getPartialTextKeywordAnswerText,
     setQuestionMultiOptionStates,
