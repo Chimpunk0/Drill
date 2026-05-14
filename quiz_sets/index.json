@@ -25,6 +25,11 @@
       "id": "bpc-vba/kodove-chytaky-quiz-large",
       "label": "BPC-VBA cviko-skuska large",
       "dataUrl": "bpc-vba/kodove-chytaky-quiz-large.json"
+    },
+    {
+      "id": "testing/edge-cases",
+      "label": "Testing – Edge Cases",
+      "dataUrl": "testing/edge-cases.json"
     }
   ]
 }

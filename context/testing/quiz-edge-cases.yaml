@@ -1,0 +1,128 @@
+# Human-editable source fixture for testing quiz generation.
+# Run:
+#   python3 generate_quiz_set.py context/testing/quiz-edge-cases.yaml
+#
+# This source intentionally covers the YAML generator's supported combinations.
+# The matching runtime JSON fixture in quiz_sets/testing/edge-cases.json also
+# includes JSON-only fields such as answerMode and HTML option labels.
+
+set_id: "testing/edge-cases"
+label: "Testing – Edge Cases"
+title: "Testing Quiz Edge Cases"
+sections:
+  - id: "basics"
+    title: "1. Basic question types"
+    questions:
+      - id: "mcq_plain_four_options"
+        type: "mcq"
+        label: "Plain single-choice question with four options."
+        answer: "b"
+        options:
+          a: "Wrong option"
+          b: "Correct option"
+          c: "Another wrong option"
+          d: "Last wrong option"
+        explanation: "Single-choice questions should accept exactly one radio answer."
+
+      - id: "mcq_options_as_list"
+        type: "mcq"
+        label: "Single-choice question using list-shaped options."
+        answer: "yes"
+        options:
+          - value: "yes"
+            text: "Yes, this is the correct list option."
+          - value: "no"
+            text: "No, this is intentionally wrong."
+        explanation: "The generator accepts options either as a mapping or as value/text rows."
+
+      - id: "mcq_multi_answer_as_list"
+        type: "mcq_multi"
+        label: "Multiple-choice question with two correct answers."
+        answer:
+          - "a"
+          - "c"
+        options:
+          a: "Correct A"
+          b: "Wrong B"
+          c: "Correct C"
+          d: "Wrong D"
+        explanation: "Multi-select answers can be provided as a YAML list."
+
+      - id: "mcq_multi_answer_as_string"
+        type: "mcq_multi"
+        label: "Multiple-choice question with comma-separated correct answers."
+        answer: "left,right"
+        options:
+          left: "Correct left value"
+          middle: "Wrong middle value"
+          right: "Correct right value"
+        explanation: "The generator also accepts comma-separated answers for mcq_multi."
+
+  - id: "rich_content"
+    title_html: "2. Rich <em>content</em> inputs"
+    questions:
+      - id: "mcq_html_label_and_escaped_text"
+        type: "mcq"
+        label_html: "HTML label with <code>&lt;code&gt;</code>, symbols &amp; escaped text."
+        answer: "escaped"
+        options:
+          plain: "Plain <not HTML> text should be escaped."
+          escaped: "Correct answer with ampersand & quotes \"inside\"."
+          unicode: "Diacritics: č, š, ž, ä, ô."
+        explanation: "Labels can be HTML while option text remains escaped plain text."
+
+      - id: "mcq_with_image_path"
+        type: "mcq"
+        label: "Question with an image path that should be resolved relative to the set."
+        image: "img/example-placeholder.png"
+        image_alt: "Placeholder image for testing relative paths"
+        answer: "ok"
+        options:
+          ok: "The image path is present."
+          nope: "There is no image path."
+        explanation: "This checks image and image_alt propagation."
+
+      - id: "mcq_with_image_html"
+        type: "mcq"
+        label: "Question with custom image HTML."
+        image_html: "<svg role=\"img\" aria-label=\"Inline test SVG\" width=\"120\" height=\"40\"><rect width=\"120\" height=\"40\" fill=\"#f5f5f5\" stroke=\"#222\"/><text x=\"10\" y=\"25\">SVG</text></svg>"
+        answer: "inline"
+        options:
+          inline: "Inline image HTML is present."
+          missing: "Inline image HTML is missing."
+        explanation: "This checks image_html passthrough."
+
+  - id: "text_answers"
+    title: "3. Text answer inputs"
+    questions:
+      - id: "text_contains_any_plain"
+        type: "text"
+        label: "Text answer with default contains-any matching."
+        keywords:
+          - "alpha"
+          - "first"
+        placeholder: "Type alpha or first"
+        hint: "Either accepted keyword should pass."
+        explanation: "The runtime treats text questions without answerMode as contains_any."
+
+      - id: "text_html_label_hint"
+        type: "text"
+        label_html: "Text answer with <strong>HTML label</strong> and HTML hint."
+        keywords:
+          - "beta"
+          - "second value"
+        placeholder: "Type beta"
+        hint_html: "Try <code>beta</code> or the phrase <code>second value</code>."
+        explanation: "This checks label_html and hint_html for text questions."
+
+      - id: "text_keyword_punctuation"
+        type: "text"
+        label: "Text answer with punctuation, spaces, and diacritics."
+        keywords:
+          - "termín dodání"
+          - "hello, world"
+          - "C++"
+        placeholder: "Type an accepted phrase"
+        hint: "Accepted keywords intentionally include punctuation and non-ASCII characters."
+        explanation: "Useful for checking keyword parsing and normalization."
+

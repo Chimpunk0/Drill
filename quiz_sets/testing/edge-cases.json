@@ -1,0 +1,283 @@
+{
+  "schemaVersion": 1,
+  "setId": "testing/edge-cases",
+  "label": "Testing – Edge Cases",
+  "title": "Testing Quiz Edge Cases",
+  "description": "Synthetic fixture for regression testing all supported quiz question types and rendering combinations.",
+  "sections": [
+    {
+      "id": "basics",
+      "title": "1. Basic question types",
+      "questions": [
+        {
+          "id": "mcq_plain_four_options",
+          "type": "mcq",
+          "label": "Plain single-choice question with four options.",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Wrong option"
+            },
+            {
+              "value": "b",
+              "text": "Correct option"
+            },
+            {
+              "value": "c",
+              "text": "Another wrong option"
+            },
+            {
+              "value": "d",
+              "text": "Last wrong option"
+            }
+          ],
+          "explanation": "Single-choice questions should accept exactly one radio answer."
+        },
+        {
+          "id": "mcq_two_options_boolean_values",
+          "type": "mcq",
+          "label": "Single-choice question with boolean-like string values.",
+          "answer": "true",
+          "options": [
+            {
+              "value": "true",
+              "text": "Correct value named true"
+            },
+            {
+              "value": "false",
+              "text": "Wrong value named false"
+            }
+          ],
+          "explanation": "Option values are strings even when they look like booleans."
+        },
+        {
+          "id": "mcq_numeric_like_values",
+          "type": "mcq",
+          "label": "Single-choice question with numeric-like string values.",
+          "answer": "02",
+          "options": [
+            {
+              "value": "1",
+              "text": "One"
+            },
+            {
+              "value": "02",
+              "text": "Zero-padded two"
+            },
+            {
+              "value": "3.0",
+              "text": "Three point zero"
+            }
+          ],
+          "explanation": "The runtime should compare values as exact strings."
+        },
+        {
+          "id": "mcq_multi_two_correct",
+          "type": "mcq_multi",
+          "label": "Multiple-choice question with two correct answers.",
+          "answer": [
+            "a",
+            "c"
+          ],
+          "options": [
+            {
+              "value": "a",
+              "text": "Correct A"
+            },
+            {
+              "value": "b",
+              "text": "Wrong B"
+            },
+            {
+              "value": "c",
+              "text": "Correct C"
+            },
+            {
+              "value": "d",
+              "text": "Wrong D"
+            }
+          ],
+          "explanation": "Multi-select scoring should require the exact selected set."
+        },
+        {
+          "id": "mcq_multi_single_correct",
+          "type": "mcq_multi",
+          "label": "Multiple-choice question with only one correct checkbox answer.",
+          "answer": [
+            "only"
+          ],
+          "options": [
+            {
+              "value": "only",
+              "text": "The only correct checkbox"
+            },
+            {
+              "value": "extra",
+              "text": "Extra incorrect checkbox"
+            },
+            {
+              "value": "none",
+              "text": "Another incorrect checkbox"
+            }
+          ],
+          "explanation": "A multi-select question may still have a single correct value."
+        }
+      ]
+    },
+    {
+      "id": "rich_content",
+      "titleHtml": "2. Rich <em>content</em> inputs",
+      "questions": [
+        {
+          "id": "mcq_html_label_and_html_option",
+          "type": "mcq",
+          "labelHtml": "HTML label with <code>&lt;code&gt;</code>, symbols &amp; escaped text.",
+          "answer": "html",
+          "options": [
+            {
+              "value": "plain",
+              "text": "Plain <not HTML> text should be escaped."
+            },
+            {
+              "value": "html",
+              "html": "Correct option containing <strong>trusted HTML</strong> and <code>inline code</code>."
+            },
+            {
+              "value": "unicode",
+              "text": "Diacritics: č, š, ž, ä, ô."
+            }
+          ],
+          "explanation": "The renderer supports labelHtml and option.html while escaping option.text."
+        },
+        {
+          "id": "mcq_formatted_label_code_fence",
+          "type": "mcq",
+          "label": "Formatted label with a fenced code block:\n```javascript\nconst answer = \"b\";\nconsole.log(answer);\n```",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Option A"
+            },
+            {
+              "value": "b",
+              "text": "Option B"
+            }
+          ],
+          "explanation": "Plain labels can contain fenced code blocks that render as code."
+        },
+        {
+          "id": "mcq_with_image_path",
+          "type": "mcq",
+          "label": "Question with an image path that should be resolved relative to the set.",
+          "image": "img/example-placeholder.png",
+          "imageAlt": "Placeholder image for testing relative paths",
+          "answer": "ok",
+          "options": [
+            {
+              "value": "ok",
+              "text": "The image path is present."
+            },
+            {
+              "value": "nope",
+              "text": "There is no image path."
+            }
+          ],
+          "explanation": "This checks image and imageAlt propagation. The placeholder path is intentionally synthetic."
+        },
+        {
+          "id": "mcq_with_image_html",
+          "type": "mcq",
+          "label": "Question with custom image HTML.",
+          "imageHtml": "<svg role=\"img\" aria-label=\"Inline test SVG\" width=\"120\" height=\"40\"><rect width=\"120\" height=\"40\" fill=\"#f5f5f5\" stroke=\"#222\"/><text x=\"10\" y=\"25\">SVG</text></svg>",
+          "answer": "inline",
+          "options": [
+            {
+              "value": "inline",
+              "text": "Inline image HTML is present."
+            },
+            {
+              "value": "missing",
+              "text": "Inline image HTML is missing."
+            }
+          ],
+          "explanation": "This checks imageHtml passthrough."
+        }
+      ]
+    },
+    {
+      "id": "text_answers",
+      "title": "3. Text answer inputs",
+      "questions": [
+        {
+          "id": "text_contains_any_default",
+          "type": "text",
+          "label": "Text answer with default contains-any matching.",
+          "keywords": [
+            "alpha",
+            "first"
+          ],
+          "placeholder": "Type alpha or first",
+          "hint": "Either accepted keyword should pass.",
+          "explanation": "The runtime treats text questions without answerMode as contains_any."
+        },
+        {
+          "id": "text_contains_any_explicit",
+          "type": "text",
+          "label": "Text answer with explicit contains_any matching.",
+          "answerMode": "contains_any",
+          "keywords": [
+            "beta",
+            "second value"
+          ],
+          "placeholder": "Type beta",
+          "hintHtml": "Try <code>beta</code> or the phrase <code>second value</code>.",
+          "explanation": "This checks explicit contains_any plus HTML hint rendering."
+        },
+        {
+          "id": "text_contains_all",
+          "type": "text",
+          "labelHtml": "Text answer requiring <strong>all</strong> keywords in any order.",
+          "answerMode": "contains_all",
+          "keywords": [
+            "scope",
+            "deadline",
+            "owner"
+          ],
+          "placeholder": "Mention all required words",
+          "hint": "All three words must appear, but the order does not matter.",
+          "explanation": "contains_all should fail partial answers and pass when every keyword is present."
+        },
+        {
+          "id": "text_sequence",
+          "type": "text",
+          "label": "Text answer requiring a sequence of ordered tokens.",
+          "answerMode": "sequence",
+          "keywords": [
+            "1",
+            "3",
+            "4",
+            "2"
+          ],
+          "placeholder": "Example: 1, 3, 4, 2",
+          "hint": "The order matters for this one.",
+          "explanation": "sequence should catch answers with the right tokens in the wrong order."
+        },
+        {
+          "id": "text_keyword_punctuation_unicode",
+          "type": "text",
+          "label": "Text answer with punctuation, spaces, and diacritics.",
+          "keywords": [
+            "termín dodání",
+            "hello, world",
+            "C++"
+          ],
+          "placeholder": "Type an accepted phrase",
+          "hint": "Accepted keywords intentionally include punctuation and non-ASCII characters.",
+          "explanation": "Useful for checking keyword parsing and normalization."
+        }
+      ]
+    }
+  ]
+}
