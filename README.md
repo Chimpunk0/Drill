@@ -44,15 +44,23 @@ npm run validate
 
 ## Quiz Content Source
 
-By default, local development and production builds load quiz content from the
-separate content repository:
+Local development and production builds load quiz content from the directory
+configured by `QUIZ_SETS_DIR`.
 
-```text
-/Users/simonpollak/Documents/Projects/drill_content/quiz_sets
+Create a local `.env` file from `.env.example`:
+
+```bash
+cp .env.example .env
+```
+
+Then set your local content checkout:
+
+```bash
+QUIZ_SETS_DIR=/absolute/path/to/drill_content/quiz_sets
 ```
 
 This is the single runtime quiz-set source. During development, Vite serves
-`/quiz_sets/...` from that directory. During `npm run build`, the build script
+`/quiz_sets/...` from `QUIZ_SETS_DIR`. During `npm run build`, the build script
 copies that directory into `dist/quiz_sets`.
 
 To use a different content checkout temporarily:

@@ -10,12 +10,36 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / "dist"
-EXTERNAL_QUIZ_SETS = Path(
-    os.environ.get(
-        "QUIZ_SETS_DIR",
-        "/Users/simonpollak/Documents/Projects/drill_content/quiz_sets",
-    )
-).expanduser()
+
+
+def load_dotenv_value(name: str) -> str | None:
+    value = os.environ.get(name)
+    if value:
+        return value
+    env_path = ROOT / ".env"
+    if not env_path.exists():
+        return None
+    for line in env_path.read_text(encoding="utf-8").splitlines():
+        stripped = line.strip()
+        if not stripped or stripped.startswith("#") or "=" not in stripped:
+            continue
+        key, raw_value = stripped.split("=", 1)
+        if key.strip() == name:
+            return raw_value.strip().strip('"').strip("'")
+    return None
+
+
+def get_quiz_sets_dir() -> Path:
+    value = load_dotenv_value("QUIZ_SETS_DIR")
+    if not value:
+        raise SystemExit(
+            "QUIZ_SETS_DIR is not set. Create .env from .env.example or run with "
+            "QUIZ_SETS_DIR=/path/to/quiz_sets."
+        )
+    return Path(value).expanduser()
+
+
+EXTERNAL_QUIZ_SETS = get_quiz_sets_dir()
 
 DIRS = [
     "src/assets",

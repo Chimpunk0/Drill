@@ -6,14 +6,23 @@ quiz sets, images, and runtime manifest.
 
 ## Source Of Truth
 
-The default quiz content directory is:
+The quiz content directory is configured with `QUIZ_SETS_DIR`.
 
-```text
-/Users/simonpollak/Documents/Projects/drill_content/quiz_sets
+Create a private local `.env` file from the committed template:
+
+```bash
+cp .env.example .env
+```
+
+Then edit `.env`:
+
+```bash
+QUIZ_SETS_DIR=/absolute/path/to/drill_content/quiz_sets
 ```
 
 This directory is the single runtime source for quiz content during local
-development, validation, and production builds.
+development, validation, and production builds. `.env` is ignored by git because
+it contains machine-specific local paths.
 
 The app serves this content at:
 
@@ -24,7 +33,7 @@ The app serves this content at:
 For example, this content file:
 
 ```text
-/Users/simonpollak/Documents/Projects/drill_content/quiz_sets/bpc-vba-2026/default.json
+${QUIZ_SETS_DIR}/bpc-vba-2026/default.json
 ```
 
 is loaded by the app as:
@@ -51,7 +60,7 @@ repository.
 Every available quiz set must be registered in:
 
 ```text
-/Users/simonpollak/Documents/Projects/drill_content/quiz_sets/index.json
+${QUIZ_SETS_DIR}/index.json
 ```
 
 Each manifest entry should include:
@@ -84,19 +93,19 @@ Field meanings:
 1. Create a directory under the content source:
 
 ```text
-/Users/simonpollak/Documents/Projects/drill_content/quiz_sets/my-course
+${QUIZ_SETS_DIR}/my-course
 ```
 
 2. Add the quiz JSON:
 
 ```text
-/Users/simonpollak/Documents/Projects/drill_content/quiz_sets/my-course/default.json
+${QUIZ_SETS_DIR}/my-course/default.json
 ```
 
 3. Put images beside the quiz set when possible:
 
 ```text
-/Users/simonpollak/Documents/Projects/drill_content/quiz_sets/my-course/img/example.png
+${QUIZ_SETS_DIR}/my-course/img/example.png
 ```
 
 4. Reference images from the quiz JSON using paths relative to the quiz JSON
@@ -151,7 +160,7 @@ edge-case quiz should be available at runtime or included in validation, keep it
 in the content source:
 
 ```text
-/Users/simonpollak/Documents/Projects/drill_content/quiz_sets/testing/edge-cases.json
+${QUIZ_SETS_DIR}/testing/edge-cases.json
 ```
 
 The manifest entry should be:

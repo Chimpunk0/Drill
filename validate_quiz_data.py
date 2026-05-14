@@ -11,12 +11,34 @@ from pathlib import Path
 from typing import Any
 
 
-DEFAULT_EXTERNAL_QUIZ_SETS = Path(
-    os.environ.get(
-        "QUIZ_SETS_DIR",
-        "/Users/simonpollak/Documents/Projects/drill_content/quiz_sets",
-    )
-).expanduser()
+ROOT = Path(__file__).resolve().parent
+
+
+def load_dotenv_value(name: str) -> str | None:
+    value = os.environ.get(name)
+    if value:
+        return value
+    env_path = ROOT / ".env"
+    if not env_path.exists():
+        return None
+    for line in env_path.read_text(encoding="utf-8").splitlines():
+        stripped = line.strip()
+        if not stripped or stripped.startswith("#") or "=" not in stripped:
+            continue
+        key, raw_value = stripped.split("=", 1)
+        if key.strip() == name:
+            return raw_value.strip().strip('"').strip("'")
+    return None
+
+
+def get_quiz_sets_dir() -> Path:
+    value = load_dotenv_value("QUIZ_SETS_DIR")
+    if not value:
+        raise SystemExit(
+            "QUIZ_SETS_DIR is not set. Create .env from .env.example or run with "
+            "QUIZ_SETS_DIR=/path/to/quiz_sets."
+        )
+    return Path(value).expanduser()
 
 
 def validate_file(path: Path) -> tuple[int, list[str], list[str]]:
@@ -220,7 +242,7 @@ def main() -> None:
 
     paths = [Path(path) for path in args.paths]
     if args.all or not paths:
-        manifest_path = DEFAULT_EXTERNAL_QUIZ_SETS / "index.json"
+        manifest_path = get_quiz_sets_dir() / "index.json"
         if not manifest_path.exists():
             print(f"ERROR: quiz set manifest does not exist: {manifest_path}")
             sys.exit(1)
