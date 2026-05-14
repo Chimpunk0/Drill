@@ -14,26 +14,61 @@ window.QUIZ_FALLBACK_SETS = window.QUIZ_FALLBACK_SETS || [
     id: "bpc-vba-2026/default",
     label: "BPC-VBA 2026",
     dataUrl: "quiz_sets/bpc-vba-2026/default.json",
+    source: {
+      type: "github",
+      owner: "Chimpunk0",
+      repo: "drill_content",
+      branch: "main",
+      path: "quiz_sets/bpc-vba-2026/default.json",
+    },
   },
   {
     id: "bpc-sos-2026/polsemestralka",
     label: "BPC-SOS 2026 – Polsemestralka",
     dataUrl: "quiz_sets/bpc-sos-2026/polsemestralka.json",
+    source: {
+      type: "github",
+      owner: "Chimpunk0",
+      repo: "drill_content",
+      branch: "main",
+      path: "quiz_sets/bpc-sos-2026/polsemestralka.json",
+    },
   },
   {
     id: "sos-skuska/sos-skuska",
     label: "SOS-SKUSKA (Skúška)",
     dataUrl: "quiz_sets/sos-skuska/sos-skuska.json",
+    source: {
+      type: "github",
+      owner: "Chimpunk0",
+      repo: "drill_content",
+      branch: "main",
+      path: "quiz_sets/sos-skuska/sos-skuska.json",
+    },
   },
   {
     id: "bpc-ic1-2026/skuska",
     label: "BPC-IC1 2026 – Skúška",
     dataUrl: "quiz_sets/bpc-ic1-2026/skuska.json",
+    source: {
+      type: "github",
+      owner: "Chimpunk0",
+      repo: "drill_content",
+      branch: "main",
+      path: "quiz_sets/bpc-ic1-2026/skuska.json",
+    },
   },
   {
     id: "bpc-vba/kodove-chytaky-quiz-large",
     label: "BPC-VBA cviko-skuska large",
     dataUrl: "quiz_sets/bpc-vba/kodove-chytaky-quiz-large.json",
+    source: {
+      type: "github",
+      owner: "Chimpunk0",
+      repo: "drill_content",
+      branch: "main",
+      path: "quiz_sets/bpc-vba/kodove-chytaky-quiz-large.json",
+    },
   },
 ];
 

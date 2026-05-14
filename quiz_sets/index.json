@@ -4,32 +4,74 @@
     {
       "id": "bpc-vba-2026/default",
       "label": "BPC-VBA 2026",
-      "dataUrl": "bpc-vba-2026/default.json"
+      "dataUrl": "bpc-vba-2026/default.json",
+      "source": {
+        "type": "github",
+        "owner": "Chimpunk0",
+        "repo": "drill_content",
+        "branch": "main",
+        "path": "quiz_sets/bpc-vba-2026/default.json"
+      }
     },
     {
       "id": "bpc-sos-2026/polsemestralka",
       "label": "BPC-SOS 2026 – Polsemestralka",
-      "dataUrl": "bpc-sos-2026/polsemestralka.json"
+      "dataUrl": "bpc-sos-2026/polsemestralka.json",
+      "source": {
+        "type": "github",
+        "owner": "Chimpunk0",
+        "repo": "drill_content",
+        "branch": "main",
+        "path": "quiz_sets/bpc-sos-2026/polsemestralka.json"
+      }
     },
     {
       "id": "sos-skuska/sos-skuska",
       "label": "SOS-SKUSKA (Skúška)",
-      "dataUrl": "sos-skuska/sos-skuska.json"
+      "dataUrl": "sos-skuska/sos-skuska.json",
+      "source": {
+        "type": "github",
+        "owner": "Chimpunk0",
+        "repo": "drill_content",
+        "branch": "main",
+        "path": "quiz_sets/sos-skuska/sos-skuska.json"
+      }
     },
     {
       "id": "bpc-ic1-2026/skuska",
       "label": "BPC-IC1 2026 – Skúška",
-      "dataUrl": "bpc-ic1-2026/skuska.json"
+      "dataUrl": "bpc-ic1-2026/skuska.json",
+      "source": {
+        "type": "github",
+        "owner": "Chimpunk0",
+        "repo": "drill_content",
+        "branch": "main",
+        "path": "quiz_sets/bpc-ic1-2026/skuska.json"
+      }
     },
     {
       "id": "bpc-vba/kodove-chytaky-quiz-large",
       "label": "BPC-VBA cviko-skuska large",
-      "dataUrl": "bpc-vba/kodove-chytaky-quiz-large.json"
+      "dataUrl": "bpc-vba/kodove-chytaky-quiz-large.json",
+      "source": {
+        "type": "github",
+        "owner": "Chimpunk0",
+        "repo": "drill_content",
+        "branch": "main",
+        "path": "quiz_sets/bpc-vba/kodove-chytaky-quiz-large.json"
+      }
     },
     {
       "id": "testing/edge-cases",
       "label": "Testing – Edge Cases",
-      "dataUrl": "testing/edge-cases.json"
+      "dataUrl": "testing/edge-cases.json",
+      "source": {
+        "type": "github",
+        "owner": "Chimpunk0",
+        "repo": "drill_content",
+        "branch": "main",
+        "path": "quiz_sets/testing/edge-cases.json"
+      }
     }
   ]
 }

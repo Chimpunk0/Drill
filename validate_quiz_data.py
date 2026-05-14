@@ -17,7 +17,6 @@ DEFAULT_EXTERNAL_QUIZ_SETS = Path(
         "/Users/simonpollak/Documents/Projects/drill_content/quiz_sets",
     )
 ).expanduser()
-LOCAL_EDGE_CASES_PATH = Path("quiz_sets/testing/edge-cases.json")
 
 
 def validate_file(path: Path) -> tuple[int, list[str], list[str]]:
@@ -144,6 +143,7 @@ def validate_manifest(path: Path) -> tuple[list[Path], list[str], list[str]]:
         if not isinstance(data_url, str) or not data_url.strip():
             errors.append(f"{prefix}: dataUrl is required")
             continue
+        validate_source(entry.get("source"), prefix, errors)
         if "://" in data_url or data_url.startswith(("/", "#")):
             warnings.append(f"{prefix}: external/absolute dataUrl not validated: {data_url}")
             continue
@@ -153,6 +153,27 @@ def validate_manifest(path: Path) -> tuple[list[Path], list[str], list[str]]:
             continue
         data_paths.append(data_path)
     return data_paths, errors, warnings
+
+
+def validate_source(source: Any, prefix: str, errors: list[str]) -> None:
+    if source is None:
+        return
+    if not isinstance(source, dict):
+        errors.append(f"{prefix}: source must be an object")
+        return
+    source_type = source.get("type")
+    if source_type != "github":
+        errors.append(f"{prefix}: source.type must be github")
+        return
+    for field in ("owner", "repo", "branch", "path"):
+        value = source.get(field)
+        if not isinstance(value, str) or not value.strip():
+            errors.append(f"{prefix}: source.{field} is required")
+    path = source.get("path")
+    if isinstance(path, str) and (
+        path.startswith(("/", "#")) or "://" in path or ".." in Path(path).parts
+    ):
+        errors.append(f"{prefix}: source.path must be a relative repo path")
 
 
 def validate_options_question(
@@ -197,19 +218,13 @@ def main() -> None:
     parser.add_argument("--all", action="store_true")
     args = parser.parse_args()
 
-    root = Path(__file__).resolve().parent
     paths = [Path(path) for path in args.paths]
     if args.all or not paths:
-        external_manifest_path = DEFAULT_EXTERNAL_QUIZ_SETS / "index.json"
-        manifest_path = (
-            external_manifest_path
-            if external_manifest_path.exists()
-            else root / "quiz_sets" / "index.json"
-        )
+        manifest_path = DEFAULT_EXTERNAL_QUIZ_SETS / "index.json"
+        if not manifest_path.exists():
+            print(f"ERROR: quiz set manifest does not exist: {manifest_path}")
+            sys.exit(1)
         paths, manifest_errors, manifest_warnings = validate_manifest(manifest_path)
-        edge_cases_path = root / LOCAL_EDGE_CASES_PATH
-        if edge_cases_path.exists() and edge_cases_path not in paths:
-            paths.append(edge_cases_path)
         all_errors = manifest_errors
         all_warnings = manifest_warnings
     else:

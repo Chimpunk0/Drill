@@ -1,5 +1,9 @@
-const EDITOR_REPO = "Chimpunk0/Drill";
-const EDITOR_BASE_BRANCH = "main";
+const EDITOR_DEFAULT_GITHUB_SOURCE = {
+    type: "github",
+    owner: "Chimpunk0",
+    repo: "drill_content",
+    branch: "main",
+};
 
 const editorState = {
     draft: null,
@@ -39,6 +43,24 @@ function getQuizSetFilePath() {
     } catch (e) {
         return dataUrl.replace(/^\.?\//, "");
     }
+}
+
+function getQuizSetGithubSource() {
+    const source = window.getCurrentQuizSet?.()?.source;
+    const filePath = getQuizSetFilePath();
+    if (source?.type === "github" && source.owner && source.repo && source.branch && source.path) {
+        return {
+            type: "github",
+            owner: source.owner,
+            repo: source.repo,
+            branch: source.branch,
+            path: source.path,
+        };
+    }
+    return {
+        ...EDITOR_DEFAULT_GITHUB_SOURCE,
+        path: filePath,
+    };
 }
 
 function normalizeDraftData(data) {
@@ -553,7 +575,9 @@ function exportJson() {
 function exportPrBundle() {
     updateFromForm();
     const data = normalizeDraftData(editorState.draft);
-    const filePath = getQuizSetFilePath();
+    const source = getQuizSetGithubSource();
+    const filePath = source.path;
+    const repoSlug = `${source.owner}/${source.repo}`;
     const updatedText = toPrettyJson(data);
     const originalText = toPrettyJson(getOriginalData());
     const patch = createReplacementPatch(filePath, originalText, updatedText);
@@ -562,8 +586,8 @@ function exportPrBundle() {
         `Quiz editor PR bundle`,
         ``,
         `Target file: ${filePath}`,
-        `Repository: ${EDITOR_REPO}`,
-        `Base branch: ${EDITOR_BASE_BRANCH}`,
+        `Repository: ${repoSlug}`,
+        `Base branch: ${source.branch}`,
         ``,
         `Option A: apply the patch locally:`,
         `git checkout -b quiz-content-edit`,
@@ -574,7 +598,7 @@ function exportPrBundle() {
         `git push -u origin quiz-content-edit`,
         ``,
         `Option B: open GitHub's file editor and replace ${filePath} with the exported JSON.`,
-        `https://github.com/${EDITOR_REPO}/edit/${EDITOR_BASE_BRANCH}/${filePath}`,
+        `https://github.com/${repoSlug}/edit/${source.branch}/${filePath}`,
         ``,
     ].join("\n");
     downloadText(
@@ -587,7 +611,7 @@ function exportPrBundle() {
         instructions,
         "text/plain",
     );
-    window.open(`https://github.com/${EDITOR_REPO}/edit/${EDITOR_BASE_BRANCH}/${filePath}`, "_blank", "noopener");
+    window.open(`https://github.com/${repoSlug}/edit/${source.branch}/${filePath}`, "_blank", "noopener");
 }
 
 function resetDraft() {

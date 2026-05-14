@@ -3,16 +3,10 @@ import { extname, join, normalize, relative, resolve, sep } from "node:path";
 import { defineConfig } from "vite";
 
 const rootDir = resolve(".");
-const localQuizSetsDir = join(rootDir, "quiz_sets");
-const externalQuizSetsDir = resolve(
+const quizSetsDir = resolve(
   process.env.QUIZ_SETS_DIR ||
     "/Users/simonpollak/Documents/Projects/drill_content/quiz_sets",
 );
-const edgeCasesManifestEntry = {
-  id: "testing/edge-cases",
-  label: "Testing – Edge Cases",
-  dataUrl: "testing/edge-cases.json",
-};
 
 function isInside(parent, child) {
   const rel = relative(parent, child);
@@ -36,15 +30,7 @@ function readJson(path) {
 }
 
 function buildQuizManifest() {
-  const manifestPath = join(externalQuizSetsDir, "index.json");
-  const manifest = existsSync(manifestPath)
-    ? readJson(manifestPath)
-    : readJson(join(localQuizSetsDir, "index.json"));
-  const sets = Array.isArray(manifest.sets) ? [...manifest.sets] : [];
-  if (!sets.some((set) => set?.id === edgeCasesManifestEntry.id)) {
-    sets.push(edgeCasesManifestEntry);
-  }
-  return JSON.stringify({ ...manifest, sets }, null, 2);
+  return JSON.stringify(readJson(join(quizSetsDir, "index.json")), null, 2);
 }
 
 function serveFile(res, filePath) {
@@ -56,7 +42,7 @@ function serveFile(res, filePath) {
 export default defineConfig({
   server: {
     fs: {
-      allow: [rootDir, externalQuizSetsDir],
+      allow: [rootDir, quizSetsDir],
     },
   },
   plugins: [
@@ -86,19 +72,10 @@ export default defineConfig({
             return;
           }
 
-          const localOverride = join(localQuizSetsDir, relativePath);
-          if (
-            relativePath === "testing/edge-cases.json" &&
-            existsSync(localOverride)
-          ) {
-            serveFile(res, localOverride);
-            return;
-          }
-
-          const externalPath = join(externalQuizSetsDir, relativePath);
+          const externalPath = join(quizSetsDir, relativePath);
           if (
             existsSync(externalPath) &&
-            isInside(externalQuizSetsDir, externalPath) &&
+            isInside(quizSetsDir, externalPath) &&
             statSync(externalPath).isFile()
           ) {
             serveFile(res, externalPath);

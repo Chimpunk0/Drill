@@ -31,11 +31,23 @@ function normalizeManifestSets(manifest, manifestUrl) {
             id: String(set.id),
             label: String(set.label),
             dataUrl: normalizeDataUrl(String(set.dataUrl), manifestUrl),
+            source: normalizeQuizSetSource(set.source),
         }));
     if (!sets.length) {
         throw new Error("Manifest neobsahuje žiadne platné quiz sety.");
     }
     return sets;
+}
+
+function normalizeQuizSetSource(source) {
+    if (!source || typeof source !== "object") return null;
+    if (source.type !== "github") return null;
+    const owner = String(source.owner || "").trim();
+    const repo = String(source.repo || "").trim();
+    const branch = String(source.branch || "").trim();
+    const path = String(source.path || "").trim();
+    if (!owner || !repo || !branch || !path) return null;
+    return { type: "github", owner, repo, branch, path };
 }
 
 function chooseActiveQuizSet() {

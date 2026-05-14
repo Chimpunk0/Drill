@@ -51,11 +51,9 @@ separate content repository:
 /Users/simonpollak/Documents/Projects/drill_content/quiz_sets
 ```
 
-The app still keeps `quiz_sets/testing/edge-cases.json` in this repository as a
-local regression fixture. During development, Vite serves normal quiz files from
-the content repo and serves that edge-case file from this app repo. During
-`npm run build`, the build script copies the external quiz sets into `dist/` and
-then overlays the local edge-case fixture.
+This is the single runtime quiz-set source. During development, Vite serves
+`/quiz_sets/...` from that directory. During `npm run build`, the build script
+copies that directory into `dist/quiz_sets`.
 
 To use a different content checkout temporarily:
 
@@ -63,6 +61,24 @@ To use a different content checkout temporarily:
 QUIZ_SETS_DIR=/path/to/other/quiz_sets npm run dev
 QUIZ_SETS_DIR=/path/to/other/quiz_sets npm run build
 QUIZ_SETS_DIR=/path/to/other/quiz_sets npm run validate
+```
+
+Each quiz-set manifest entry can include GitHub source metadata. The editor uses
+this to target PR exports and future local-helper PR creation:
+
+```json
+{
+  "id": "bpc-vba-2026/default",
+  "label": "BPC-VBA 2026",
+  "dataUrl": "bpc-vba-2026/default.json",
+  "source": {
+    "type": "github",
+    "owner": "Chimpunk0",
+    "repo": "drill_content",
+    "branch": "main",
+    "path": "quiz_sets/bpc-vba-2026/default.json"
+  }
+}
 ```
 
 ## Editing Quiz Sets and Making a PR
