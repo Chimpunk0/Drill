@@ -5,9 +5,19 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from pathlib import Path
 from typing import Any
+
+
+DEFAULT_EXTERNAL_QUIZ_SETS = Path(
+    os.environ.get(
+        "QUIZ_SETS_DIR",
+        "/Users/simonpollak/Documents/Projects/drill_content/quiz_sets",
+    )
+).expanduser()
+LOCAL_EDGE_CASES_PATH = Path("quiz_sets/testing/edge-cases.json")
 
 
 def validate_file(path: Path) -> tuple[int, list[str], list[str]]:
@@ -190,8 +200,16 @@ def main() -> None:
     root = Path(__file__).resolve().parent
     paths = [Path(path) for path in args.paths]
     if args.all or not paths:
-        manifest_path = root / "quiz_sets" / "index.json"
+        external_manifest_path = DEFAULT_EXTERNAL_QUIZ_SETS / "index.json"
+        manifest_path = (
+            external_manifest_path
+            if external_manifest_path.exists()
+            else root / "quiz_sets" / "index.json"
+        )
         paths, manifest_errors, manifest_warnings = validate_manifest(manifest_path)
+        edge_cases_path = root / LOCAL_EDGE_CASES_PATH
+        if edge_cases_path.exists() and edge_cases_path not in paths:
+            paths.append(edge_cases_path)
         all_errors = manifest_errors
         all_warnings = manifest_warnings
     else:

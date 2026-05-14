@@ -664,6 +664,56 @@
           ],
           "explanation": "Threat modeling se dělá už při návrhu systému: hledají se aktiva, hrozby, možné útoky a protiopatření. Nenahrazuje testování ani neslouží jen jako auditní dokumentace.",
           "id": "q1_27"
+        },
+        {
+          "id": "q1_28",
+          "type": "mcq",
+          "label": "28. Co je typický smysl „default deny\" (deny by default)?",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "přístup se řídí jen podle hesla"
+            },
+            {
+              "value": "b",
+              "text": "pokud neexistuje explicitní zamítnutí, přístup je povolen"
+            },
+            {
+              "value": "c",
+              "text": "pokud neexistuje explicitní povolení, přístup je zamítnut"
+            },
+            {
+              "value": "d",
+              "text": "přístup je vždy povolen pro interní síť"
+            }
+          ],
+          "explanation": "Default deny znamená bezpečné výchozí nastavení: co není výslovně povoleno, je zakázáno. Tím se snižuje riziko nechtěného přístupu při chybějícím nebo neúplném pravidle."
+        },
+        {
+          "id": "q1_29",
+          "type": "mcq",
+          "label": "29. Ve Scrumu je role, která usměrňuje tým a pomáhá odstraňovat externí vlivy, nazývána:",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Team member (Developer)"
+            },
+            {
+              "value": "b",
+              "text": "Scrum Master"
+            },
+            {
+              "value": "c",
+              "text": "Product Owner"
+            },
+            {
+              "value": "d",
+              "text": "Release manager"
+            }
+          ],
+          "explanation": "Scrum Master pomáhá týmu dodržovat Scrum, odstraňuje překážky a chrání tým před rušivými externími vlivy. Product Owner spravuje produktovou hodnotu a backlog."
         }
       ]
     },
@@ -1160,6 +1210,56 @@
           ],
           "explanation": "EVP_DigestFinal dokončí výpočet digestu, zapíše výsledný hash do výstupního bufferu a vrátí jeho délku. EVP_DigestUpdate naopak přidává další vstupní data.",
           "id": "q7_22"
+        },
+        {
+          "id": "q7_23",
+          "type": "mcq",
+          "label": "23. Co dělá funkce `EVP_EncryptInit()`?",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Inicializuje kontext pro šifrování"
+            },
+            {
+              "value": "b",
+              "text": "Generuje klíče"
+            },
+            {
+              "value": "c",
+              "text": "Dešifruje data"
+            },
+            {
+              "value": "d",
+              "text": "Načítá certifikáty"
+            }
+          ],
+          "explanation": "`EVP_EncryptInit()` inicializuje šifrovací kontext pro vybranou šifru a klíč. Samotné zpracování dat pak pokračuje funkcemi jako `EVP_EncryptUpdate()` a `EVP_EncryptFinal_ex()`."
+        },
+        {
+          "id": "q7_24",
+          "type": "mcq",
+          "label": "24. Jaký příkaz v OpenSSL slouží k zašifrování dat pomocí symetrického klíče?",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "EVP_EncryptUpdate(ctx, out, &outlen, in, inlen)"
+            },
+            {
+              "value": "b",
+              "text": "OpenSSL_encrypt()"
+            },
+            {
+              "value": "c",
+              "text": "EVP_SymmetricEncrypt()"
+            },
+            {
+              "value": "d",
+              "text": "Cipher_encrypt_data()"
+            }
+          ],
+          "explanation": "V OpenSSL EVP API se data při symetrickém šifrování zpracovávají přes `EVP_EncryptUpdate()`. Ostatní uvedené funkce nejsou standardní OpenSSL EVP volání."
         }
       ]
     },
@@ -1741,6 +1841,131 @@
           ],
           "explanation": "AIK znamená Attestation Identity Key. Používá se pro atestaci a prokazování identity TPM, tedy k autentizaci platformy, ne k běžnému šifrování dat.",
           "id": "q12_23"
+        },
+        {
+          "id": "q12_24",
+          "type": "mcq",
+          "label": "24. Jak TPM přispívá k ochraně proti hardwarovým útokům?",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Používá antivirový software"
+            },
+            {
+              "value": "b",
+              "text": "Generuje varovné signály"
+            },
+            {
+              "value": "c",
+              "text": "Pomocí detekce neoprávněné manipulace s hardwarovými komponentami"
+            },
+            {
+              "value": "d",
+              "text": "Nijak, TPM chrání pouze softwarové útoky"
+            }
+          ],
+          "explanation": "TPM poskytuje hardwarově chráněné kryptografické funkce a může pomáhat s měřením integrity platformy. Díky tomu lze detekovat změny nebo manipulaci s komponentami a stavem boot procesu."
+        },
+        {
+          "id": "q12_25",
+          "type": "mcq",
+          "label": "25. Je možné monotónní počítadlo v TPM dekrementovat?",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "Pokud je povoleno v nastavení"
+            },
+            {
+              "value": "b",
+              "text": "Ano"
+            },
+            {
+              "value": "c",
+              "text": "Pouze v některých modelech"
+            },
+            {
+              "value": "d",
+              "text": "Ne"
+            }
+          ],
+          "explanation": "Monotónní počítadlo je navrženo tak, aby se pouze zvyšovalo. To pomáhá bránit rollback útokům, kde by útočník chtěl vrátit systém do staršího stavu."
+        },
+        {
+          "id": "q12_26",
+          "type": "mcq",
+          "label": "26. Které kryptografické protokoly TPM podporuje?",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "AES, RSA, SHA"
+            },
+            {
+              "value": "b",
+              "text": "UDP, TCP, IP"
+            },
+            {
+              "value": "c",
+              "text": "None of the above"
+            },
+            {
+              "value": "d",
+              "text": "FTP, HTTP, SMTP"
+            }
+          ],
+          "explanation": "TPM pracuje s kryptografickými algoritmy jako RSA, AES a SHA. UDP, TCP, IP, FTP, HTTP a SMTP jsou síťové protokoly, ne kryptografické primitivy TPM."
+        },
+        {
+          "id": "q12_27",
+          "type": "mcq",
+          "label": "27. Jaký příkaz v TPM umožňuje čtení veřejných klíčů?",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "tpm2 decrypt"
+            },
+            {
+              "value": "b",
+              "text": "tpm2 readpublic"
+            },
+            {
+              "value": "c",
+              "text": "tpm2 authenticate"
+            },
+            {
+              "value": "d",
+              "text": "tpm2 getrandom"
+            }
+          ],
+          "explanation": "`tpm2 readpublic` čte veřejnou část objektu nebo klíče v TPM. `tpm2 getrandom` generuje náhodná data a `tpm2 decrypt` slouží k dešifrování."
+        },
+        {
+          "id": "q12_28",
+          "type": "mcq",
+          "label": "28. Co znamená PK v kontextu UEFI Secure Boot?",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Platform key"
+            },
+            {
+              "value": "b",
+              "text": "Protection key"
+            },
+            {
+              "value": "c",
+              "text": "Public key"
+            },
+            {
+              "value": "d",
+              "text": "Private key"
+            }
+          ],
+          "explanation": "PK znamená Platform Key. V UEFI Secure Boot je to hlavní klíč platformy, který řídí vlastnictví a správu databází Secure Boot."
         }
       ]
     },
@@ -2114,6 +2339,81 @@
           ],
           "explanation": "git clone vytvoří lokální kopii vzdáleného repozitáře včetně historie, větví a výchozího remote origin.",
           "id": "q2_17"
+        },
+        {
+          "id": "q2_18",
+          "type": "mcq",
+          "label": "18. Parametr konfigurace `user.email` obsahuje:",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "jméno nadřízeného"
+            },
+            {
+              "value": "b",
+              "text": "jméno autora revize"
+            },
+            {
+              "value": "c",
+              "text": "emailovou adresu autora revize"
+            },
+            {
+              "value": "d",
+              "text": "přihlašovací jméno uživatele"
+            }
+          ],
+          "explanation": "`user.email` je e-mailová adresa zapsaná do metadat commitu jako adresa autora nebo committera. Jméno autora se nastavuje zvlášť parametrem `user.name`."
+        },
+        {
+          "id": "q2_19",
+          "type": "mcq",
+          "label": "19. Jaký příkaz vytvoří novou větev v Gitu?",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "git newbranch"
+            },
+            {
+              "value": "b",
+              "text": "git startbranch"
+            },
+            {
+              "value": "c",
+              "text": "git createbranch"
+            },
+            {
+              "value": "d",
+              "text": "git branch"
+            }
+          ],
+          "explanation": "`git branch <název>` vytvoří novou větev. Přepnutí na novou větev se dělá zvlášť pomocí `git switch` nebo `git checkout`, případně najednou přes `git switch -c`."
+        },
+        {
+          "id": "q2_20",
+          "type": "mcq",
+          "label": "20. Nastavení konfigurace, které má být platné pro všechny repozitáře všech uživatelů, se provádí příkazem:",
+          "answer": "d",
+          "options": [
+            {
+              "value": "a",
+              "text": "git config --local"
+            },
+            {
+              "value": "b",
+              "text": "git system --config"
+            },
+            {
+              "value": "c",
+              "text": "git config --global"
+            },
+            {
+              "value": "d",
+              "text": "git config --system"
+            }
+          ],
+          "explanation": "`git config --system` zapisuje systémovou konfiguraci platnou pro všechny uživatele a repozitáře na daném stroji. `--global` platí pro aktuálního uživatele a `--local` pro jeden repozitář."
         }
       ]
     },
@@ -2869,6 +3169,131 @@
           ],
           "explanation": "free se smí volat jen nad pamětí získanou z malloc/calloc/realloc. Varianta s malloc zároveň kontroluje, jestli alokace neselhala.",
           "id": "q3_31"
+        },
+        {
+          "id": "q3_32",
+          "type": "mcq",
+          "label": "32. Proč je důležité ošetřovat chyby v programu?",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Automatické opravy chyb"
+            },
+            {
+              "value": "b",
+              "text": "Zvýšení komplexnosti aplikace"
+            },
+            {
+              "value": "c",
+              "text": "Prevence proti neočekávanému chování a zabezpečení aplikace"
+            },
+            {
+              "value": "d",
+              "text": "Snížení počtu funkcí v kódu"
+            }
+          ],
+          "explanation": "Ošetření chyb zabraňuje tomu, aby program pokračoval v neplatném stavu, spadl nepředvídatelným způsobem nebo otevřel cestu ke zneužití."
+        },
+        {
+          "id": "q3_33",
+          "type": "mcq",
+          "label": "33. Jaká možná chyba je obsažena v následujícím kódu?```c\nchar *buffer = malloc(32);\nstrcpy(buffer, \"test\");\nfree(buffer);\nprintf(\"%s\\n\", buffer);\n```",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "Integer overflow"
+            },
+            {
+              "value": "b",
+              "text": "Memory leak"
+            },
+            {
+              "value": "c",
+              "text": "Use after free"
+            },
+            {
+              "value": "d",
+              "text": "Buffer overflow"
+            }
+          ],
+          "explanation": "Po zavolání `free(buffer)` už paměť nepatří programu. Následné čtení přes `printf` používá uvolněný ukazatel, tedy chybu use after free."
+        },
+        {
+          "id": "q3_34",
+          "type": "mcq",
+          "label": "34. Které doplnění je nejbezpečnější pro zkopírování textu do pevného bufferu?```c\nvoid set_name(const char *input)\n{\n    char name[16];\n    /* DOPLŇTE */\n}\n```",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "gets(name);"
+            },
+            {
+              "value": "b",
+              "text": "sprintf(name, \"%s\", input);"
+            },
+            {
+              "value": "c",
+              "text": "if (input != NULL) snprintf(name, sizeof(name), \"%s\", input);"
+            },
+            {
+              "value": "d",
+              "text": "strcpy(name, input);"
+            }
+          ],
+          "explanation": "`snprintf` respektuje velikost cílového pole a kontrola `input != NULL` brání dereferenci nulového ukazatele. Ostatní varianty mohou přepsat hranice bufferu nebo jsou nebezpečné."
+        },
+        {
+          "id": "q3_35",
+          "type": "mcq",
+          "label": "35. Jaká možná chyba je obsažena v následujícím kódu?```c\nchar *a = malloc(32);\nchar *b = a;\nfree(a);\nfree(b);\n```",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Format string vulnerability"
+            },
+            {
+              "value": "b",
+              "text": "Double free"
+            },
+            {
+              "value": "c",
+              "text": "Memory leak"
+            },
+            {
+              "value": "d",
+              "text": "Integer overflow"
+            }
+          ],
+          "explanation": "`a` a `b` ukazují na stejný blok paměti. Po `free(a)` je blok uvolněn a `free(b)` se pokouší uvolnit stejný blok podruhé."
+        },
+        {
+          "id": "q3_36",
+          "type": "mcq",
+          "label": "36. Jaké doplnění nejlépe zabrání přetečení bufferu v následujícím kódu?```c\nvoid copy_name(const char *input)\n{\n    char name[16];\n    /* DOPLŇTE */\n    strcpy(name, input);\n}\n```",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "name[16] = \"\\0\";"
+            },
+            {
+              "value": "b",
+              "text": "if (input == NULL || strlen(input) >= sizeof(name)) return;"
+            },
+            {
+              "value": "c",
+              "text": "strcpy(input, name);"
+            },
+            {
+              "value": "d",
+              "text": "if (input == NULL) strcpy(name, \"\");"
+            }
+          ],
+          "explanation": "Podmínka odmítne nulový vstup i řetězec, který se do `name[16]` nevejde včetně ukončovací nuly. Pak je následné `strcpy` omezené na bezpečný případ."
         }
       ]
     },
@@ -3732,6 +4157,56 @@
           ],
           "explanation": "Dynamická analýza sleduje běžící program. Díky tomu umí zachytit chyby závislé na konkrétním běhu, vstupech, stavu paměti nebo načasování.",
           "id": "q10_22"
+        },
+        {
+          "id": "q10_23",
+          "type": "mcq",
+          "label": "23. Které chyby jsou často přehlíženy během statické analýzy?",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "Chyby spojené s definicí proměnných"
+            },
+            {
+              "value": "b",
+              "text": "Chyby, které se projeví pouze za určitých provozních podmínek"
+            },
+            {
+              "value": "c",
+              "text": "Chyby v syntaxi"
+            },
+            {
+              "value": "d",
+              "text": "Typografické chyby v kódu"
+            }
+          ],
+          "explanation": "Statická analýza neprovádí program v reálných podmínkách, proto může přehlédnout chyby závislé na konkrétním běhovém stavu, datech nebo prostředí."
+        },
+        {
+          "id": "q10_24",
+          "type": "mcq",
+          "label": "24. Proč může být dynamická analýza časově náročnější než statická?",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "Vyžaduje spouštění aplikace a často i simulaci různých provozních podmínek"
+            },
+            {
+              "value": "b",
+              "text": "Je méně automatizovaná"
+            },
+            {
+              "value": "c",
+              "text": "Vyžaduje manuální kontrolu každého řádku kódu"
+            },
+            {
+              "value": "d",
+              "text": "Musí být prováděna vždy v noci"
+            }
+          ],
+          "explanation": "Dynamická analýza sleduje běžící program, takže je potřeba aplikaci spouštět, připravovat vstupy a často opakovat scénáře pro různé provozní podmínky."
         }
       ]
     },
@@ -4009,6 +4484,31 @@
           ],
           "explanation": "Pro porovnání dvou řetězců v CUnit se používá CU_ASSERT_STRING_EQUAL(actual, expected).",
           "id": "qut_11"
+        },
+        {
+          "id": "qut_12",
+          "type": "mcq",
+          "label": "12. Jaký příkaz v CUnit registruje testovací sadu?",
+          "answer": "b",
+          "options": [
+            {
+              "value": "a",
+              "text": "CU_init_suite()"
+            },
+            {
+              "value": "b",
+              "text": "CU_add_suite()"
+            },
+            {
+              "value": "c",
+              "text": "CU_register_suite()"
+            },
+            {
+              "value": "d",
+              "text": "CU_create_suite()"
+            }
+          ],
+          "explanation": "V CUnit se testovací sada přidává do registry funkcí `CU_add_suite()`. Po ní se do sady přidávají jednotlivé testy přes `CU_add_test()`."
         }
       ]
     },
@@ -4700,6 +5200,81 @@
           ],
           "explanation": "V Linux keyrings označuje @s session keyring, tedy klíčenku platnou v kontextu daného sezení. @u je user keyring a @t je thread keyring.",
           "id": "q5_28"
+        },
+        {
+          "id": "q5_29",
+          "type": "mcq",
+          "label": "29. Položka `minimum` v souboru `/etc/shadow` označuje:",
+          "answer": "c",
+          "options": [
+            {
+              "value": "a",
+              "text": "minimální počet znaků v hesle"
+            },
+            {
+              "value": "b",
+              "text": "den, kdy vyprší platnost hesla"
+            },
+            {
+              "value": "c",
+              "text": "minimální počet dní platnosti hesla"
+            },
+            {
+              "value": "d",
+              "text": "minimální počet znaků v soli"
+            }
+          ],
+          "explanation": "Pole `minimum` v `/etc/shadow` určuje minimální počet dní, které musí uplynout mezi změnami hesla. Nejde o délku hesla ani soli."
+        },
+        {
+          "id": "q5_30",
+          "type": "mcq",
+          "label": "30. Položka `maximum` v souboru `/etc/shadow` označuje:",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "maximální počet dní platnosti hesla"
+            },
+            {
+              "value": "b",
+              "text": "maximální počet znaků v soli"
+            },
+            {
+              "value": "c",
+              "text": "maximální počet znaků v hesle"
+            },
+            {
+              "value": "d",
+              "text": "den, kdy vyprší platnost hesla"
+            }
+          ],
+          "explanation": "Pole `maximum` v `/etc/shadow` říká, kolik dní může heslo maximálně platit, než má být vyžadována jeho změna."
+        },
+        {
+          "id": "q5_31",
+          "type": "mcq",
+          "label": "31. Prvky (klíčenky nebo data) platné pouze v kontextu daného sezení jsou označovány:",
+          "answer": "a",
+          "options": [
+            {
+              "value": "a",
+              "text": "@s"
+            },
+            {
+              "value": "b",
+              "text": "@u"
+            },
+            {
+              "value": "c",
+              "text": "@t"
+            },
+            {
+              "value": "d",
+              "text": "@g"
+            }
+          ],
+          "explanation": "`@s` označuje session keyring. `@u` je user keyring, `@t` thread keyring a `@p` process keyring."
         }
       ]
     },
